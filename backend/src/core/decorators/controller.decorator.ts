@@ -1,16 +1,15 @@
-import { METHODS_METADATA, METHOD_METADATA, PATH_METADATA } from "../constants";
-import { RequestMethod } from "../enums/request-method.enum";
-import IController from "../interfaces/IController.interface";
+import { IController } from "core";
 import * as express from "express";
 import { Request, Response, Router } from "express";
-export default function Controller(path: string) {
+import { METHODS_METADATA, METHOD_METADATA, PATH_METADATA } from "../constants";
+import { RequestMethod } from "../enums/request-method.enum";
+export function Controller(path: string) {
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
     return class extends constructor implements IController {
       public router = express.Router();
       path = path ? path : "/";
       constructor(...args: any[]) {
         super();
-        this.initRoutes();
       }
       initRoutes() {
         const methods: string[] = Reflect.getMetadata(METHODS_METADATA, this);

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiBaseUrl: '${DOCKER_ENV_BASE_URL}',
 };

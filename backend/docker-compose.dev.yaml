@@ -1,0 +1,7 @@
+version: "3"
+services:
+  frontend:
+    image: node:12
+    volumes:
+      - ./:/home/node/app
+    command: tail -f /dev/null

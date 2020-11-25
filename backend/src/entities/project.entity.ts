@@ -1,18 +1,10 @@
-import { Priority } from "../enums/priority.enum";
-import {
-  Entity,
-  ObjectID,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-} from "typeorm";
-import { User } from "./user.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Issue } from "./issue.entity";
 
 @Entity()
 export class Project {
   @PrimaryGeneratedColumn()
-  public id?: number;
+  public id!: number;
 
   @Column()
   public title!: string;

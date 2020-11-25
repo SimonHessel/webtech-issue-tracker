@@ -1,6 +1,6 @@
-import { Middleware, Controller, GET } from "../../core";
+import { Middleware, Controller, GET } from "../core";
 import { Request, Response } from "express";
-import loggerMiddleware from "../../middleware/logger";
+import loggerMiddleware from "../middleware/logger";
 
 @Middleware(loggerMiddleware)
 @Controller("health")

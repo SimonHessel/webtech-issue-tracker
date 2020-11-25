@@ -1,8 +1,8 @@
 import { App } from "./core";
 import "reflect-metadata";
 
-import { HealthController } from "./controllers/Health/Health.controller";
 import { IssuesController } from "./controllers/Issues.controller";
+import { HealthController } from "./controllers/Health.controller";
 
 const app = new App({
   port: 5000,

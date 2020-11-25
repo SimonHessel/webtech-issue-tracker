@@ -1,6 +1,5 @@
 import { IController } from "core";
 import * as express from "express";
-import { Request, Response, Router } from "express";
 import { METHODS_METADATA, METHOD_METADATA, PATH_METADATA } from "../constants";
 import { RequestMethod } from "../enums/request-method.enum";
 export function Controller(path: string) {
@@ -11,9 +10,10 @@ export function Controller(path: string) {
       constructor(...args: any[]) {
         super();
       }
-      initRoutes() {
+      public initRoutes() {
         const methods: string[] = Reflect.getMetadata(METHODS_METADATA, this);
-        methods &&
+        return (
+          methods &&
           methods.forEach((endpoint) => {
             const method = Reflect.getMetadata(
               METHOD_METADATA,
@@ -23,36 +23,36 @@ export function Controller(path: string) {
               PATH_METADATA,
               (this as any)[endpoint]
             );
-            registerRoute(this.router, path, (this as any)[endpoint], method);
-          });
+            this.registerRoute(path, endpoint, method);
+          })
+        );
+      }
+      public registerRoute(
+        path: string,
+        endpoint: string,
+        method: RequestMethod
+      ) {
+        const f = (this as any)[endpoint].bind(this);
+        switch (method) {
+          case RequestMethod.GET:
+            this.router.get(path, f);
+            break;
+          case RequestMethod.POST:
+            this.router.post(path, f);
+            break;
+          case RequestMethod.PATCH:
+            this.router.patch(path, f);
+            break;
+          case RequestMethod.PUT:
+            this.router.patch(path, f);
+            break;
+          case RequestMethod.DELETE:
+            this.router.delete(path, f);
+            break;
+          default:
+            break;
+        }
       }
     };
   };
 }
-
-const registerRoute = (
-  router: Router,
-  path: string,
-  f: (req: Request, res: Response) => any,
-  method: RequestMethod
-) => {
-  switch (method) {
-    case RequestMethod.GET:
-      router.get(path, f);
-      break;
-    case RequestMethod.POST:
-      router.post(path, f);
-      break;
-    case RequestMethod.PATCH:
-      router.patch(path, f);
-      break;
-    case RequestMethod.PUT:
-      router.patch(path, f);
-      break;
-    case RequestMethod.DELETE:
-      router.delete(path, f);
-      break;
-    default:
-      break;
-  }
-};

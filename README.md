@@ -24,7 +24,7 @@ For a live demo please visit <link>
 
 Quick and compact installation. Follow the steps below.
 
-#### Technologies
+##### Technologies
 
 - `Angular`
 - `Angular-Material`
@@ -32,32 +32,34 @@ Quick and compact installation. Follow the steps below.
 - `Express`
 - `TypeORM`
 
-### Requirements
+##### Requirements
 
 - `Node 12+`
 - `MongoDB`
   or
 - `Docker`
 
-### Installation steps & development setup
+##### Installation steps & development setup
 
-If you don't want install node locally you can use docker.
+If you don't want to install node locally you can use docker.
 You can use one of these 2 options:
 
-#### Option 1
+###### Option 1
 
 ```bash
 $ docker-compose -f docker-compose.dev.yaml up
 $ docker exec -it $CONTAINER_NAME bash -c cd /home/node/app &6 bash
 ```
 
-#### Option 2
+###### Option 2
 
 ```bash
 $ docker run -it --workdir /home/node/app -p 5000:5000 -v $(pwd):/home/node/app node:12 bash
 ```
 
-#### Backend
+After following one of the above mentioned options, you can start the backend respectively the frontend by running the following commands:
+
+###### Backend
 
 ```bash
 cd backend
@@ -65,7 +67,7 @@ npm install
 npm run dev # runs a webserver on port 5000
 ```
 
-#### Frontend
+###### Frontend
 
 ```bash
 cd backend

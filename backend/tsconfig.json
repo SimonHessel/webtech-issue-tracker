@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "types": ["reflect-metadata"],
-    "lib": ["ES2020"]
+    "lib": ["ES2020"],
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

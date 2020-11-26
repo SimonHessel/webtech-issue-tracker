@@ -1,7 +1,46 @@
 version: "3"
 services:
-  frontend:
+  backend:
     image: node:12
+    container_name: backend
     volumes:
       - ./:/home/node/app
     command: tail -f /dev/null
+    ports:
+      - 5000:5000
+    environment:
+      LOGGING: "false"
+      DATABASE_DB: webtech
+      DATABASE_USER: webtech
+      DATABASE_PASS: webtech
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      DATABASE_SYNCHRONIZE: "true"
+      PGDATA: /data/postgres
+    links:
+      - postgres
+  postgres:
+    image: postgres:11.5-alpine
+    container_name: postgres
+    volumes:
+      - postgres:/data/postgres
+    environment:
+      POSTGRES_DB: webtech
+      POSTGRES_USER: webtech
+      POSTGRES_PASS: webtech
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    ports:
+      - 5432:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+  pgadmin:
+    image: dpage/pgadmin4:4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: webtech@webtech.com
+      PGADMIN_DEFAULT_PASSWORD: webtech
+    ports:
+      - 5050:80
+volumes:
+  postgres:

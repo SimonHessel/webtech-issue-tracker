@@ -1,35 +1,56 @@
-import { Project } from "../entities/project.entity";
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
 import { Controller, DELETE, GET, Middleware, PATCH, POST } from "../core";
 import { Issue } from "../entities/issue.entity";
-import loggerMiddleware from "../middleware/logger";
 import { IssueDTO } from "../interfaces/Issue.dto";
-
-@Middleware(loggerMiddleware)
+import loggerMiddleware from "../middleware/logger";
+import { IssueService, ProjectService, UserService } from "../services";
+// @Middleware(loggerMiddleware)
 @Controller("issues")
 export class IssuesController {
-  issueRepository = getRepository(Issue);
-  projectRepository = getRepository(Project);
-  constructor() {}
+  constructor(
+    // private userRepository: Repository<User>,
+    // private projectRepository: Repository<Project>,
+    // private issueRepository: Repository<Issue>
+    private issueService: IssueService,
+    private userService: UserService,
+    private projectService: ProjectService
+  ) {}
 
   @POST("/:projectID")
   public async create(
-    req: Request<{ projectID: string }, {}, IssueDTO>,
+    req: Request<{ projectID: number }, {}, IssueDTO>,
     res: Response<Issue>
   ) {
     const { projectID } = req.params;
-    const issue = req.body;
+
+    const { assignee, ...issue } = req.body;
+
+    const [user, project] = await Promise.all([
+      this.userService.findUserByName(assignee),
+      this.projectService.findByID(projectID),
+    ]);
+
+    if (!user || !project) return res.sendStatus(404);
+
+    console.log(user, project);
+
+    // const createdIssue = await this.issueRepository.save({
+    //   ...issue,
+    //   assignee: user,
+    //   project,
+    // });
+    // res.send(createdIssue);
     res.sendStatus(200);
   }
 
   @GET("/:projectID")
-  public read(
-    req: Request<{ projectID: string }, {}, any>,
+  public async read(
+    req: Request<{ projectID: number }, {}, any>,
     res: Response<Issue[]>
   ) {
     const { projectID } = req.params;
-    res.sendStatus(200);
+    const issues = await this.issueService.getProjectIssues(projectID);
+    res.send(issues);
   }
 
   @PATCH("/:projectID/:id")

@@ -1,9 +1,11 @@
-import { App } from "./core";
+import { App, Service } from "./core";
 import "reflect-metadata";
 
 import { IssuesController } from "./controllers/Issues.controller";
 import { HealthController } from "./controllers/Health.controller";
 import { createConnection } from "typeorm";
+import { Injector } from "./core/injector";
+import { IssueService } from "./services";
 
 createConnection({
   name: "default",
@@ -21,7 +23,7 @@ createConnection({
   .then((connection) => {
     const app = new App({
       port: 5000,
-      controllers: [new HealthController(), new IssuesController()],
+      controllers: [HealthController, IssuesController],
       middleWares: [],
     });
 

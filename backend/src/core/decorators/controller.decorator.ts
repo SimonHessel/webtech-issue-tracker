@@ -8,7 +8,7 @@ export function Controller(path: string) {
       public router = express.Router();
       path = path ? path : "/";
       constructor(...args: any[]) {
-        super();
+        super(...args);
       }
       public initRoutes() {
         const methods: string[] = Reflect.getMetadata(METHODS_METADATA, this);

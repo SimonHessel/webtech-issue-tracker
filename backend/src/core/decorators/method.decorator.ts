@@ -1,4 +1,8 @@
-import { PATH_METADATA, METHOD_METADATA, METHODS_METADATA } from "../constants";
+import {
+  PATH_METADATA,
+  METHOD_METADATA,
+  ENDPOINTS_METADATA,
+} from "../constants";
 import { RequestMethod } from "../enums/request-method.enum";
 
 const defaultMetadata = {
@@ -18,9 +22,9 @@ const RequestMapping = (
   return (target, key, descriptor: PropertyDescriptor) => {
     Reflect.defineMetadata(PATH_METADATA, path, descriptor.value);
     Reflect.defineMetadata(METHOD_METADATA, requestMethod, descriptor.value);
-    const currentMethods = Reflect.getMetadata(METHODS_METADATA, target);
-    const methods = currentMethods ? [...currentMethods, key] : [key];
-    Reflect.defineMetadata(METHODS_METADATA, methods, target);
+    const currentEndpoints = Reflect.getMetadata(ENDPOINTS_METADATA, target);
+    const endpoints = currentEndpoints ? [...currentEndpoints, key] : [key];
+    Reflect.defineMetadata(ENDPOINTS_METADATA, endpoints, target);
     return descriptor;
   };
 };

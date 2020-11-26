@@ -8,7 +8,7 @@ export class App {
   public port: number;
   private controllers: any[];
 
-  constructor(appInit: { port: number; middleWares: any; controllers: any[] }) {
+  constructor(appInit: { port: number; controllers: any[] }) {
     this.app = express();
     this.port = appInit.port;
     this.app.use(express.json());
@@ -17,16 +17,7 @@ export class App {
       Injector.resolve<any>(controller)
     );
 
-    this.middlewares(appInit.middleWares);
     this.routes();
-  }
-
-  private middlewares(middleWares: {
-    forEach: (arg0: (middleWare: IMiddleware) => void) => void;
-  }) {
-    middleWares.forEach((middleWare) => {
-      this.app.use(middleWare);
-    });
   }
 
   private routes() {

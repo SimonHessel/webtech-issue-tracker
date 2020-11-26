@@ -24,7 +24,6 @@ createConnection({
     const app = new App({
       port: 5000,
       controllers: [HealthController, IssuesController],
-      middleWares: [],
     });
 
     app.listen();

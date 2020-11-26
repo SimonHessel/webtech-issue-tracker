@@ -1,6 +1,10 @@
 import { IController } from "core";
 import * as express from "express";
-import { METHODS_METADATA, METHOD_METADATA, PATH_METADATA } from "../constants";
+import {
+  ENDPOINTS_METADATA,
+  METHOD_METADATA,
+  PATH_METADATA,
+} from "../constants";
 import { RequestMethod } from "../enums/request-method.enum";
 export function Controller(path: string) {
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
@@ -11,21 +15,19 @@ export function Controller(path: string) {
         super(...args);
       }
       public initRoutes() {
-        const methods: string[] = Reflect.getMetadata(METHODS_METADATA, this);
-        return (
-          methods &&
-          methods.forEach((endpoint) => {
-            const method = Reflect.getMetadata(
-              METHOD_METADATA,
-              (this as any)[endpoint]
-            );
-            const path = Reflect.getMetadata(
-              PATH_METADATA,
-              (this as any)[endpoint]
-            );
-            this.registerRoute(path, endpoint, method);
-          })
-        );
+        const endpoints: string[] =
+          Reflect.getMetadata(ENDPOINTS_METADATA, this) || [];
+        return endpoints.forEach((endpoint) => {
+          const method = Reflect.getMetadata(
+            METHOD_METADATA,
+            (this as any)[endpoint]
+          );
+          const path = Reflect.getMetadata(
+            PATH_METADATA,
+            (this as any)[endpoint]
+          );
+          this.registerRoute(path, endpoint, method);
+        });
       }
       public registerRoute(
         path: string,

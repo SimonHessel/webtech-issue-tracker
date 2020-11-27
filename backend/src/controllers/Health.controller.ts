@@ -1,8 +1,6 @@
-import { Middleware, Controller, GET } from "../core";
 import { Request, Response } from "express";
-import loggerMiddleware from "../middleware/logger";
+import { Controller, GET } from "../core";
 
-@Middleware(loggerMiddleware)
 @Controller("health")
 export class HealthController {
   constructor() {}

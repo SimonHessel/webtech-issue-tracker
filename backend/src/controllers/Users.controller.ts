@@ -1,10 +1,9 @@
-import { Project } from "../entities/project.entity";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Controller, DELETE, GET, Middleware, PATCH, POST } from "../core";
-import loggerMiddleware from "../middleware/logger";
-import { UserDTO } from "../interfaces/User.dto";
-import { User } from "../entities/user.entity";
+import { User } from "../entities";
+import { UserDTO } from "../interfaces";
+import { loggerMiddleware } from "../middleware";
 
 @Middleware(loggerMiddleware)
 @Controller("users")

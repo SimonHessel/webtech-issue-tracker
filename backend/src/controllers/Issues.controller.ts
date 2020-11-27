@@ -1,10 +1,19 @@
 import { Request, Response } from "express";
-import { Controller, DELETE, GET, Middleware, PATCH, POST } from "../core";
-import { Issue } from "../entities/issue.entity";
-import { IssueDTO } from "../interfaces/Issue.dto";
-import loggerMiddleware from "../middleware/logger";
+import {
+  Controller,
+  DELETE,
+  GET,
+  MethodMiddleware,
+  PATCH,
+  POST,
+} from "../core";
+import { Issue } from "../entities";
+import { IssueDTO } from "../interfaces";
+import { JWT, ProjectSecurity, ProjectSecurityMiddleware } from "../middleware";
 import { IssueService, ProjectService, UserService } from "../services";
-// @Middleware(loggerMiddleware)
+
+@JWT
+@ProjectSecurity
 @Controller("issues")
 export class IssuesController {
   constructor(

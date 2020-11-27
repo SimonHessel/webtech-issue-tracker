@@ -1,4 +1,4 @@
-import { Project } from "../entities/project.entity";
+import { Project } from "../entities";
 import { getRepository, Repository } from "typeorm";
 import { Service } from "../core";
 

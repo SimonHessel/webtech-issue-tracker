@@ -1,3 +1,7 @@
 import { Request, Response } from "express";
 
-export type IMiddleware = (req: Request, resp: Response, next: Function) => any;
+export type IMiddleware = (
+  req: Request<any, any, any>,
+  resp: Response<any>,
+  next: Function
+) => any;

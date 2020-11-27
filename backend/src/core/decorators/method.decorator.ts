@@ -3,7 +3,7 @@ import {
   METHOD_METADATA,
   ENDPOINTS_METADATA,
 } from "../constants";
-import { RequestMethod } from "../enums/request-method.enum";
+import { RequestMethod } from "../enums";
 
 const defaultMetadata = {
   path: "/",

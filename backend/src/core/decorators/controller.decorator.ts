@@ -5,7 +5,7 @@ import {
   METHOD_METADATA,
   PATH_METADATA,
 } from "../constants";
-import { RequestMethod } from "../enums/request-method.enum";
+import { RequestMethod } from "../enums";
 export function Controller(path: string) {
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
     return class extends constructor implements IController {

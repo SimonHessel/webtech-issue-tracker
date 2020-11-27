@@ -16,7 +16,7 @@ export const MethodMiddleware = (middleware: IMiddleware): MethodDecorator => {
 };
 
 export const ControllerMiddleware = (middleware: IMiddleware) => <
-  T extends { new (...args: any[]): {} }
+  T extends { new (...args: any[]): Record<string, unknown> }
 >(
   constructor: T
 ) =>

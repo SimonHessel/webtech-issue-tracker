@@ -17,7 +17,7 @@ createConnection({
   logging: process.env.LOGGING!.toLocaleLowerCase() === "true",
   synchronize: process.env.DATABASE_SYNCHRONIZE!.toLocaleLowerCase() === "true",
 })
-  .then((connection) => {
+  .then(() => {
     const app = new App({
       port: 5000,
       controllers: [HealthController, IssuesController],

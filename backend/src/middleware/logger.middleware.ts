@@ -1,10 +1,6 @@
-import { Request, Response } from "express";
+import { IMiddleware } from "core";
 
-export const loggerMiddleware = (
-  req: Request,
-  res: Response,
-  next: Function
-) => {
+export const loggerMiddleware: IMiddleware = (req, res, next) => {
   console.log("Request logged:", req.method, req.path);
   next();
 };

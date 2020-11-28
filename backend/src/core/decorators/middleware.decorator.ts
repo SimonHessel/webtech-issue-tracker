@@ -16,7 +16,8 @@ export const MethodMiddleware = (middleware: IMiddleware): MethodDecorator => {
 };
 
 export const ControllerMiddleware = (middleware: IMiddleware) => <
-  T extends { new (...args: any[]): Record<string, unknown> }
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends { new (...args: any[]): {} }
 >(
   constructor: T
 ) =>

@@ -11,7 +11,6 @@ import { RequestMethod } from "../enums";
 export function Controller(path: string) {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
-    console.log(typeof constructor);
     return class extends constructor implements IController {
       public router = express.Router();
       path = path ? path : "/";

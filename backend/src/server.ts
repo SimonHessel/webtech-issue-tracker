@@ -1,3 +1,4 @@
+import { AuthController } from "controllers/AuthController.controller";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { HealthController } from "./controllers/Health.controller";
@@ -20,7 +21,7 @@ createConnection({
   .then(() => {
     const app = new App({
       port: 5000,
-      controllers: [HealthController, IssuesController],
+      controllers: [HealthController, IssuesController, AuthController],
     });
 
     app.listen();

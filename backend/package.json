@@ -11,7 +11,7 @@
     "lint": "eslint",
     "lint:changes": "npm run lint -- $(git diff --name-only --cached --relative=backend | grep  -E .ts)",
     "lint:all": "npm run lint -- . --ext .ts",
-    "postinstall": "cp .githooks/* ../.git/hooks/ -r"
+    "postinstall": "cp -R .githooks/* ../.git/hooks/"
   },
   "author": "",
   "license": "ISC",

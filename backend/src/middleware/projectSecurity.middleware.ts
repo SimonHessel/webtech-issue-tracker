@@ -1,19 +1,14 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import { TokenData } from "interfaces";
-import { ControllerMiddleware } from "../core";
+import { ControllerMiddleware, IMiddleware } from "../core";
 
-export const ProjectSecurityMiddleware = async (
-  req: Request<{ projectID: string }, {}, {}>,
-  res: Response,
-  next: Function
+export const ProjectSecurityMiddleware: IMiddleware = async (
+  req: Request<{ projectID: string }, unknown, unknown>,
+  res,
+  next
 ) => {
   const projectID = parseInt(req.params.projectID);
   const tokenData: TokenData = res.locals.tokenData;
-  console.log(
-    projectID,
-    tokenData,
-    tokenData.projects.some((id) => id === projectID)
-  );
   if (tokenData.projects.some((id) => id === projectID)) next();
   else res.status(403).send("No permissions for this project");
 };

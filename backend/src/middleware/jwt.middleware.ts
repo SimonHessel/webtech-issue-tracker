@@ -1,12 +1,7 @@
-import { Request, Response } from "express";
 import { verifyJWT } from "../utils";
-import { ControllerMiddleware } from "../core";
+import { ControllerMiddleware, IMiddleware } from "../core";
 
-export const JWTMiddleware = async (
-  req: Request,
-  res: Response,
-  next: Function
-) => {
+export const JWTMiddleware: IMiddleware = async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization)
     return res.status(403).send("No authorization header was set.");

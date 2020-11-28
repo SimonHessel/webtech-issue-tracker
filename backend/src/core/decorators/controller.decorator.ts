@@ -9,7 +9,9 @@ import {
 } from "../constants";
 import { RequestMethod } from "../enums";
 export function Controller(path: string) {
-  return function <T extends { new (...args: any[]): {} }>(constructor: T) {
+  return function <T extends { new (...args: any[]): Record<string, unknown> }>(
+    constructor: T
+  ) {
     return class extends constructor implements IController {
       public router = express.Router();
       path = path ? path : "/";

@@ -1,11 +1,8 @@
-import { App, Service } from "./core";
 import "reflect-metadata";
-
-import { IssuesController } from "./controllers/Issues.controller";
-import { HealthController } from "./controllers/Health.controller";
 import { createConnection } from "typeorm";
-import { Injector } from "./core/injector";
-import { IssueService } from "./services";
+import { HealthController } from "./controllers/Health.controller";
+import { IssuesController } from "./controllers/Issues.controller";
+import { App } from "./core";
 
 createConnection({
   name: "default",
@@ -20,7 +17,7 @@ createConnection({
   logging: process.env.LOGGING!.toLocaleLowerCase() === "true",
   synchronize: process.env.DATABASE_SYNCHRONIZE!.toLocaleLowerCase() === "true",
 })
-  .then((connection) => {
+  .then(() => {
     const app = new App({
       port: 5000,
       controllers: [HealthController, IssuesController],

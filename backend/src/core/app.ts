@@ -1,4 +1,3 @@
-import { IController, IMiddleware } from "core";
 import * as express from "express";
 import { Application } from "express";
 import { Injector } from "./injector";

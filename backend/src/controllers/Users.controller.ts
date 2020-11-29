@@ -1,12 +1,9 @@
-import { Project } from "../entities/project.entity";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Controller, DELETE, GET, Middleware, PATCH, POST } from "../core";
-import loggerMiddleware from "../middleware/logger";
-import { UserDTO } from "../interfaces/User.dto";
-import { User } from "../entities/user.entity";
+import { Controller, DELETE, GET, PATCH, POST } from "../core";
+import { User } from "../entities";
+import { UserDTO } from "../interfaces";
 
-@Middleware(loggerMiddleware)
 @Controller("users")
 export class UsersController {
   userRepository = getRepository(User);
@@ -14,21 +11,24 @@ export class UsersController {
 
   @POST("/")
   public async create(
-    req: Request<{ projectid: number }, {}, UserDTO>,
+    req: Request<{ projectid: number }, unknown, UserDTO>,
     res: Response<User>
   ) {
     res.sendStatus(200);
   }
 
   @GET("/")
-  public async read(req: Request<{}, {}, any>, res: Response<User[]>) {
+  public async read(
+    req: Request<Record<string, never>, unknown, any>,
+    res: Response<User[]>
+  ) {
     const users = await this.userRepository.find();
     res.send(users);
   }
 
   @PATCH("/:id")
   public async update(
-    req: Request<{ id: number }, {}, UserDTO>,
+    req: Request<{ id: number }, unknown, UserDTO>,
     res: Response<User>
   ) {
     const { id } = req.params;
@@ -39,7 +39,10 @@ export class UsersController {
   }
 
   @DELETE("/:id")
-  public async delete(req: Request<{ id: number }, {}, any>, res: Response) {
+  public async delete(
+    req: Request<{ id: number }, unknown, any>,
+    res: Response
+  ) {
     const { id } = req.params;
     const result = await this.userRepository.delete(id);
     if (result) res.sendStatus(200);

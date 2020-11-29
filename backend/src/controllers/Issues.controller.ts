@@ -36,7 +36,7 @@ export class IssuesController {
   @MethodMiddleware(ProjectSecurityMiddleware)
   @POST("/:projectID")
   public async create(
-    req: Request<{ projectID: number }, {}, IssueDTO>,
+    req: Request<{ projectID: number }, unknown, IssueDTO>,
     res: Response<Issue>
   ) {
     const { projectID } = req.params;
@@ -65,9 +65,10 @@ export class IssuesController {
   @MethodMiddleware(ProjectSecurityMiddleware)
   @GET("/:projectID")
   public async read(
-    req: Request<{ projectID: number }, {}, any>,
+    req: Request<{ projectID: number }, unknown, Record<string, never>>,
     res: Response<Issue[]>
   ) {
+    console.log(req.body);
     const { projectID } = req.params;
     const issues = await this.issueService.getProjectIssues(projectID);
     res.send(issues);
@@ -75,7 +76,7 @@ export class IssuesController {
 
   @PATCH("/:projectID/:id")
   public update(
-    req: Request<{ projectID: string; id: string }, {}, IssueDTO>,
+    req: Request<{ projectID: string; id: string }, unknown, IssueDTO>,
     res: Response<Issue>
   ) {
     const { projectID, id } = req.params;
@@ -84,7 +85,11 @@ export class IssuesController {
 
   @DELETE("/:projectID/:id")
   public delete(
-    req: Request<{ projectID: string; id: string }, {}, any>,
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      Record<string, never>
+    >,
     res: Response
   ) {
     const { projectID, id } = req.params;

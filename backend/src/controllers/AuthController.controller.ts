@@ -47,8 +47,11 @@ export class AuthController {
     if (!email || !username || !password)
       return res.status(401).send("Username/Email/Password were not defined.");
 
-    if (!(await this.authService.registerUser(email, username, password)))
-      return res.status(401).send("Something didn't work out.");
+    try {
+      await this.authService.registerUser(email, username, password);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
     res.sendStatus(200);
   }
 

@@ -28,10 +28,14 @@ export class AuthService {
     user.username = username;
     user.password = password;
 
-    // Needs email validation using regex
+    // Email validation using regex
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!emailRegexp.test(email)) return false;
+
     // Needs username validation using regex
+
     // Needs password validation using regex
 
-    return !!this.userRepository.save({ email, username, password });
+    return !!this.userRepository.save(user);
   }
 }

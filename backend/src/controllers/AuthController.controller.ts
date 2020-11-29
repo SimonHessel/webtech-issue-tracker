@@ -47,17 +47,14 @@ export class AuthController {
     if (!email || !username || !password)
       return res.status(401).send("Username/Email/Password were not defined.");
 
-    const apiResponse = await this.authService.registerUser(
-      email,
-      username,
-      password
-    );
-    if (!apiResponse) return res.status(401).send("Something didn't work out.");
+    if (!(await this.authService.registerUser(email, username, password)))
+      return res.status(401).send("Something didn't work out.");
     res.sendStatus(200);
   }
 
   @POST("/:userID")
   public forgotPassword(req: Request, res: Response) {
+    // Needs email integration to send email link
     res.sendStatus(200);
   }
 

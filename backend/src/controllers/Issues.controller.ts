@@ -1,12 +1,26 @@
 import { Request, Response } from "express";
-import { Controller, DELETE, GET, PATCH, POST } from "../core";
+import {
+  Controller,
+  DELETE,
+  GET,
+  InjectRepository,
+  MethodMiddleware,
+  PATCH,
+  POST,
+} from "../core";
 import { Issue } from "../entities";
 import { IssueDTO } from "../interfaces";
-import { JWT, ProjectSecurity } from "../middleware";
+import {
+  JWT,
+  JWTMiddleware,
+  ProjectSecurity,
+  ProjectSecurityMiddleware,
+} from "../middleware";
 import { IssueService, ProjectService, UserService } from "../services";
 
-@JWT
-@ProjectSecurity
+@JWT()
+@ProjectSecurity({ all: false })
+// @ProjectSecurity
 @Controller("issues")
 export class IssuesController {
   constructor(
@@ -15,9 +29,11 @@ export class IssuesController {
     // private issueRepository: Repository<Issue>
     private issueService: IssueService,
     private userService: UserService,
-    private projectService: ProjectService
+    @InjectRepository() private projectService: ProjectService
   ) {}
 
+  @MethodMiddleware(JWTMiddleware)
+  @MethodMiddleware(ProjectSecurityMiddleware)
   @POST("/:projectID")
   public async create(
     req: Request<{ projectID: number }, unknown, IssueDTO>,
@@ -45,6 +61,8 @@ export class IssuesController {
     res.sendStatus(200);
   }
 
+  @MethodMiddleware(JWTMiddleware)
+  @MethodMiddleware(ProjectSecurityMiddleware)
   @GET("/:projectID")
   public async read(
     req: Request<{ projectID: number }, unknown, Record<string, never>>,

@@ -5,9 +5,11 @@ import {
   ENDPOINTS_METADATA,
   METHOD_METADATA,
   MIDDLEWARES_METADATA,
+  MIDDLEWARE_METHODS_METADATA,
   PATH_METADATA,
 } from "../constants";
 import { RequestMethod } from "../enums";
+import { MiddlewaresMetadata as MethodsMiddlewaresMetadata } from "./middleware.decorator";
 export function Controller(path: string) {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return function <T extends { new (...args: any[]): {} }>(constructor: T) {
@@ -20,8 +22,13 @@ export function Controller(path: string) {
       public initRoutes() {
         const endpoints: string[] =
           Reflect.getMetadata(ENDPOINTS_METADATA, this) || [];
-        const controllerMiddlwares: IMiddleware[] =
+        const middlewares: IMiddleware["middleware"][] =
           Reflect.getMetadata(MIDDLEWARES_METADATA, this) || [];
+        const methodsMiddlewaresMetadata: MethodsMiddlewaresMetadata = Reflect.getMetadata(
+          MIDDLEWARE_METHODS_METADATA,
+          this
+        );
+
         return endpoints.forEach((endpoint) => {
           const method = Reflect.getMetadata(
             METHOD_METADATA,
@@ -31,14 +38,20 @@ export function Controller(path: string) {
             PATH_METADATA,
             (this as any)[endpoint]
           );
-          const endpointMiddlewwares: IMiddleware[] =
-            Reflect.getMetadata(
-              MIDDLEWARES_METADATA,
-              (this as any)[endpoint]
-            ) || [];
+
           this.registerRoute(
             path,
-            [...controllerMiddlwares, ...endpointMiddlewwares],
+            methodsMiddlewaresMetadata
+              ? middlewares.filter((middleware) =>
+                  Reflect.getMetadata(MIDDLEWARES_METADATA, middleware)
+                    ? (
+                        methodsMiddlewaresMetadata.get(
+                          Reflect.getMetadata(MIDDLEWARES_METADATA, middleware)
+                        ) || []
+                      ).includes(endpoint)
+                    : true
+                )
+              : middlewares,
             endpoint,
             method
           );
@@ -46,7 +59,7 @@ export function Controller(path: string) {
       }
       public registerRoute(
         path: string,
-        middlewares: IMiddleware[],
+        middlewares: IMiddleware["middleware"][],
         endpoint: string,
         method: RequestMethod
       ) {

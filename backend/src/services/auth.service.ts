@@ -17,4 +17,21 @@ export class AuthService {
       ],
     });
   }
+
+  public async registerUser(
+    email: string,
+    username: string,
+    password: string
+  ): Promise<boolean> {
+    const user = new User();
+    user.email = email;
+    user.username = username;
+    user.password = password;
+
+    // Needs email validation using regex
+    // Needs username validation using regex
+    // Needs password validation using regex
+
+    return !!this.userRepository.save({ email, username, password });
+  }
 }

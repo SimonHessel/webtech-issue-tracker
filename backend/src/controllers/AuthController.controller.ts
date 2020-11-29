@@ -42,7 +42,17 @@ export class AuthController {
   }
 
   @POST("/register")
-  public register(req: Request, res: Response) {
+  public async register(req: Request, res: Response) {
+    const { email, username, password } = req.body;
+    if (!email || !username || !password)
+      return res.status(401).send("Username/Email/Password were not defined.");
+
+    const apiResponse = await this.authService.registerUser(
+      email,
+      username,
+      password
+    );
+    if (!apiResponse) return res.status(401).send("Something didn't work out.");
     res.sendStatus(200);
   }
 

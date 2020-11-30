@@ -33,12 +33,15 @@ export class AuthController {
           "No user with that username/email and password combination has been found."
         );
 
-    const token = this.jwtService.updateToken({
-      username: user.username,
-      email: user.email,
-      projects: (user as any).projects.map((project: any) => project.id),
-    });
-    res.send({ token });
+    if (
+      !this.jwtService.updateToken(res, {
+        username: user.username,
+        email: user.email,
+        projects: (user as any).projects.map((project: any) => project.id),
+      })
+    )
+      return res.status(401).send("Malformed JWT token.");
+    res.status(200).send();
   }
 
   @POST("/register")

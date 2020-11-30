@@ -23,21 +23,21 @@ export class AuthService {
     username: string,
     password: string
   ): Promise<boolean> {
-    const user = new User();
-    user.email = email;
-    user.username = username;
-    user.password = password;
-
     // Email validation
     const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    if (!emailRegexp.test(email)) throw "Test";
+    if (!emailRegexp.test(email)) throw "Invalid email address.";
 
-    // Needs username validation using regex
     // username can include only a-zA-Z0-9-
+    if (!/^[a-zA-Z0-9_.-]*$/.test(username)) throw "Invalid username";
 
-    // Needs password validation using regex
-    // min. 6 characters, must include at least one number and at least one capital letter
+    // Password validation using regex
+    if (
+      password.length < 6 ||
+      /^[a-zA-Z0-9_.-]*$/.test(password) ||
+      /\d/.test(password)
+    )
+      throw "Invalid password";
 
-    return !!this.userRepository.save(user);
+    return !!this.userRepository.save({ email, username, password });
   }
 }

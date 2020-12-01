@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { getRepository, Repository } from "typeorm";
-import { Middleware, IMiddleware, Service, Options } from "../core";
-import { User } from "../entities";
-import { TokenData } from "../interfaces";
-import { JWTService } from "../services";
+import { Middleware, IMiddleware, Service, Options } from "core";
+import { User } from "entities/user.entity";
+import { TokenData } from "interfaces/tokenData.interface";
+import { JWTService } from "services/jwt.service";
 
 @Service()
 export class ProjectSecurityMiddleware implements IMiddleware {

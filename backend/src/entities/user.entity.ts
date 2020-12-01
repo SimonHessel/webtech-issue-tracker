@@ -5,7 +5,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Project } from "./project.entity";
+import { Project } from "entities/project.entity";
 
 @Entity()
 export class User {

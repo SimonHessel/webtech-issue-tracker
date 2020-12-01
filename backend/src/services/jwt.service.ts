@@ -1,7 +1,9 @@
-import { signJWT } from "../utils";
-import { Service } from "../core";
-import { TokenData, TokenDataDTO } from "../interfaces";
+import { Service } from "core";
 import { Response } from "express";
+import { TokenDataDTO } from "interfaces/tokenData.dto";
+import { TokenData } from "interfaces/tokenData.interface";
+import { signJWT } from "utils/jwt.util";
+
 @Service()
 export class JWTService {
   constructor() {}

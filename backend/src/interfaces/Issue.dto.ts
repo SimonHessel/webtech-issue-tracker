@@ -1,5 +1,5 @@
 import { Priority } from "enums/priority.enum";
-import { UserDTO } from "./User.dto";
+import { UserDTO } from "interfaces/User.dto";
 export interface IssueDTO {
   title: string;
   description: string;

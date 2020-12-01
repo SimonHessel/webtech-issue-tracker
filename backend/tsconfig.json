@@ -8,10 +8,20 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "module": "commonjs",
-    "outDir": "./dist",
-    "baseUrl": "./src",
+    "outDir": "./dist/src",
+    "baseUrl": "src",
     "types": ["reflect-metadata"],
     "lib": ["ES2020"],
+    "paths": {
+      "controllers/*": ["controllers/*"],
+      "core": ["core"],
+      "utils/*": ["utils/*"],
+      "entities/*": ["entities/*"],
+      "services/*": ["services/*"],
+      "middlewares/*": ["middlewares/*"],
+      "interfaces/*": ["interfaces/*"],
+      "enums/*": ["enums/*"]
+    },
     "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts"],

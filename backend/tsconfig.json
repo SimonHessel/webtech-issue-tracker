@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "module": "commonjs",
-    "outDir": "./dist",
+    "outDir": "./dist/src",
     "baseUrl": "src",
     "types": ["reflect-metadata"],
     "lib": ["ES2020"],

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { HealthController } from "./controllers/Health.controller";
 import { IssuesController } from "./controllers/Issues.controller";
+import { ProjectsController } from "./controllers/Projects.controller";
 import { App } from "./core";
 
 createConnection({
@@ -20,7 +21,7 @@ createConnection({
   .then(() => {
     const app = new App({
       port: 5000,
-      controllers: [HealthController, IssuesController],
+      controllers: [HealthController, IssuesController, ProjectsController],
     });
 
     app.listen();

@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -23,5 +24,6 @@ export class Project {
   public issues!: Issue[];
 
   @ManyToMany(() => User)
+  @JoinTable()
   public users!: User[];
 }

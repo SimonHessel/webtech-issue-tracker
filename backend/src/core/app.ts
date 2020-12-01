@@ -1,5 +1,6 @@
 import * as express from "express";
 import { Application } from "express";
+import { log } from "./utils";
 import { Injector } from "./injector";
 
 export class App {
@@ -28,7 +29,7 @@ export class App {
 
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`App listening on the http://localhost:${this.port}`);
+      log("Application", `App listening on the http://localhost:${this.port}`);
     });
   }
 }

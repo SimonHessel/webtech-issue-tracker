@@ -1,10 +1,10 @@
+import { HealthController } from "controllers/Health.controller";
+import { IssuesController } from "controllers/Issues.controller";
+import { App, log } from "core";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { HealthController } from "./controllers/Health.controller";
-import { IssuesController } from "./controllers/Issues.controller";
-import { ProjectsController } from "./controllers/Projects.controller";
-import { App } from "./core";
 
+console.time("start");
 createConnection({
   name: "default",
   type: "postgres",
@@ -19,6 +19,8 @@ createConnection({
   synchronize: process.env.DATABASE_SYNCHRONIZE!.toLocaleLowerCase() === "true",
 })
   .then(() => {
+    console.timeEnd("start");
+    log("DatabaseService", "Initlized");
     const app = new App({
       port: 5000,
       controllers: [HealthController, IssuesController, ProjectsController],

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { IMiddleware, Middleware, Options, Service } from "../core";
-import { verifyJWT } from "../utils";
+import { IMiddleware, Middleware, Options, Service } from "core";
+import { verifyJWT } from "utils/jwt.util";
 
 @Service()
 export class JWTMiddleware implements IMiddleware {

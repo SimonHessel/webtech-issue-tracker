@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Controller, DELETE, GET, PATCH, POST } from "../core";
-import { User } from "../entities";
-import { UserDTO } from "../interfaces";
+import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { User } from "entities/user.entity";
+import { UserDTO } from "interfaces/User.dto";
 
 @Controller("users")
 export class UsersController {

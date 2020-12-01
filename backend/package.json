@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon .",
-    "ts-node": "ts-node src/server.ts",
-    "start": "ts-node dist/server.js",
+    "ts-node": "ts-node -r ./tsconfig-paths-bootstrap.js  src/server.ts",
+    "start": "node dist/server.js",
     "build": "tsc -p .",
     "lint": "eslint",
     "lint:changes": "npm run lint -- $(git diff --name-only --cached --relative=backend | grep  -E .ts)",
@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.4.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
@@ -32,7 +33,9 @@
     "eslint": "^7.14.0",
     "eslint-plugin-unused-imports": "^1.0.1",
     "nodemon": "^2.0.6",
+    "replace-ts-alias": "^1.0.7",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.2"
   }
 }

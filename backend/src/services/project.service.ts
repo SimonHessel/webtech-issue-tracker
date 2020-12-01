@@ -1,6 +1,6 @@
-import { Project } from "../entities";
+import { Service } from "core";
+import { Project } from "entities/project.entity";
 import { getRepository, Repository } from "typeorm";
-import { Service } from "../core";
 
 @Service()
 export class ProjectService {

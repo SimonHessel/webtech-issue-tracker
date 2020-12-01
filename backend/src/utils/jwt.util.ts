@@ -1,4 +1,4 @@
-import { TokenData } from "../interfaces";
+import { TokenData } from "interfaces/tokenData.interface";
 import * as jwt from "jsonwebtoken";
 
 export const verifyJWT = (token: string): Promise<TokenData> =>

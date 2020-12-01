@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Priority } from "../enums";
-import { Project } from "./project.entity";
-import { User } from "./user.entity";
+import { Priority } from "enums/priority.enum";
+import { Project } from "entities/project.entity";
+import { User } from "entities/user.entity";
 
 @Entity()
 export class Issue {

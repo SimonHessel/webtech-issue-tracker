@@ -4,7 +4,7 @@
 
 ```bash
 $ docker-compose -f docker-compose.dev.yaml up
-$ docker exec -it backend bash -c cd /home/node/app && bash
+$ docker exec -it backend bash -- -c "cd /home/node/app && bash"
 
 # inside the container
 $ npm i

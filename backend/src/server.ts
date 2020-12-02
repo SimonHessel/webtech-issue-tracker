@@ -1,5 +1,7 @@
+import { AuthController } from "controllers/AuthController.controller";
 import { HealthController } from "controllers/Health.controller";
 import { IssuesController } from "controllers/Issues.controller";
+import { ProjectsController } from "controllers/Projects.controller";
 import { App, log } from "core";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
@@ -23,7 +25,12 @@ createConnection({
     log("DatabaseService", "Initlized");
     const app = new App({
       port: 5000,
-      controllers: [HealthController, IssuesController, ProjectsController],
+      controllers: [
+        HealthController,
+        IssuesController,
+        ProjectsController,
+        AuthController,
+      ],
     });
 
     app.listen();

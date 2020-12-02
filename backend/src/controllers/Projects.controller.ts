@@ -1,15 +1,20 @@
-import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { Controller, DELETE, GET, MethodMiddleware, PATCH, POST } from "core";
 import { Project } from "entities/project.entity";
 import { Request, Response } from "express";
 import { ProjectDTO } from "interfaces/Project.dto";
 import { TokenData } from "interfaces/tokenData.interface";
 import { JWT } from "middlewares/jwt.middleware";
+import {
+  ProjectSecurity,
+  ProjectSecurityMiddleware,
+} from "middlewares/projectSecurity.middleware";
 import { JWTService } from "services/jwt.service";
 import { ProjectService } from "services/project.service";
 import { UserService } from "services/user.service";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @JWT()
+@ProjectSecurity({ all: false })
 @Controller("projects")
 export class ProjectsController {
   constructor(
@@ -52,12 +57,18 @@ export class ProjectsController {
     res.send(!user ? [] : user.projects);
   }
 
+  @MethodMiddleware(ProjectSecurityMiddleware)
   @PATCH("/:id")
   public async update(
-    req: Request<{ id: number }, unknown, QueryDeepPartialEntity<Project>>,
-    res: Response<Project>
+    req: Request<
+      { projectID: string },
+      unknown,
+      QueryDeepPartialEntity<Project>
+    >,
+    res: Response<Project | string>
   ) {
-    const { id } = req.params;
+    const id = parseInt(req.params.projectID);
+    if (isNaN(id)) return res.status(400).send("id not a number");
     const updatedProject = req.body;
     if (updatedProject) {
       const project = await this.projectService.updateProject(

@@ -55,8 +55,12 @@ export class ProjectsController {
   @GET("/")
   public async read(req: Request, res: Response) {
     const { username } = res.locals.tokenData as TokenData;
-    const user = await this.userService.findUserByName(username);
-    res.send(!user ? [] : user.projects);
+    try {
+      const user = await this.userService.findUserByName(username);
+      res.send(!user ? [] : user.projects);
+    } catch (error) {
+      res.status(501).send(`${error}`);
+    }
   }
 
   @MethodMiddleware(ProjectSecurityMiddleware)
@@ -72,28 +76,28 @@ export class ProjectsController {
     const id = parseInt(req.params.projectID);
     if (isNaN(id)) return res.status(400).send("id not a number");
     const updatedProject = req.body;
-    if (updatedProject) {
+    if (!updatedProject) return res.status(400).send("Body malformed.");
+    try {
       const project = await this.projectService.updateProject(
         id,
         updatedProject
       );
       res.send(project);
+    } catch (error) {
+      res.status(501).send(`${error}`);
     }
-    res.status(400);
   }
 
   @DELETE("/:id")
-  public async delete(
-    req: Request<
-      { projectID: string },
-      unknown,
-      QueryDeepPartialEntity<Project>
-    >,
-    res: Response
-  ) {
+  public async delete(req: Request<{ projectID: string }>, res: Response) {
     const id = parseInt(req.params.projectID);
     if (isNaN(id)) return res.status(400).send("id not a number");
-    if (this.projectService.deleteProject(id)) res.sendStatus(200);
-    res.sendStatus(400).send("project does not exist");
+    try {
+      if (this.projectService.deleteProject(id)) return res.status(200);
+
+      res.status(404).send();
+    } catch (error) {
+      res.status(500).send(`${error}`);
+    }
   }
 }

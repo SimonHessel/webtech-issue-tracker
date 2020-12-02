@@ -62,7 +62,7 @@ export class UsersController {
 
       res.status(404).send();
     } catch (error) {
-      res.status(501).send(`${error}`);
+      res.status(500).send(`${error}`);
     }
   }
 }

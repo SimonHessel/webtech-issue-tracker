@@ -45,11 +45,6 @@ export class ProjectService {
   }
 
   public async deleteProject(id: number): Promise<boolean> {
-    const project = await this.findByID(id);
-    if (project) {
-      await this.projectRepository.delete(project);
-      return true;
-    }
-    return false;
+    return !!this.projectRepository.delete(id);
   }
 }

@@ -1,13 +1,13 @@
+import { Expose } from "class-transformer";
+import { Issue } from "entities/issue.entity";
+import { User } from "entities/user.entity";
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Issue } from "entities/issue.entity";
-import { User } from "entities/user.entity";
 
 @Entity()
 export class Project {
@@ -23,7 +23,7 @@ export class Project {
   @OneToMany(() => Issue, (issue) => issue.project)
   public issues!: Issue[];
 
-  @ManyToMany(() => User)
-  @JoinTable()
+  @Expose({ groups: ["project"] })
+  @ManyToMany(() => User, (user) => user.projects)
   public users!: User[];
 }

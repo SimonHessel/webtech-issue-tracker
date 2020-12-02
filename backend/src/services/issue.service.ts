@@ -1,6 +1,6 @@
-import { Issue } from "../entities";
+import { Service } from "core";
+import { Issue } from "entities/issue.entity";
 import { getRepository, Repository } from "typeorm";
-import { Service } from "../core";
 
 @Service()
 export class IssueService {

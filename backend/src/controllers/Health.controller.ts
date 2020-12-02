@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Controller, GET } from "../core";
+import { Controller, GET } from "core";
 
 @Controller("health")
 export class HealthController {

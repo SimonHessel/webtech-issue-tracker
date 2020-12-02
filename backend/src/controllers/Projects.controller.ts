@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Controller, DELETE, GET, PATCH, POST } from "../core";
+import { Project } from "../entities";
 import { ProjectDTO } from "../interfaces/Project.dto";
 import { TokenData } from "../interfaces/tokenData.interface";
 import { JWT } from "../middleware/jwt.middleware";
@@ -44,19 +45,24 @@ export class ProjectsController {
 
   @GET("/")
   public async read(req: Request, res: Response) {
-    console.log(res.locals.tokenData);
     const { username } = res.locals.tokenData as TokenData;
     const user = await this.userService.findUserByName(username);
     res.send(!user ? [] : user.projects);
   }
 
   @PATCH("/:id")
-  public update(req: Request, res: Response) {
-    res.send();
+  public async update(req: Request<{ id: number }>, res: Response<Project>) {
+    const { id } = req.params;
+    const oldProject = await this.projectService.findByID(id);
+    if (!!oldProject) {
+      const project = await this.projectService.updateProject(id, oldProject);
+      res.send(project);
+    }
+    res.status(400);
   }
 
   @DELETE("/:id")
   public delete(req: Request, res: Response) {
-    res.send();
+    res.sendStatus(200);
   }
 }

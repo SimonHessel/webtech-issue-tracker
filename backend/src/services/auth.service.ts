@@ -1,6 +1,6 @@
-import { User } from "../entities";
+import { User } from "entities/user.entity";
 import { getRepository, Repository } from "typeorm";
-import { Service } from "../core";
+import { Service } from "core";
 
 @Service()
 export class AuthService {

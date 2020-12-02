@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "services/auth.service";
 import { JWTService } from "services/jwt.service";
-import { Controller, POST, Login } from "../core";
+import { Controller, POST, Login } from "core";
 
 @Controller("auth")
 export class AuthController {

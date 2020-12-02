@@ -81,7 +81,17 @@ export class ProjectsController {
   }
 
   @DELETE("/:id")
-  public delete(req: Request, res: Response) {
-    res.sendStatus(200);
+  public async delete(
+    req: Request<
+      { projectID: string },
+      unknown,
+      QueryDeepPartialEntity<Project>
+    >,
+    res: Response
+  ) {
+    const id = parseInt(req.params.projectID);
+    if (isNaN(id)) return res.status(400).send("id not a number");
+    if (this.projectService.deleteProject(id)) res.sendStatus(200);
+    res.sendStatus(400).send("project does not exist");
   }
 }

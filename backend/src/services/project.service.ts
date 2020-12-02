@@ -40,4 +40,13 @@ export class ProjectService {
     if (project) return project;
     else throw "Internal Server error";
   }
+
+  public async deleteProject(id: number): Promise<boolean> {
+    const project = await this.findByID(id);
+    if (project) {
+      await this.projectRepository.delete(project);
+      return true;
+    }
+    return false;
+  }
 }

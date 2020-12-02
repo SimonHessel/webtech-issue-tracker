@@ -2,6 +2,7 @@ import { AuthController } from "controllers/AuthController.controller";
 import { HealthController } from "controllers/Health.controller";
 import { IssuesController } from "controllers/Issues.controller";
 import { ProjectsController } from "controllers/Projects.controller";
+import { UsersController } from "controllers/Users.controller";
 import { App, log } from "core";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
@@ -30,6 +31,7 @@ createConnection({
         IssuesController,
         ProjectsController,
         AuthController,
+        UsersController,
       ],
     });
 

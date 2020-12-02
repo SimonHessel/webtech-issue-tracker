@@ -8,6 +8,7 @@ import {
   ProjectSecurity,
   ProjectSecurityMiddleware,
 } from "middlewares/projectSecurity.middleware";
+import { Serializer } from "middlewares/serlizer.middleware";
 import { JWTService } from "services/jwt.service";
 import { ProjectService } from "services/project.service";
 import { UserService } from "services/user.service";
@@ -15,6 +16,7 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 
 @JWT()
 @ProjectSecurity({ all: false })
+@Serializer()
 @Controller("projects")
 export class ProjectsController {
   constructor(

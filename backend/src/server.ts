@@ -1,3 +1,4 @@
+import { AuthController } from "controllers/AuthController.controller";
 import { HealthController } from "controllers/Health.controller";
 import { IssuesController } from "controllers/Issues.controller";
 import { App, log } from "core";
@@ -23,7 +24,7 @@ createConnection({
     log("DatabaseService", "Initlized");
     const app = new App({
       port: 5000,
-      controllers: [HealthController, IssuesController],
+      controllers: [HealthController, IssuesController, AuthController],
     });
 
     app.listen();

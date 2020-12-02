@@ -33,9 +33,9 @@ export class ProjectService {
 
   public async updateProject(
     id: number,
-    oldProject: QueryDeepPartialEntity<Project>
+    updatedProject: QueryDeepPartialEntity<Project>
   ): Promise<Project> {
-    await this.projectRepository.update(id, oldProject);
+    await this.projectRepository.update(id, updatedProject);
     const project = await this.findByID(id);
     if (project) return project;
     else throw "Internal Server error";

@@ -7,6 +7,7 @@ import { JWT } from "middlewares/jwt.middleware";
 import { JWTService } from "services/jwt.service";
 import { ProjectService } from "services/project.service";
 import { UserService } from "services/user.service";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @JWT()
 @Controller("projects")
@@ -52,11 +53,17 @@ export class ProjectsController {
   }
 
   @PATCH("/:id")
-  public async update(req: Request<{ id: number }>, res: Response<Project>) {
+  public async update(
+    req: Request<{ id: number }, unknown, QueryDeepPartialEntity<Project>>,
+    res: Response<Project>
+  ) {
     const { id } = req.params;
-    const oldProject = await this.projectService.findByID(id);
-    if (!!oldProject) {
-      const project = await this.projectService.updateProject(id, oldProject);
+    const updatedProject = req.body;
+    if (updatedProject) {
+      const project = await this.projectService.updateProject(
+        id,
+        updatedProject
+      );
       res.send(project);
     }
     res.status(400);

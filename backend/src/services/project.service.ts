@@ -19,16 +19,19 @@ export class ProjectService {
     title: string,
     description: string,
     username: string
-  ) {
+  ): Promise<Project> {
     const user = await this.userService.findUserByName(username);
-    if (user)
-      return this.projectRepository.save({
+    if (user) {
+      const project = await this.projectRepository.save({
         title,
         description,
         issues: [],
         users: [user],
       });
-    else throw "user is undefinded";
+      user.projects.push(project);
+      this.userService.saveUser(user);
+      return project;
+    } else throw "user is undefinded";
   }
 
   public async updateProject(

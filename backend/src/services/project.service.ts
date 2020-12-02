@@ -2,6 +2,7 @@ import { Project, User } from "../entities";
 import { getRepository, Repository } from "typeorm";
 import { Service } from "../core";
 import { UserService } from "./user.service";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Service()
 export class ProjectService {
@@ -28,5 +29,15 @@ export class ProjectService {
         users: [user],
       });
     else throw "user is undefinded";
+  }
+
+  public async updateProject(
+    id: number,
+    oldProject: QueryDeepPartialEntity<Project>
+  ): Promise<Project> {
+    await this.projectRepository.update(id, oldProject);
+    const project = await this.findByID(id);
+    if (project) return project;
+    else throw "Internal Server error";
   }
 }

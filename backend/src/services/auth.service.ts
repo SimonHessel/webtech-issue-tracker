@@ -11,6 +11,7 @@ export class AuthService {
     password: string
   ): Promise<User | undefined> {
     return this.userRepository.findOne({
+      relations: ["projects"],
       where: [
         { username: usernameOrEmail, password },
         { email: usernameOrEmail, password },
@@ -33,8 +34,8 @@ export class AuthService {
     // Password validation using regex
     if (
       password.length < 6 ||
-      /^[a-zA-Z0-9_.-]*$/.test(password) ||
-      /\d/.test(password)
+      !/^[a-zA-Z0-9_.-]*$/.test(password) ||
+      !/\d/.test(password)
     )
       throw "Invalid password";
 

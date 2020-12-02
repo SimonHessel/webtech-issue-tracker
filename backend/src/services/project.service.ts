@@ -1,7 +1,7 @@
 import { Service } from "core";
 import { Project } from "entities/project.entity";
-import { getRepository, Repository } from "typeorm";
 import { UserService } from "services/user.service";
+import { getRepository, Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Service()

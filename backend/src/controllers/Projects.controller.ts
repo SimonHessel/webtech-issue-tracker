@@ -1,11 +1,12 @@
+import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { Project } from "entities/project.entity";
 import { Request, Response } from "express";
-import { Controller, DELETE, GET, PATCH, POST } from "../core";
-import { Project } from "../entities";
-import { ProjectDTO } from "../interfaces/Project.dto";
-import { TokenData } from "../interfaces/tokenData.interface";
-import { JWT } from "../middleware/jwt.middleware";
-import { JWTService, ProjectService } from "../services";
-import { UserService } from "../services/user.service";
+import { ProjectDTO } from "interfaces/Project.dto";
+import { TokenData } from "interfaces/tokenData.interface";
+import { JWT } from "middlewares/jwt.middleware";
+import { JWTService } from "services/jwt.service";
+import { ProjectService } from "services/project.service";
+import { UserService } from "services/user.service";
 
 @JWT()
 @Controller("projects")

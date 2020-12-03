@@ -2,6 +2,7 @@ import * as express from "express";
 import { Application } from "express";
 import { log } from "./utils";
 import { Injector } from "./injector";
+import { SwaggerGenerator } from "core/Swagger";
 
 export class App {
   public app: Application;
@@ -17,6 +18,7 @@ export class App {
       Injector.resolve<any>(controller)
     );
 
+    // this.swagger = new SwaggerGenerator()
     this.routes();
   }
 

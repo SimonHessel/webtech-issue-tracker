@@ -29,7 +29,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.controls.usernameOrEmail.value, this.loginForm.controls.password.value).subscribe(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (res) => this.router.navigateByUrl('/'),
-      (err) => console.log(err)
+      (err) => window.alert(err)
     );
     };
 }

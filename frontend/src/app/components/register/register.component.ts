@@ -10,9 +10,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent {
   registerForm = new FormGroup({
     eMail: new FormControl('', [Validators.required, Validators.email]),
-    userName: new FormControl('', [Validators.required, Validators.pattern('/^[a-zA-Z0-9]+$/'), Validators.minLength(5)]),
+    username: new FormControl('', [Validators.required, Validators.minLength(5)]),
     password: new FormControl('', [Validators.required])
   });
 
+  onSubmit = () => {
+    console.log(this.registerForm.controls.eMail.value);
+    console.log(this.registerForm.controls.username.value);
+    console.log(this.registerForm.controls.password.value);
+  };
 
 }

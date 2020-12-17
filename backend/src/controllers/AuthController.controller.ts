@@ -57,15 +57,4 @@ export class AuthController {
     }
     res.sendStatus(200);
   }
-
-  @POST("/:userID")
-  public forgotPassword(req: Request, res: Response) {
-    // Needs email integration to send email link
-    res.sendStatus(200);
-  }
-
-  @POST("/:passwordToken")
-  public resetPassword(req: Request, res: Response) {
-    res.sendStatus(200);
-  }
 }

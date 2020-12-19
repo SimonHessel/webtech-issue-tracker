@@ -1,13 +1,17 @@
+import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { User } from "entities/user.entity";
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import { Controller, DELETE, GET, PATCH, POST } from "../core";
-import { User } from "../entities";
-import { UserDTO } from "../interfaces";
+import { UserDTO } from "interfaces/User.dto";
+import { JWT } from "middlewares/jwt.middleware";
+import { Serializer } from "middlewares/serlizer.middleware";
+import { UserService } from "services/user.service";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
+@JWT()
+@Serializer()
 @Controller("users")
 export class UsersController {
-  userRepository = getRepository(User);
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   @POST("/")
   public async create(
@@ -20,22 +24,28 @@ export class UsersController {
   @GET("/")
   public async read(
     req: Request<Record<string, never>, unknown, any>,
-    res: Response<User[]>
+    res: Response
   ) {
-    const users = await this.userRepository.find();
+    const users = await this.userService.list();
     res.send(users);
   }
 
-  @PATCH("/:id")
+  @PATCH("/")
   public async update(
-    req: Request<{ id: number }, unknown, UserDTO>,
-    res: Response<User>
+    req: Request<{ id: string }, unknown, QueryDeepPartialEntity<User>>,
+    res: Response<User | string>
   ) {
-    const { id } = req.params;
-    const user = req.body;
+    const { username } = res.locals.tokenData;
+    if (!username) return res.status(400).send("JWT malformed.");
 
-    const updatedUser = await this.userRepository.save({ id, ...user });
-    res.send(updatedUser);
+    const updatedUser = req.body;
+    if (!updatedUser) return res.status(400).send("Body malformed.");
+    try {
+      const user = await this.userService.updateUser(username, updatedUser);
+      return res.send(user);
+    } catch (error) {
+      res.status(501).send(`${error}`);
+    }
   }
 
   @DELETE("/:id")
@@ -43,9 +53,16 @@ export class UsersController {
     req: Request<{ id: number }, unknown, any>,
     res: Response
   ) {
-    const { id } = req.params;
-    const result = await this.userRepository.delete(id);
-    if (result) res.sendStatus(200);
-    else res.sendStatus(404);
+    const { username } = res.locals.tokenData;
+    if (!username) return res.status(400).send("JWT malformed.");
+
+    try {
+      if (await this.userService.deleteUserByUsername(username))
+        return res.status(200).send();
+
+      res.status(404).send();
+    } catch (error) {
+      res.status(500).send(`${error}`);
+    }
   }
 }

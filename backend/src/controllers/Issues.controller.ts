@@ -1,39 +1,23 @@
+import { Controller, DELETE, GET, InjectRepository, PATCH, POST } from "core";
+import { Issue } from "entities/issue.entity";
 import { Request, Response } from "express";
-import {
-  Controller,
-  DELETE,
-  GET,
-  InjectRepository,
-  MethodMiddleware,
-  PATCH,
-  POST,
-} from "../core";
-import { Issue } from "../entities";
-import { IssueDTO } from "../interfaces";
-import {
-  JWT,
-  JWTMiddleware,
-  ProjectSecurity,
-  ProjectSecurityMiddleware,
-} from "../middleware";
-import { IssueService, ProjectService, UserService } from "../services";
+import { IssueDTO } from "interfaces/Issue.dto";
+import { JWT } from "middlewares/jwt.middleware";
+import { ProjectSecurity } from "middlewares/projectSecurity.middleware";
+import { IssueService } from "services/issue.service";
+import { ProjectService } from "services/project.service";
+import { UserService } from "services/user.service";
 
 @JWT()
 @ProjectSecurity({ all: false })
-// @ProjectSecurity
 @Controller("issues")
 export class IssuesController {
   constructor(
-    // private userRepository: Repository<User>,
-    // private projectRepository: Repository<Project>,
-    // private issueRepository: Repository<Issue>
     private issueService: IssueService,
     private userService: UserService,
     @InjectRepository() private projectService: ProjectService
   ) {}
 
-  @MethodMiddleware(JWTMiddleware)
-  @MethodMiddleware(ProjectSecurityMiddleware)
   @POST("/:projectID")
   public async create(
     req: Request<{ projectID: number }, unknown, IssueDTO>,
@@ -61,8 +45,6 @@ export class IssuesController {
     res.sendStatus(200);
   }
 
-  @MethodMiddleware(JWTMiddleware)
-  @MethodMiddleware(ProjectSecurityMiddleware)
   @GET("/:projectID")
   public async read(
     req: Request<{ projectID: number }, unknown, Record<string, never>>,

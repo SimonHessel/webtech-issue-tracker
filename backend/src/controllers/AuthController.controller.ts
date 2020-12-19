@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Login } from "interfaces/login.interface";
 import { AuthService } from "services/auth.service";
 import { JWTService } from "services/jwt.service";
-import { Controller, POST } from "../core";
+import { Controller, POST } from "core";
 
 @Controller("auth")
 export class AuthController {
@@ -56,17 +56,6 @@ export class AuthController {
     } catch (error) {
       return res.status(401).send(error);
     }
-    res.sendStatus(200);
-  }
-
-  @POST("/:userID")
-  public forgotPassword(req: Request, res: Response) {
-    // Needs email integration to send email link
-    res.sendStatus(200);
-  }
-
-  @POST("/:passwordToken")
-  public resetPassword(req: Request, res: Response) {
     res.sendStatus(200);
   }
 }

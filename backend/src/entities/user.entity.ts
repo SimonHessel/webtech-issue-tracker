@@ -5,7 +5,8 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Project } from "./project.entity";
+import { Exclude, Expose } from "class-transformer";
+import { Project } from "entities/project.entity";
 
 @Entity()
 export class User {
@@ -15,13 +16,15 @@ export class User {
   @Column()
   public email!: string;
 
+  @Exclude()
   @Column()
   public password!: string;
 
   @Column()
   public username!: string;
 
-  @ManyToMany(() => Project)
+  @Expose({ groups: ["user"] })
+  @ManyToMany(() => Project, (project) => project.users)
   @JoinTable()
   public projects!: Project[];
 }

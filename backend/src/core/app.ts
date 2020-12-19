@@ -1,6 +1,8 @@
 import * as express from "express";
 import { Application } from "express";
+import { log } from "./utils";
 import { Injector } from "./injector";
+import * as cors from "cors";
 
 export class App {
   public app: Application;
@@ -12,6 +14,8 @@ export class App {
     this.port = appInit.port;
     this.app.use(express.json());
 
+    this.app.use(cors());
+
     this.controllers = appInit.controllers.map((controller) =>
       Injector.resolve<any>(controller)
     );
@@ -22,13 +26,13 @@ export class App {
   private routes() {
     this.controllers.forEach((controller) => {
       controller.initRoutes();
-      this.app.use("/" + controller.path, controller.router);
+      this.app.use("/api/" + controller.path, controller.router);
     });
   }
 
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`App listening on the http://localhost:${this.port}`);
+      log("Application", `App listening on the http://localhost:${this.port}`);
     });
   }
 }

@@ -1,20 +1,25 @@
+import { IMiddleware } from "core/interfaces";
 import * as express from "express";
 import { Application } from "express";
-import { log } from "./utils";
 import { Injector } from "./injector";
-import * as cors from "cors";
+import { log } from "./utils";
 
 export class App {
   public app: Application;
   public port: number;
   private controllers: any[];
 
-  constructor(appInit: { port: number; controllers: any[] }) {
+  constructor(appInit: {
+    port: number;
+    controllers: any[];
+    middlewares: IMiddleware["middleware"][];
+  }) {
     this.app = express();
     this.port = appInit.port;
+
     this.app.use(express.json());
 
-    this.app.use(cors());
+    appInit.middlewares.forEach((middleware) => this.app.use(middleware));
 
     this.controllers = appInit.controllers.map((controller) =>
       Injector.resolve<any>(controller)

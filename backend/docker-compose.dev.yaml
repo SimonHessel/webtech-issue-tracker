@@ -16,6 +16,10 @@ services:
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
       DATABASE_SYNCHRONIZE: "true"
+      ACCESS_TOKEN_EXPIRATION: 5m
+      REFRESH_TOKEN_EXPIRATION: 1w
+      RFRESH_TOKEN_COKKIE_NAME: jit
+      ACCESS_TOKEN_HEADER_NAME: Token
       PGDATA: /data/postgres
     links:
       - postgres

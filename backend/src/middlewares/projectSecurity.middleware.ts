@@ -1,16 +1,22 @@
-import { NextFunction, Request, Response } from "express";
-import { getRepository, Repository } from "typeorm";
-import { Middleware, IMiddleware, Service, Options } from "core";
+import {
+  IMiddleware,
+  InjectRepository,
+  Middleware,
+  Options,
+  Service,
+} from "core";
 import { User } from "entities/user.entity";
+import { NextFunction, Request, Response } from "express";
 import { TokenData } from "interfaces/tokenData.interface";
 import { JWTService } from "services/jwt.service";
+import { Repository } from "typeorm";
 
 @Service()
 export class ProjectSecurityMiddleware implements IMiddleware {
-  private userRepository: Repository<User>;
-  constructor(private jwtService: JWTService) {
-    this.userRepository = getRepository(User);
-  }
+  constructor(
+    private jwtService: JWTService,
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
   async middleware(
     req: Request<{ projectID: string }, unknown, unknown>,
     res: Response,

@@ -1,18 +1,17 @@
-import { Service } from "core";
+import { InjectRepository, Service } from "core";
 import { User } from "entities/user.entity";
 import { Response } from "express";
 import { RefreshTokenData } from "interfaces/refreshTokenData.interface";
 import { TokenDataDTO } from "interfaces/tokenData.dto";
 import { TokenData } from "interfaces/tokenData.interface";
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { signJWT, verifyJWT } from "utils/jwt.util";
 
 @Service()
 export class JWTService {
-  userRepository: Repository<User>;
-  constructor() {
-    this.userRepository = getRepository(User);
-  }
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
 
   public async checkRefreshToken(token: string): Promise<User> {
     try {

@@ -1,14 +1,13 @@
-import { Service } from "core";
+import { InjectRepository, Service } from "core";
 import { User } from "entities/user.entity";
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Service()
 export class UserService {
-  userRepository: Repository<User>;
-  constructor() {
-    this.userRepository = getRepository(User);
-  }
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
 
   public async list(): Promise<User[]> {
     return this.userRepository.find();

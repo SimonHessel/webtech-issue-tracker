@@ -1,11 +1,12 @@
+import { InjectRepository, Service } from "core";
 import { User } from "entities/user.entity";
-import { getRepository, Repository } from "typeorm";
-import { Service } from "core";
+import { Repository } from "typeorm";
 
 @Service()
 export class AuthService {
-  userRepository: Repository<User> = getRepository(User);
-  constructor() {}
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
   public async findUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string

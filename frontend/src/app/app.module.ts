@@ -15,10 +15,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { environment } from 'src/environments/environment';
-import { ApiBaseUrlInterceptors } from './services/ApiBaseUrlInterceptors';
+import { ApiBaseUrlInterceptor } from './interceptors/apiBaseUrl.intercepor';
+import { MenuComponent } from './components/menu/menu.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { KanbanComponent } from './components/kanban/kanban.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    MenuComponent,
+    ProjectsComponent,
+    KanbanComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +52,17 @@ import { ApiBaseUrlInterceptors } from './services/ApiBaseUrlInterceptors';
     { provide: 'HTTPS', useValue: environment.https },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ApiBaseUrlInterceptors,
+      useClass: ApiBaseUrlInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

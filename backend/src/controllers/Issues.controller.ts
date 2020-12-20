@@ -1,4 +1,4 @@
-import { Controller, DELETE, GET, InjectRepository, PATCH, POST } from "core";
+import { Controller, DELETE, GET, PATCH, POST } from "core";
 import { Issue } from "entities/issue.entity";
 import { Request, Response } from "express";
 import { IssueDTO } from "interfaces/Issue.dto";
@@ -15,7 +15,7 @@ export class IssuesController {
   constructor(
     private issueService: IssueService,
     private userService: UserService,
-    @InjectRepository() private projectService: ProjectService
+    private projectService: ProjectService
   ) {}
 
   @POST("/:projectID")

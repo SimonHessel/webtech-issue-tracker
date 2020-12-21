@@ -1,18 +1,25 @@
+import { IMiddleware } from "core/interfaces";
 import * as express from "express";
 import { Application } from "express";
-import { log } from "./utils";
 import { Injector } from "./injector";
-import { SwaggerGenerator } from "core/Swagger";
+import { log } from "./utils";
 
 export class App {
   public app: Application;
   public port: number;
   private controllers: any[];
 
-  constructor(appInit: { port: number; controllers: any[] }) {
+  constructor(appInit: {
+    port: number;
+    controllers: any[];
+    middlewares: IMiddleware["middleware"][];
+  }) {
     this.app = express();
     this.port = appInit.port;
+
     this.app.use(express.json());
+
+    appInit.middlewares.forEach((middleware) => this.app.use(middleware));
 
     this.controllers = appInit.controllers.map((controller) =>
       Injector.resolve<any>(controller)
@@ -25,7 +32,7 @@ export class App {
   private routes() {
     this.controllers.forEach((controller) => {
       controller.initRoutes();
-      this.app.use("/" + controller.path, controller.router);
+      this.app.use("/api/" + controller.path, controller.router);
     });
   }
 

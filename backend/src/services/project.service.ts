@@ -1,15 +1,15 @@
-import { Service } from "core";
+import { InjectRepository, Service } from "core";
 import { Project } from "entities/project.entity";
 import { UserService } from "services/user.service";
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Service()
 export class ProjectService {
-  projectRepository: Repository<Project>;
-  constructor(private userService: UserService) {
-    this.projectRepository = getRepository(Project);
-  }
+  constructor(
+    private userService: UserService,
+    @InjectRepository(Project) private projectRepository: Repository<Project>
+  ) {}
 
   public async findByID(id: number) {
     return this.projectRepository.findOne(id);

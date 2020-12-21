@@ -20,6 +20,10 @@ export class User {
   @Column()
   public password!: string;
 
+  @Exclude()
+  @Column({ default: 1 })
+  public passwordVersion!: number;
+
   @Column()
   public username!: string;
 

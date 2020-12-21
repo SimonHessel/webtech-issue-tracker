@@ -4,6 +4,10 @@ import { IssuesController } from "controllers/Issues.controller";
 import { ProjectsController } from "controllers/Projects.controller";
 import { UsersController } from "controllers/Users.controller";
 import { App, log } from "core";
+
+import * as cookieParser from "cookie-parser";
+import * as cors from "cors";
+
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
@@ -32,6 +36,14 @@ createConnection({
         ProjectsController,
         AuthController,
         UsersController,
+      ],
+      middlewares: [
+        cookieParser(),
+        cors({
+          credentials: true,
+          exposedHeaders: process.env.ACCESS_TOKEN_HEADER_NAME!,
+          origin: "http://localhost:4200",
+        }),
       ],
     });
 

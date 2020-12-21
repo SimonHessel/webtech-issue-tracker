@@ -67,6 +67,7 @@ export class AuthController {
   @GET("/refresh")
   public async refresh(req: Request, res: Response) {
     const refreshToken = req.cookies[process.env.RFRESH_TOKEN_COKKIE_NAME!];
+
     if (!refreshToken) return res.status(401).send("No Refreshtoken.");
     try {
       const {
@@ -84,5 +85,16 @@ export class AuthController {
     } catch (error) {
       return res.status(401).send(error);
     }
+  }
+
+  @GET("/logout")
+  public async logout(req: Request, res: Response) {
+    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME!, "", {
+      httpOnly: true,
+      secure: false,
+      path: "/api/auth/refresh",
+      maxAge: 0,
+    });
+    res.status(200).send();
   }
 }

@@ -5,3 +5,5 @@ export const MIDDLEWARES_METADATA = "middlewares";
 export const MIDDLEWARE_METHODS_METADATA = "middlewares_methods";
 export const ENTITIES_MEDTADATA = "entities";
 export const ENTITY_MEDTADATA = "entity";
+export const SUMMARY_METADATA = "summary";
+export const BODY_METADATA = "body";

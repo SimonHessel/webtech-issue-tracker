@@ -1,5 +1,6 @@
-import { Controller, GET, Login, POST } from "core";
+import { Controller, GET, POST } from "core";
 import { Request, Response } from "express";
+import { Login } from "interfaces/login.interface";
 import { AuthService } from "services/auth.service";
 import { JWTService } from "services/jwt.service";
 
@@ -96,5 +97,14 @@ export class AuthController {
       maxAge: 0,
     });
     res.status(200).send();
+  }
+  @POST("/:userID")
+  public async forgotPassword(req: Request, res: Response) {
+    res.sendStatus(404);
+  }
+
+  @POST("/:passwordToken")
+  public async resetPassword(req: Request, res: Response) {
+    res.sendStatus(404);
   }
 }

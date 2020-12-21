@@ -58,4 +58,14 @@ export class AuthController {
     }
     res.sendStatus(200);
   }
+
+  @POST("/:userID")
+  public async forgotPassword(req: Request, res: Response) {
+    res.sendStatus(404);
+  }
+
+  @POST("/:passwordToken")
+  public async resetPassword(req: Request, res: Response) {
+    res.sendStatus(404);
+  }
 }

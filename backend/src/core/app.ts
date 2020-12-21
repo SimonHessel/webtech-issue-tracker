@@ -25,6 +25,7 @@ export class App {
       Injector.resolve<any>(controller)
     );
 
+    // this.swagger = new SwaggerGenerator()
     this.routes();
   }
 

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, mapTo, mergeMap } from 'rxjs/operators';
+import { catchError, map, mapTo, mergeMap, tap } from 'rxjs/operators';
 import jwtDecode from 'jwt-decode';
 import { Me } from '../models/me.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
   private refreshed = false;
   private token = '';
   private me: Me | undefined = undefined;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public login(usernameOrEmail: string, password: string): Observable<unknown> {
     return this.http
@@ -49,6 +50,13 @@ export class AuthService {
   public logout() {
     this.token = '';
     this.me = undefined;
+
+    return this.http
+      .get(`${this.apiEndpoint}/logout`, {
+        withCredentials: true,
+        responseType: 'text',
+      })
+      .pipe(tap(() => this.router.navigateByUrl('login')));
   }
 
   get getMe(): Me | undefined {
@@ -58,16 +66,11 @@ export class AuthService {
     return this.token;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public refreshToken(): Observable<any> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return this.http
-      .get(`${this.apiEndpoint}/refresh`, {
-        withCredentials: true,
-        responseType: 'text',
-      })
-      .pipe(mapTo(true));
-    // .pipe(tap(({accessToken}: Token) => this.setToken(accessToken)));
+  public refreshToken() {
+    return this.http.get(`${this.apiEndpoint}/refresh`, {
+      withCredentials: true,
+      responseType: 'text',
+    });
   }
 
   public register(

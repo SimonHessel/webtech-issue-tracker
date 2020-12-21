@@ -1,5 +1,11 @@
 import { IController } from "core";
 import { IMiddleware } from "core/interfaces";
+import {
+  MethodType,
+  Method,
+  RequestMethodToMethodType,
+  Parameter,
+} from "../Swagger";
 import * as express from "express";
 import {
   ENDPOINTS_METADATA,
@@ -7,6 +13,7 @@ import {
   MIDDLEWARES_METADATA,
   MIDDLEWARE_METHODS_METADATA,
   PATH_METADATA,
+  SUMMARY_METADATA,
 } from "../constants";
 import { RequestMethod } from "../enums";
 import { MiddlewaresMetadata as MethodsMiddlewaresMetadata } from "./middleware.decorator";
@@ -24,7 +31,9 @@ export function Controller(path: string) {
         super(...args); // foward the constructor args to the extended class
       }
 
-      public generateSwagger() {
+      public generateSwagger(): {
+        [key: string]: { [key in MethodType]: Method };
+      } {
         const endpoints: string[] =
           Reflect.getMetadata(ENDPOINTS_METADATA, this) || [];
         const middlewares: IMiddleware["middleware"][] =
@@ -34,20 +43,61 @@ export function Controller(path: string) {
           this
         );
 
-        return endpoints.forEach((endpoint) => {
-          const method = Reflect.getMetadata(
-            METHOD_METADATA,
-            (this as any)[endpoint]
-          );
-          const path = Reflect.getMetadata(
-            PATH_METADATA,
-            (this as any)[endpoint]
-          );
+        return endpoints.reduce(
+          (
+            acc: { [key: string]: { [key in MethodType]: Method } },
+            endpoint
+          ) => {
+            const method: RequestMethod = Reflect.getMetadata(
+              METHOD_METADATA,
+              (this as any)[endpoint]
+            );
+            const subPath: string = Reflect.getMetadata(
+              PATH_METADATA,
+              (this as any)[endpoint]
+            );
 
-          // path,
-          //   endpoint,
-          //   method
-        });
+            const summary: string = Reflect.getMetadata(
+              SUMMARY_METADATA,
+              (this as any)[endpoint]
+            );
+
+            const completePath = `/${path}${subPath.length > 1 ? subPath : ""}`;
+
+            const obj = acc[completePath] || {};
+            obj[RequestMethodToMethodType(method)] = {
+              consumes: ["application/json"],
+              description: "default description",
+              tags: [path],
+              summary,
+
+              operationId: path + endpoint,
+
+              produces: [],
+              parameters: [
+                ...subPath
+                  .split("/")
+                  .filter((parameter) => parameter.includes(":"))
+                  .map<Parameter>((parameter) => ({
+                    in: "path",
+                    name: parameter.replace(":", ""),
+                    required: true,
+                    description: "description",
+                    type: "string",
+                    responses: {
+                      200: { description: "sucess" },
+                      400: { description: "fail" },
+                    },
+                  })),
+              ],
+            };
+
+            acc[completePath] = obj;
+
+            return acc;
+          },
+          {}
+        );
       }
 
       public initRoutes() {

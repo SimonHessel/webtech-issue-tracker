@@ -42,7 +42,7 @@ export class AuthService {
 
     try {
       const hash = await bcrypt.hash(password, 10);
-      return this.userRepository.save({ email, username, hash });
+      return this.userRepository.save({ email, username, password: hash });
     } catch (error) {
       throw "Couldn't register user - hashing error";
     }

@@ -11,13 +11,14 @@ export class AuthService {
   public async findUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
-  ): Promise<User | undefined> {
+  ): Promise<User> {
     const user = await this.userRepository.findOne({
       relations: ["projects"],
       where: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
     });
     if (!user) throw "No user found";
     if (await bcrypt.compare(password, user.password)) return user;
+    else throw "Wrong password or username.";
   }
 
   public async registerUser(

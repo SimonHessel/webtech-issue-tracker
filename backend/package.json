@@ -7,6 +7,7 @@
     "dev": "nodemon .",
     "ts-node": "ts-node -r ./tsconfig-paths-bootstrap.js  src/server.ts",
     "start": "node -r ./dist/tsconfig-paths-bootstrap.js dist/src/server.js",
+    "start:prod": "node -r ./tsconfig-paths-bootstrap.js src/server.js",
     "build": "tsc -p . && cp tsconfig* ./dist/",
     "lint": "eslint",
     "lint:changes": "npm run lint -- $(git diff --name-only --cached --relative=backend | grep  -E .ts)",

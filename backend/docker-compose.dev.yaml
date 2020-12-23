@@ -20,7 +20,6 @@ services:
       REFRESH_TOKEN_EXPIRATION: 1w
       RFRESH_TOKEN_COKKIE_NAME: jit
       ACCESS_TOKEN_HEADER_NAME: Token
-      PGDATA: /data/postgres
     links:
       - postgres
   postgres:

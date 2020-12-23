@@ -6,6 +6,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuardService } from './guards/auth.guard';
+import { ProjectGuardService } from './guards/project.guard';
 
 const routes: Routes = [
   {
@@ -29,8 +30,18 @@ const routes: Routes = [
         component: ProjectsComponent,
       },
       {
-        path: 'projects/:id/kanban',
-        component: KanbanComponent,
+        path: 'projects/:id',
+        canActivate: [ProjectGuardService],
+        children: [
+          {
+            path: 'kanban',
+            component: KanbanComponent,
+          },
+          {
+            path: '**',
+            redirectTo: 'kanban',
+          },
+        ],
       },
       { path: '**', redirectTo: 'projects' },
     ],

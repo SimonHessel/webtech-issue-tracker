@@ -15,20 +15,16 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.auth.isloggedIn().pipe(
-      catchError((err) => this.auth.logout().pipe(mapTo(false))),
+      catchError((err) =>
+        this.auth.logout().pipe(mapTo(this.router.parseUrl('/login')))
+      ),
       map((isAuthenticated) => {
-        if (!isAuthenticated && state.url !== '/login') {
-          this.router.navigate(['login']);
-          return false;
-        } else if (isAuthenticated && state.url === '/login') {
-          this.router.navigateByUrl('');
-          return false;
-        }
+        if (!isAuthenticated && state.url !== '/login')
+          return this.router.parseUrl('/login');
+        else if (isAuthenticated && state.url === '/login')
+          return this.router.parseUrl('');
         return true;
       })
     );

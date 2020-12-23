@@ -12,21 +12,16 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate {
+export class ProjectGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.auth.isloggedIn().pipe(
-      catchError((err) =>
-        this.auth.logout().pipe(mapTo(this.router.parseUrl('/login')))
-      ),
-      map((isAuthenticated) => {
-        if (!isAuthenticated && state.url !== '/login')
-          return this.router.parseUrl('/login');
-        else if (isAuthenticated && state.url === '/login')
-          return this.router.parseUrl('');
-        return true;
-      })
-    );
+    const id = parseInt(route.params.id, 10);
+    if (isNaN(id)) return this.router.parseUrl('/projects');
+
+    const projects = this.auth.getMe?.projects;
+    if (!projects) return this.router.parseUrl('/projects');
+
+    return projects.some((projectId) => projectId === id);
   }
 }

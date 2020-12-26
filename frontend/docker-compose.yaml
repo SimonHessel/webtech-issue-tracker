@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: resources/Dockerfile
     environment:
-      - BASE_URL=localhost:5000
+      BASE_URL: localhost:5000
+      HTTPS: "false"
     ports:
       - 8080:80

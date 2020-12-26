@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthService } from '@app/services/auth.service';
+import { AuthService } from 'core/services/auth.service';
 
 @Injectable()
 export class ProjectGuardService implements CanActivate {

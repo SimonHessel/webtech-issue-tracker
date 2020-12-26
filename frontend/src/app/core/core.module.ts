@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'env';
 import { AuthGuardService } from './guards/auth.guard';
 import { ApiBaseUrlInterceptor } from './interceptors/apiBaseUrl.intercepor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';

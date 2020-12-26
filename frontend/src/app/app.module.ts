@@ -1,71 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { environment } from 'src/environments/environment';
-import { ApiBaseUrlInterceptor } from './interceptors/apiBaseUrl.intercepor';
-import { MenuComponent } from './components/menu/menu.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { KanbanComponent } from './components/kanban/kanban.component';
-import { TokenInterceptor } from './interceptors/token.interceptor';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CoreModule } from 'core/core.module';
+import { MenuComponent } from './layout/menu/menu.component';
+import { SharedModule } from 'shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    MenuComponent,
-    ProjectsComponent,
-    KanbanComponent,
-  ],
+  declarations: [AppComponent, MenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatToolbarModule,
+    CoreModule,
+    SharedModule,
   ],
-  providers: [
-    {
-      provide: 'API_BASE_DOMAIN',
-      useValue: environment.apiBaseDomain,
-    },
-    { provide: 'HTTPS', useValue: environment.https },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiBaseUrlInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,13 +5,9 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map, mapTo, take, tap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from 'core/services/auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProjectGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
 
@@ -22,6 +18,8 @@ export class ProjectGuardService implements CanActivate {
     const projects = this.auth.getMe?.projects;
     if (!projects) return this.router.parseUrl('/projects');
 
-    return projects.some((projectId) => projectId === id);
+    return projects.some((projectId) => projectId === id)
+      ? true
+      : this.router.parseUrl('/projects');
   }
 }

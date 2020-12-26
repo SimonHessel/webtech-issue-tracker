@@ -6,9 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { Me } from '../models/me.model';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
   private apiEndpoint = 'auth';
   private refreshed = false;

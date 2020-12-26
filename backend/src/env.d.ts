@@ -11,5 +11,6 @@ declare namespace NodeJS {
     REFRESH_TOKEN_EXPIRATION: string;
     RFRESH_TOKEN_COKKIE_NAME: string;
     ACCESS_TOKEN_HEADER_NAME: string;
+    FRONTEND_DOMAINS: string;
   }
 }

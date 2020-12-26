@@ -42,7 +42,7 @@ createConnection({
         cors({
           credentials: true,
           exposedHeaders: process.env.ACCESS_TOKEN_HEADER_NAME!,
-          origin: "http://localhost:4200",
+          origin: process.env.FRONTEND_DOMAINS!.split(","),
         }),
       ],
     });

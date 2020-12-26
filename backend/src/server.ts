@@ -7,7 +7,7 @@ import { App, log } from "core";
 
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-
+import * as morgan from "morgan";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
@@ -43,6 +43,9 @@ createConnection({
           credentials: true,
           exposedHeaders: process.env.ACCESS_TOKEN_HEADER_NAME!,
           origin: process.env.FRONTEND_DOMAINS!.split(","),
+        }),
+        morgan("dev", {
+          skip: (_, res) => res.statusCode < 400,
         }),
       ],
     });

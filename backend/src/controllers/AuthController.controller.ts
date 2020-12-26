@@ -1,5 +1,6 @@
-import { Controller, GET, Login, POST } from "core";
+import { Controller, GET, POST } from "core";
 import { Request, Response } from "express";
+import { Login } from "interfaces/login.interface";
 import { AuthService } from "services/auth.service";
 import { JWTService } from "services/jwt.service";
 
@@ -21,28 +22,21 @@ export class AuthController {
         .status(400)
         .send("Username/Email or Password were not defined");
 
-    const user = await this.authService.findUsernameOrEmailAndPassword(
-      usernameOrEmail,
-      password
-    );
-
-    if (!user)
-      return res
-        .status(400)
-        .send(
-          "No user with that username/email and password combination has been found."
-        );
-
-    if (
-      !this.jwtService.updateToken(res, {
-        username: user.username,
-        email: user.email,
-        projects: user.projects.map((project: any) => project.id),
-      })
-    )
-      return res.status(400).send("Malformed JWT token.");
-
     try {
+      const user = await this.authService.findUsernameOrEmailAndPassword(
+        usernameOrEmail,
+        password
+      );
+
+      if (
+        !this.jwtService.updateToken(res, {
+          username: user.username,
+          email: user.email,
+          projects: user.projects.map((project: any) => project.id),
+        })
+      )
+        return res.status(400).send("Malformed JWT token.");
+
       await this.jwtService.setRefreshToken(res, user.username);
     } catch (error) {
       return res.status(400).send(error);
@@ -96,5 +90,14 @@ export class AuthController {
       maxAge: 0,
     });
     res.status(200).send();
+  }
+  @POST("/:userID")
+  public async forgotPassword(req: Request, res: Response) {
+    res.sendStatus(404);
+  }
+
+  @POST("/:passwordToken")
+  public async resetPassword(req: Request, res: Response) {
+    res.sendStatus(404);
   }
 }

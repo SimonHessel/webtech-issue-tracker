@@ -1,45 +1,50 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { KanbanComponent } from './components/kanban/kanban.component';
-import { LoginComponent } from './components/login/login.component';
-import { MenuComponent } from './components/menu/menu.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { RegisterComponent } from './components/register/register.component';
-import { AuthGuardService } from './guards/auth.guard';
+import { RouterModule, Routes } from '@angular/router';
+
+import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
+
+import { AuthGuardService } from './core/guards/auth.guard';
+import { MenuComponent } from './layout/menu/menu.component';
 
 const routes: Routes = [
   {
-    canActivate: [AuthGuardService],
-    path: 'login',
-    component: LoginComponent,
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'projects',
   },
-  {
-    canActivate: [AuthGuardService],
-    path: 'register',
-    component: RegisterComponent,
-  },
-
   {
     path: '',
-    component: MenuComponent,
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'projects',
-        component: ProjectsComponent,
+        path: 'auth',
+
+        loadChildren: () =>
+          import('modules/auth/auth.module').then((m) => m.AuthModule),
       },
       {
-        path: 'projects/:id/kanban',
-        component: KanbanComponent,
+        path: '',
+        component: MenuComponent,
+        children: [
+          {
+            path: 'projects',
+            loadChildren: () =>
+              import('modules/projects/projects.module').then(
+                (m) => m.ProjectsModule
+              ),
+          },
+        ],
       },
-      { path: '**', redirectTo: 'projects' },
     ],
   },
   { path: '**', redirectTo: '/projects' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    QuicklinkModule,
+    RouterModule.forRoot(routes, { preloadingStrategy: QuicklinkStrategy }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

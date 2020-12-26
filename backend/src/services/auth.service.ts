@@ -1,3 +1,4 @@
+import * as bcrypt from "bcrypt";
 import { InjectRepository, Service } from "core";
 import { User } from "entities/user.entity";
 import { Repository } from "typeorm";
@@ -10,21 +11,21 @@ export class AuthService {
   public async findUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
-  ): Promise<User | undefined> {
-    return this.userRepository.findOne({
+  ): Promise<User> {
+    const user = await this.userRepository.findOne({
       relations: ["projects"],
-      where: [
-        { username: usernameOrEmail, password },
-        { email: usernameOrEmail, password },
-      ],
+      where: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
     });
+    if (!user) throw "No user found";
+    if (await bcrypt.compare(password, user.password)) return user;
+    else throw "Wrong password or username.";
   }
 
   public async registerUser(
     email: string,
     username: string,
     password: string
-  ): Promise<boolean> {
+  ): Promise<User> {
     // Email validation
     const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!emailRegexp.test(email)) throw "Invalid email address.";
@@ -40,6 +41,11 @@ export class AuthService {
     )
       throw "Invalid password";
 
-    return !!this.userRepository.save({ email, username, password });
+    try {
+      const hash = await bcrypt.hash(password, 10);
+      return this.userRepository.save({ email, username, password: hash });
+    } catch (error) {
+      throw "Couldn't register user - hashing error";
+    }
   }
 }

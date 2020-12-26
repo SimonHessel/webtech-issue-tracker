@@ -16,8 +16,10 @@ WORKDIR /app
 RUN npm prune --production
 
 FROM node:12-alpine AS final
+ENV NODE_ENV=production
 WORKDIR /app
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist .
 COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=prod-deps /app/package.json ./package.json
 EXPOSE 5000
-CMD ["node", "dist/server.js"]
+CMD ["npm", "run", "start:prod"]

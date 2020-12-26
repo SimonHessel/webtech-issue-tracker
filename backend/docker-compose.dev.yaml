@@ -20,6 +20,7 @@ services:
       REFRESH_TOKEN_EXPIRATION: 1w
       RFRESH_TOKEN_COKKIE_NAME: jit
       ACCESS_TOKEN_HEADER_NAME: Token
+      FRONTEND_DOMAINS: http://localhost:4200,http://localhost:8080
     links:
       - postgres
   postgres:

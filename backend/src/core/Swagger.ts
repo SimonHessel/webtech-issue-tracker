@@ -54,7 +54,7 @@ export interface Definition {
       type: Type;
       format: Format;
       enum?: string[];
-      default?: any;
+      default?: unknown;
     };
   }[];
 }

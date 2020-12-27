@@ -34,7 +34,7 @@ export class JWTService {
     if (!user) throw "User does not exists.";
 
     const token = signJWT({ username, version: user.passwordVersion });
-    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME!, token, {
+    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME, token, {
       httpOnly: true,
       secure: false,
       path: "/api/auth/refresh",
@@ -44,8 +44,7 @@ export class JWTService {
   public updateToken(
     res: Response,
     newData: TokenDataDTO,
-    oldData?: TokenData,
-    refresh?: boolean
+    oldData?: TokenData
   ): boolean {
     const tokenData: TokenData = { ...oldData, ...newData } as TokenData;
     if (!tokenData.email || !tokenData.projects || !tokenData.username)
@@ -54,7 +53,7 @@ export class JWTService {
     const token = signJWT(tokenData);
 
     res.locals.tokenData = tokenData;
-    res.setHeader(process.env.ACCESS_TOKEN_HEADER_NAME!, token);
+    res.setHeader(process.env.ACCESS_TOKEN_HEADER_NAME, token);
     return true;
   }
 }

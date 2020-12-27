@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from "express";
 export class SerializerMiddleware implements IMiddleware {
   constructor() {}
 
-  private isInstanceOf(item: any) {
+  private isInstanceOf(item: unknown) {
     if (item instanceof User) return ["user"];
     if (item instanceof Project) return ["project"];
     return [];
@@ -21,7 +21,7 @@ export class SerializerMiddleware implements IMiddleware {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const oldjson = res.json;
-    res.json = function (body: any, ...args) {
+    res.json = function (body: unknown, ...args) {
       const groups: string[] =
         body instanceof Array
           ? body.length > 0
@@ -32,7 +32,7 @@ export class SerializerMiddleware implements IMiddleware {
       const sanitized = classToPlain(body, {
         enableCircularCheck: true,
         groups,
-      }) as any;
+      }) as unknown;
       return oldjson.apply(this, [sanitized], ...args);
     };
     next();

@@ -32,7 +32,7 @@ export class AuthController {
         !this.jwtService.updateToken(res, {
           username: user.username,
           email: user.email,
-          projects: user.projects.map((project: any) => project.id),
+          projects: user.projects.map((project) => project.id),
         })
       )
         return res.status(400).send("Malformed JWT token.");
@@ -60,7 +60,7 @@ export class AuthController {
 
   @GET("/refresh")
   public async refresh(req: Request, res: Response) {
-    const refreshToken = req.cookies[process.env.RFRESH_TOKEN_COKKIE_NAME!];
+    const refreshToken = req.cookies[process.env.RFRESH_TOKEN_COKKIE_NAME];
 
     if (!refreshToken) return res.status(401).send("No Refreshtoken.");
     try {
@@ -83,7 +83,7 @@ export class AuthController {
 
   @GET("/logout")
   public async logout(req: Request, res: Response) {
-    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME!, "", {
+    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME, "", {
       httpOnly: true,
       secure: false,
       path: "/api/auth/refresh",

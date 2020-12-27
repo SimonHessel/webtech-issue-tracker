@@ -2,12 +2,16 @@ import { RefreshTokenData } from "interfaces/refreshTokenData.interface";
 import { TokenData } from "interfaces/tokenData.interface";
 import * as jwt from "jsonwebtoken";
 
-export const verifyJWT = <T>(token: string): Promise<T> =>
+export const verifyJWT = <T extends TokenData | RefreshTokenData>(
+  token: string
+): Promise<T> =>
   new Promise((resolve, reject) =>
     jwt.verify(token, process.env.JWT_SECRET || "secret", (err, data) => {
       if (err || !data) return reject(err);
-      // eslint-disable-next-line unused-imports/no-unused-vars-ts
-      const { exp, ...tokenData } = data as any;
+      const { exp: _, ...tokenData } = data as (
+        | TokenData
+        | RefreshTokenData
+      ) & { exp: number };
       resolve(tokenData as T);
     })
   );

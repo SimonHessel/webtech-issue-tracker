@@ -23,7 +23,7 @@ export class UsersController {
 
   @GET("/")
   public async read(
-    req: Request<Record<string, never>, unknown, any>,
+    req: Request<Record<string, never>, unknown, unknown>,
     res: Response
   ) {
     const users = await this.userService.list();
@@ -50,7 +50,7 @@ export class UsersController {
 
   @DELETE("/:id")
   public async delete(
-    req: Request<{ id: number }, unknown, any>,
+    req: Request<{ id: number }, unknown, unknown>,
     res: Response
   ) {
     const { username } = res.locals.tokenData;

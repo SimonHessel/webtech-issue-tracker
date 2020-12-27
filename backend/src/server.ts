@@ -10,20 +10,23 @@ import * as cors from "cors";
 import * as morgan from "morgan";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
+import { config } from "dotenv";
+
+config({ path: "./defaults.env" });
 
 console.time("start");
 createConnection({
   name: "default",
   type: "postgres",
   host: process.env.DATABASE_HOST,
-  port: parseInt(process.env.DATABASE_PORT!, 10),
+  port: parseInt(process.env.DATABASE_PORT, 10),
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASS,
   database: process.env.DATABASE_NAME,
   entities: [__dirname + "/**/*.entity{.ts,.js}"],
   dropSchema: false,
-  logging: process.env.LOGGING!.toLocaleLowerCase() === "true",
-  synchronize: process.env.DATABASE_SYNCHRONIZE!.toLocaleLowerCase() === "true",
+  logging: process.env.LOGGING.toLocaleLowerCase() === "true",
+  synchronize: process.env.DATABASE_SYNCHRONIZE.toLocaleLowerCase() === "true",
 })
   .then(() => {
     console.timeEnd("start");
@@ -41,8 +44,8 @@ createConnection({
         cookieParser(),
         cors({
           credentials: true,
-          exposedHeaders: process.env.ACCESS_TOKEN_HEADER_NAME!,
-          origin: process.env.FRONTEND_DOMAINS!.split(","),
+          exposedHeaders: process.env.ACCESS_TOKEN_HEADER_NAME,
+          origin: process.env.FRONTEND_DOMAINS.split(","),
         }),
         morgan("dev", {
           skip: (_, res) => res.statusCode < 400,

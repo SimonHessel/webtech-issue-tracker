@@ -14,7 +14,7 @@ export class Issue {
   @Column()
   public description!: string;
 
-  @Column((type) => User)
+  @Column(() => User)
   public assignee!: User;
 
   @Column()

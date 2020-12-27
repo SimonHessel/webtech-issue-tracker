@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IMiddleware } from "core";
 import {
   MIDDLEWARES_METADATA,
@@ -18,7 +19,7 @@ export interface Options {
 export const MethodMiddleware = (
   middlewareClass: Type<IMiddleware>
 ): MethodDecorator => {
-  return (target, key, descriptor: PropertyDescriptor) => {
+  return (target, key) => {
     // Key-Value-Map that assigns MiddlewareClassnames to the controller methods that they should be assigned to
     const currentMiddlewareMethods: MiddlewaresMetadata =
       Reflect.getMetadata(MIDDLEWARE_METHODS_METADATA, target) || new Map([]);

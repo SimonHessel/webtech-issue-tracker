@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ENTITIES_MEDTADATA, ENTITY_MEDTADATA } from "./constants";
 import "reflect-metadata";
 import { Type } from "./utils/inject.util";

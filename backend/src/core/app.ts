@@ -1,20 +1,21 @@
-import { IMiddleware } from "core/interfaces";
-import { isMultiMiddleware } from "./utils/middlware.util";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IController, IMiddleware } from "core/interfaces";
 import * as express from "express";
 import { Application } from "express";
-import { Injector } from "./injector";
-import { log } from "./utils";
-import { SwaggerGenerator } from "./Swagger";
 import * as swaggerUi from "swagger-ui-express";
+import { Injector } from "./injector";
+import { SwaggerGenerator } from "./Swagger";
+import { log, Type } from "./utils";
+import { isMultiMiddleware } from "./utils/middlware.util";
 
 export class App {
   public app: Application;
   public port: number;
-  private controllers: any[];
+  private controllers: (any & IController & Type<any>)[];
 
   constructor(appInit: {
     port: number;
-    controllers: any[];
+    controllers: (any & IController & Type<any>)[];
     middlewares: (
       | IMiddleware["middleware"]
       | { path: string; middlewares: IMiddleware["middleware"][] }

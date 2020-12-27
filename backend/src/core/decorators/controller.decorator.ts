@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IController } from "core";
 import { IMiddleware } from "core/interfaces";
 import {
@@ -36,12 +37,6 @@ export function Controller(path: string) {
       } {
         const endpoints: string[] =
           Reflect.getMetadata(ENDPOINTS_METADATA, this) || [];
-        const middlewares: IMiddleware["middleware"][] =
-          Reflect.getMetadata(MIDDLEWARES_METADATA, this) || [];
-        const methodsMiddlewaresMetadata: MethodsMiddlewaresMetadata = Reflect.getMetadata(
-          MIDDLEWARE_METHODS_METADATA,
-          this
-        );
 
         return endpoints.reduce(
           (

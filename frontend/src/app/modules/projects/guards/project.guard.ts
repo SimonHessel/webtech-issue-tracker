@@ -11,7 +11,7 @@ import { AuthService } from 'core/services/auth.service';
 export class ProjectGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
     const id = parseInt(route.params.id, 10);
     if (isNaN(id)) return this.router.parseUrl('/projects');
 

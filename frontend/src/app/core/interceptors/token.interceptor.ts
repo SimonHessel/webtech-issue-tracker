@@ -6,8 +6,8 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
-import { finalize, map, mapTo, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()

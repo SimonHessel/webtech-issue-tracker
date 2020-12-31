@@ -1,14 +1,13 @@
 <mat-sidenav-container class="main-container">
   <mat-sidenav opened mode="side" class="sidenav">
     <div class="item-wrapper">
-      <button class="profile">S</button>
+      <button class="profile">{{ avatar }}</button>
       <button mat-icon-button class="settings">
-        <mat-icon>settings</mat-icon>
+        <mat-icon [inline]="true">settings</mat-icon>
       </button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
-    <app-header></app-header>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

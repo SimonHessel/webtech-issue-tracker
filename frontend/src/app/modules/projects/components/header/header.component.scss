@@ -26,8 +26,7 @@
     left: 0;
     right: 0;
   }
-  .button {
-    display: inline-block;
+  ::ng-deep button {
     align-self: flex-end;
   }
 }

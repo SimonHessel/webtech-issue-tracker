@@ -1,6 +1,6 @@
 import { RefreshTokenData } from "interfaces/refreshTokenData.interface";
 import { TokenData } from "interfaces/tokenData.interface";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const verifyJWT = <T extends TokenData | RefreshTokenData>(
   token: string

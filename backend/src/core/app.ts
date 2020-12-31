@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IController, IMiddleware } from "core/interfaces";
-import * as express from "express";
+import express from "express";
 import { Application } from "express";
-import * as swaggerUi from "swagger-ui-express";
+import swaggerUi from "swagger-ui-express";
 import { Injector } from "./injector";
 import { SwaggerGenerator } from "./Swagger";
 import { log, Type } from "./utils";

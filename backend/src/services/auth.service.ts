@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import { InjectRepository, Injectable } from "core";
 import { User } from "entities/user.entity";
 import { Repository } from "typeorm";

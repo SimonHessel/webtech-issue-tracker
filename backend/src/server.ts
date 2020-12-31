@@ -5,9 +5,9 @@ import { ProjectsController } from "controllers/Projects.controller";
 import { UsersController } from "controllers/Users.controller";
 import { App, log } from "core";
 
-import * as cookieParser from "cookie-parser";
-import * as cors from "cors";
-import * as morgan from "morgan";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import morgan from "morgan";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { config } from "dotenv";

@@ -1,9 +1,9 @@
-import * as bcrypt from "bcrypt";
-import { InjectRepository, Service } from "core";
+import bcrypt from "bcrypt";
+import { InjectRepository, Injectable } from "core";
 import { User } from "entities/user.entity";
 import { Repository } from "typeorm";
 
-@Service()
+@Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>

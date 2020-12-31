@@ -1,10 +1,10 @@
-import { InjectRepository, Service } from "core";
+import { InjectRepository, Injectable } from "core";
 import { Project } from "entities/project.entity";
 import { UserService } from "services/user.service";
 import { Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
-@Service()
+@Injectable()
 export class ProjectService {
   constructor(
     private userService: UserService,

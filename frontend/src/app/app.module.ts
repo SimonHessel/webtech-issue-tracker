@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { CoreModule } from 'core/core.module';
 import { MenuComponent } from './layout/menu/menu.component';
 import { SharedModule } from 'shared/shared.module';
+
+import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { HeaderComponent } from './layout/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent, MenuComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,6 +23,8 @@ import { MatCardModule } from '@angular/material/card';
     SharedModule,
     MatSidenavModule,
     MatCardModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

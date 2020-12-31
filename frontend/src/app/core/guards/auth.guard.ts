@@ -5,8 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map, mapTo, take, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -15,16 +14,18 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.auth.isloggedIn().pipe(
-      catchError((err) =>
-        this.auth.logout().pipe(mapTo(this.router.parseUrl('/auth/login')))
-      ),
       map((isAuthenticated) => {
-        if (!isAuthenticated && state.url !== '/auth/login')
+        if (!isAuthenticated && !state.url.includes('/auth/'))
           return this.router.parseUrl('/auth/login');
-        else if (isAuthenticated && state.url === '/auth/login')
+        else if (isAuthenticated && state.url.includes('/auth/'))
           return this.router.parseUrl('');
         return true;
-      })
+      }),
+      catchError(() =>
+        this.auth
+          .logout()
+          .pipe(map((urlTree) => state.url.includes('/auth/') || urlTree))
+      )
     );
   }
 }

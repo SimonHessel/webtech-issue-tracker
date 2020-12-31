@@ -15,6 +15,9 @@
     "baseUrl": "src",
     "types": ["reflect-metadata"],
     "lib": ["ES2020"],
+    "esModuleInterop": true,
+    "removeComments": true,
+    "alwaysStrict": true,
     "paths": {
       "controllers/*": ["controllers/*"],
       "core": ["core"],

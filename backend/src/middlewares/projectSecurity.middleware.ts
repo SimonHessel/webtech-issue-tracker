@@ -3,7 +3,7 @@ import {
   InjectRepository,
   Middleware,
   Options,
-  Service,
+  Injectable,
 } from "core";
 import { User } from "entities/user.entity";
 import { NextFunction, Request, Response } from "express";
@@ -11,7 +11,7 @@ import { TokenData } from "interfaces/tokenData.interface";
 import { JWTService } from "services/jwt.service";
 import { Repository } from "typeorm";
 
-@Service()
+@Injectable()
 export class ProjectSecurityMiddleware implements IMiddleware {
   constructor(
     private jwtService: JWTService,

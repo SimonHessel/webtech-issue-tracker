@@ -7,7 +7,7 @@ import {
   RequestMethodToMethodType,
   Parameter,
 } from "../Swagger";
-import * as express from "express";
+import express from "express";
 import {
   ENDPOINTS_METADATA,
   METHOD_METADATA,

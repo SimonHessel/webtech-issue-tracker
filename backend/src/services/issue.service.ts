@@ -1,8 +1,8 @@
-import { InjectRepository, Service } from "core";
+import { InjectRepository, Injectable } from "core";
 import { Issue } from "entities/issue.entity";
 import { Repository } from "typeorm";
 
-@Service()
+@Injectable()
 export class IssueService {
   constructor(
     @InjectRepository(Issue) private issueRepository: Repository<Issue>

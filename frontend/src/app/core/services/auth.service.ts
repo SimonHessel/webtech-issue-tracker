@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, mapTo, mergeMap, tap } from 'rxjs/operators';
+import { Router, UrlTree } from '@angular/router';
 import jwtDecode from 'jwt-decode';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, mapTo } from 'rxjs/operators';
 import { Me } from '../models/me.model';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +45,7 @@ export class AuthService {
     }
   }
 
-  public logout() {
+  public logout(): Observable<UrlTree> {
     this.token = '';
     this.me = undefined;
 
@@ -54,7 +54,7 @@ export class AuthService {
         withCredentials: true,
         responseType: 'text',
       })
-      .pipe(tap(() => this.router.navigateByUrl('login')));
+      .pipe(map(() => this.router.parseUrl('/auth/login')));
   }
 
   get getMe(): Me | undefined {

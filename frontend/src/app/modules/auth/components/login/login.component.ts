@@ -25,7 +25,7 @@ export class LoginComponent {
       )
       .subscribe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (res) => this.router.navigateByUrl('/'),
+        () => this.router.navigateByUrl('/'),
         (err) => window.alert(err)
       );
   }

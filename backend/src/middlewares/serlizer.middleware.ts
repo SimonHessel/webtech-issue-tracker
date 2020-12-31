@@ -1,10 +1,10 @@
 import { classToPlain } from "class-transformer";
-import { IMiddleware, Middleware, Options, Service } from "core";
+import { IMiddleware, Middleware, Options, Injectable } from "core";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { NextFunction, Request, Response } from "express";
 
-@Service()
+@Injectable()
 export class SerializerMiddleware implements IMiddleware {
   constructor() {}
 

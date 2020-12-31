@@ -1,4 +1,4 @@
-import { InjectRepository, Service } from "core";
+import { InjectRepository, Injectable } from "core";
 import { User } from "entities/user.entity";
 import { Response } from "express";
 import { RefreshTokenData } from "interfaces/refreshTokenData.interface";
@@ -7,7 +7,7 @@ import { TokenData } from "interfaces/tokenData.interface";
 import { Repository } from "typeorm";
 import { signJWT, verifyJWT } from "utils/jwt.util";
 
-@Service()
+@Injectable()
 export class JWTService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>

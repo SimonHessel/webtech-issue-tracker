@@ -1,6 +1,6 @@
-import { Service } from "../core";
+import { Injectable } from "../core";
 
-@Service()
+@Injectable()
 export class HashService {
   constructor() {}
 

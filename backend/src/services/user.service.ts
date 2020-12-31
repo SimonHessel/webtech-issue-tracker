@@ -1,9 +1,9 @@
-import { InjectRepository, Service } from "core";
+import { InjectRepository, Injectable } from "core";
 import { User } from "entities/user.entity";
 import { Repository } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
-@Service()
+@Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>

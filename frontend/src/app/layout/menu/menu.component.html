@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+<div>
+    <mat-sidenav-container class="main-container">
+        <mat-sidenav opened mode="side" class="sidenav">
+            <button class="profile">Profile</button>
+            <button class="settings">Settings</button>
+        </mat-sidenav>
+        <mat-sidenav-content class="sidenav-content">
+            <div class="project-name">
+                <h1>Project name <hr></h1>
+                <button class="button">Info</button>
+                <button class="button">Members</button>
+                <button class="button">Share</button>
+            </div>
+            <input type="text" placeholder="Search" class="search-bar">
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

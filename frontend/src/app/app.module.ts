@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from 'core/core.module';
 import { MenuComponent } from './layout/menu/menu.component';
 import { SharedModule } from 'shared/shared.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -15,6 +17,8 @@ import { SharedModule } from 'shared/shared.module';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
+    MatSidenavModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

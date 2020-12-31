@@ -1,0 +1,81 @@
+.main-container {
+    background: #F4F5F7 0% 0% no-repeat padding-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .sidenav{
+    width: 65px;
+    height: max;
+    background: #587AAC 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+  }
+
+  .sidenav-content{
+    background: #F4F5F7 0% 0% no-repeat padding-box;
+    //background-color: lightblue;
+    top: 33px;
+    left: 54px;
+  }
+
+  .project-name{
+      //background-color: lightgreen;
+      background: #F4F5F7 0% 0% no-repeat padding-box;
+      height: 41.5px;
+  }
+
+  h1{
+    text-align: left;
+    font: normal normal normal 36px/43px Segoe UI;
+    letter-spacing: 0px;
+    color: #4E4E4E;
+    //background-color: lightsalmon;
+    background: #F4F5F7 0% 0% no-repeat padding-box;
+    float: left;
+  }
+
+  .button{
+    display: inline-block;
+    margin-left: 15px;
+    margin-top: 13px;
+  }
+
+  hr{
+    margin-top: 5.5px;
+    border: 1px solid #BCBCBC;
+  }
+
+  .profile{
+    margin-top: 28px;
+    margin-left: 9px;
+    width: 47px;
+    height: 47px;
+    background: #2B5A9C 0% 0% no-repeat padding-box;
+    border-radius: 12px;
+    border: none;
+    color: white;;
+  }
+
+  .settings{
+    width: 28px;
+    height: 29px;
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    background: #BED8FF 0% 0% no-repeat padding-box;
+  }
+
+  .search-bar{
+    position: relative;
+    top: -20px;
+    float: left;
+    clear: left;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #DEDEDE;
+    border-radius: 7px;
+    width: 401px;
+    height: 32px;
+  }

@@ -1,0 +1,40 @@
+.project-name {
+  //background-color: lightgreen;
+  background: #f4f5f7;
+  height: 2.6rem;
+  display: flex;
+
+  h1 {
+    position: relative;
+    text-decoration: none;
+    text-align: left;
+    font: normal normal normal 36px/43px Segoe UI;
+    letter-spacing: 0px;
+    color: #4e4e4e;
+    //background-color: lightsalmon;
+    background: #f4f5f7;
+    float: left;
+  }
+  h1:after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    bottom: -1.5rem;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+  ::ng-deep button {
+    align-self: flex-end;
+  }
+}
+.search-bar {
+  margin-top: 1rem;
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 7px;
+  width: 25rem;
+  height: 2rem;
+}

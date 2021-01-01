@@ -64,7 +64,24 @@ export class ProjectsController {
   }
 
   @MethodMiddleware(ProjectSecurityMiddleware)
-  @PATCH("/:id")
+  @GET("/:projectID")
+  public async project(
+    req: Request<{ projectID: string }, unknown, unknown>,
+    res: Response
+  ) {
+    const id = parseInt(req.params.projectID);
+    if (isNaN(id)) return res.status(400).send("id not a number");
+
+    try {
+      const project = await this.projectService.findByID(id);
+      res.send(project);
+    } catch (error) {
+      res.status(501).send(`${error}`);
+    }
+  }
+
+  @MethodMiddleware(ProjectSecurityMiddleware)
+  @PATCH("/:projectID")
   public async update(
     req: Request<
       { projectID: string },
@@ -88,7 +105,7 @@ export class ProjectsController {
     }
   }
 
-  @DELETE("/:id")
+  @DELETE("/:projectID")
   public async delete(req: Request<{ projectID: string }>, res: Response) {
     const id = parseInt(req.params.projectID);
     if (isNaN(id)) return res.status(400).send("id not a number");

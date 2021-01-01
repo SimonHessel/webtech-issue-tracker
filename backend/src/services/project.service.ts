@@ -12,7 +12,7 @@ export class ProjectService {
   ) {}
 
   public async findByID(id: number) {
-    return this.projectRepository.findOne(id);
+    return this.projectRepository.findOne(id, { relations: ["issues"] });
   }
 
   public async createProject(

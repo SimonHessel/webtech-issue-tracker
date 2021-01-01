@@ -66,3 +66,15 @@ mat-card{
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
+::ng-deep .custom-style{
+  background-color: #587BAD;
+  color: white;
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+  span {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+  }
+}

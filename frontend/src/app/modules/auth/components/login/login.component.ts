@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
     remember: new FormControl(),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     this.authService
@@ -26,7 +27,11 @@ export class LoginComponent {
       .subscribe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         () => this.router.navigateByUrl('/'),
-        (err) => window.alert(err)
+        (err) => this.snackBar.open(err, "", {
+        duration: 7000, 
+        verticalPosition: 'top', 
+        panelClass: ["snackBar-custom-style"]
+        })
       );
   }
 }

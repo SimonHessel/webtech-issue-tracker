@@ -1,49 +1,66 @@
 <div class="register">
   <mat-toolbar>
-    <span> Register </span>
+    <span>Register</span>
   </mat-toolbar>
   <mat-card>
     <mat-card-content>
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-        <label i18n="@@email" for="eMail">E-Mail</label><br />
+        <label for="eMail">E-Mail</label><br/>
         <mat-form-field appearance="outline">
-          <input
+          <input 
             matInput
             type="email"
             id="eMail"
             name="eMail"
             formControlName="eMail"
           />
-          <mat-error i18n="@@registeremailerror" *ngIf="!registerForm.valid">
-            Please enter a correct E-Mail Address
-          </mat-error> </mat-form-field
-        ><br />
+          <mat-error *ngIf="
+          !registerForm.controls.eMail?.valid &&
+          (registerForm.controls.eMail?.dirty ||
+          registerForm.controls.eMail?.touched)
+          ">
+          Please enter a correct E-Mail address
+          </mat-error><br/>
+        </mat-form-field><br/>
 
-        <label i18n="@@username" for="username">Username</label><br />
+        <label for="username">Username</label><br/>
         <mat-form-field appearance="outline">
-          <input
+          <input 
             matInput
             type="text"
             name="username"
             id="username"
             formControlName="username"
-          /> </mat-form-field
-        ><br />
+          />
+          <mat-error *ngIf="
+          !registerForm.controls.username?.valid &&
+          (registerForm.controls.username?.dirty ||
+          registerForm.controls.username?.touched)
+          ">
+          Please enter a correct username 
+          </mat-error><br/>
+        </mat-form-field><br/>
 
-        <label i18n="@@password" for="password">Password</label><br />
+        <label for="password">Password</label><br/>
         <mat-form-field appearance="outline">
-          <input
+          <input 
             matInput
             type="password"
             name="password"
             id="password"
             formControlName="password"
           />
-        </mat-form-field>
+          <mat-error *ngIf="
+          !registerForm.controls.password?.valid &&
+          (registerForm.controls.password?.dirty ||
+          registerForm.controls.password?.touched)
+          ">
+          Please enter a password with at least 6 characters
+          </mat-error><br/>
+        </mat-form-field><br/>
 
         <p>
-          <button
-            i18n="@@registerbutton"
+          <button 
             mat-button
             type="submit"
             [disabled]="!registerForm.valid"
@@ -55,3 +72,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+

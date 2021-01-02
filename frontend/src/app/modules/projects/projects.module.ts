@@ -9,6 +9,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ProjectsService } from './services/projects.service';
 import { IssueComponent } from './components/issue/issue.component';
@@ -30,6 +32,8 @@ import { SharedModule } from 'shared/shared.module';
     MatIconModule,
     MatCardModule,
     SharedModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
 })
 export class ProjectsModule {}

@@ -27,10 +27,10 @@ export class LoginComponent {
       .subscribe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         () => this.router.navigateByUrl('/'),
-        (err) => this.snackBar.open(err, "", {
-        duration: 7000, 
-        verticalPosition: 'top', 
-        panelClass: ["snackBar-custom-style"]
+        (err) => this.snackBar.open(err, '', {
+        duration: 7000,
+        verticalPosition: 'top',
+        panelClass: ['snackBar-custom-style']
         })
       );
   }

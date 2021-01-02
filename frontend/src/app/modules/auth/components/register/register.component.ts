@@ -24,7 +24,7 @@ export class RegisterComponent {
       this.registerForm.controls.eMail.value,
       this.registerForm.controls.username.value,
       this.registerForm.controls.password.value
-    ).subscribe()
+    ).subscribe();
     /*
     console.log(this.registerForm.controls.eMail.value);
     console.log(this.registerForm.controls.username.value);

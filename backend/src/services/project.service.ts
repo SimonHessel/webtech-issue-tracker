@@ -1,18 +1,41 @@
-import { InjectRepository, Injectable } from "core";
+import { Injectable, InjectRepository } from "core";
 import { Project } from "entities/project.entity";
-import { UserService } from "services/user.service";
-import { Repository } from "typeorm";
+import { IssueRepository } from "repositories/issue.repository";
+import { ProjectRepository } from "repositories/project.repository";
+import { UserRepository } from "repositories/user.repository";
+import { Like } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Injectable()
 export class ProjectService {
   constructor(
-    private userService: UserService,
-    @InjectRepository(Project) private projectRepository: Repository<Project>
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
+    @InjectRepository(ProjectRepository)
+    private readonly projectRepository: ProjectRepository,
+    @InjectRepository(IssueRepository)
+    private readonly issueRepository: IssueRepository
   ) {}
 
   public async findByID(id: number) {
-    return this.projectRepository.findOne(id, { relations: ["issues"] });
+    return this.projectRepository.findOne(id, { relations: ["users"] });
+  }
+
+  public async findByIDs(
+    ids: number[],
+    skip: number,
+    take: number,
+    search?: string
+  ): Promise<Project[]> {
+    return this.projectRepository.findByIds(ids, {
+      where: search
+        ? {
+            title: Like(`%${search}%`),
+          }
+        : undefined,
+      skip,
+      take,
+    });
   }
 
   public async createProject(
@@ -20,8 +43,8 @@ export class ProjectService {
     description: string,
     username: string
   ): Promise<Project> {
-    const user = await this.userService.findUserByName(username);
-    if (user) {
+    try {
+      const user = await this.userRepository.findByUsername(username);
       const project = await this.projectRepository.save({
         title,
         description,
@@ -29,9 +52,11 @@ export class ProjectService {
         users: [user],
       });
       user.projects.push(project);
-      this.userService.saveUser(user);
+      this.userRepository.save(user);
       return project;
-    } else throw "user is undefinded";
+    } catch (error) {
+      throw "User is not defined.";
+    }
   }
 
   public async updateProject(

@@ -53,11 +53,31 @@ export class ProjectsController {
   }
 
   @GET("/")
-  public async read(req: Request, res: Response) {
-    const { username } = res.locals.tokenData as TokenData;
+  public async read(
+    req: Request<
+      unknown,
+      unknown,
+      unknown,
+      { skip?: string; take?: string; search?: string }
+    >,
+    res: Response
+  ) {
+    const { projects: ids } = res.locals.tokenData as TokenData;
+    const skip = parseInt(req.query.skip || "0", 10);
+    const take = parseInt(req.query.take || "10", 10);
+    const { search } = req.query;
+
+    if (isNaN(skip) || isNaN(take))
+      return res.status(400).send("id not a number");
+
     try {
-      const user = await this.userService.findUserByName(username);
-      res.send(!user ? [] : user.projects);
+      const projects = await this.projectService.findByIDs(
+        ids,
+        skip,
+        take,
+        search
+      );
+      res.send(projects);
     } catch (error) {
       res.status(501).send(`${error}`);
     }

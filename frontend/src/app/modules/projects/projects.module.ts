@@ -8,15 +8,26 @@ import { KanbanComponent } from './components/kanban/kanban.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+
 import { ProjectsService } from './services/projects.service';
+import { IssueComponent } from './components/issue/issue.component';
+import { ListComponent } from './components/list/list.component';
 @NgModule({
-  declarations: [ProjectsComponent, KanbanComponent, HeaderComponent],
+  declarations: [
+    ProjectsComponent,
+    KanbanComponent,
+    HeaderComponent,
+    IssueComponent,
+    ListComponent,
+  ],
   providers: [ProjectGuardService, ProjectsService],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
   ],
 })
 export class ProjectsModule {}

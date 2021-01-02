@@ -25,7 +25,7 @@ export class KanbanComponent
     const idString = this.route.snapshot.paramMap.get('id');
     if (!idString) throw new Error('Project guard malfunction');
     const id = parseInt(idString, 10);
-    this.projectService.setCurrentProject(id);
+    this.projectService.setCurrentProject(id).toPromise();
     this.subs.sink = this.projectService.current.subscribe(
       (project) => (this.project = project)
     );

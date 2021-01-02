@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from 'core/models/project.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { map, shareReplay, take, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProjectsService {
@@ -11,7 +11,11 @@ export class ProjectsService {
   >(undefined);
   private apiEndpoint = 'projects';
 
-  private projects$: Observable<Project[]> | undefined = undefined;
+  private projectsFetched = false;
+
+  private projects$: BehaviorSubject<Project[]> = new BehaviorSubject<
+    Project[]
+  >([]);
 
   constructor(private http: HttpClient) {}
 
@@ -20,16 +24,33 @@ export class ProjectsService {
   }
 
   get projects() {
-    if (!this.projects$) {
-      this.projects$ = this.getProjects().pipe(shareReplay(1));
+    if (!this.projectsFetched) {
+      this.projectsFetched = true;
+      this.getProjects()
+        .pipe(tap((projects) => this.projects$.next(projects)))
+        .subscribe((data) => console.log(data));
     }
 
     return this.projects$;
   }
 
   public setCurrentProject(id: number) {
-    const observer = this.http.get<Project>(`${this.apiEndpoint}/${id}`);
-    observer.subscribe(this.current$);
+    return this.http
+      .get<Project>(`${this.apiEndpoint}/${id}`)
+      .pipe(tap((project) => this.current$.next(project)));
+  }
+
+  public addProject() {
+    return this.http
+      .post<Project>(this.apiEndpoint, {
+        description: 'testdescription',
+        title: 'testtitle',
+      })
+      .pipe(
+        tap((project) => {
+          this.projects$.next([...this.projects$.getValue(), project]);
+        })
+      );
   }
 
   private getProjects() {

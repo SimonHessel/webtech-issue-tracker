@@ -2,23 +2,26 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
+import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent extends UnsubscribeOnDestroyAdapter {
   loginForm = new FormGroup({
     usernameOrEmail: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     remember: new FormControl(),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    super();
+  }
 
   onSubmit() {
-    this.authService
+    this.subs.sink = this.authService
       .login(
         this.loginForm.controls.usernameOrEmail.value,
         this.loginForm.controls.password.value

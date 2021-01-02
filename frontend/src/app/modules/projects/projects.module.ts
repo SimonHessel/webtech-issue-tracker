@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ProjectsService } from './services/projects.service';
 import { IssueComponent } from './components/issue/issue.component';
 import { ListComponent } from './components/list/list.component';
+import { SharedModule } from 'shared/shared.module';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -28,6 +29,7 @@ import { ListComponent } from './components/list/list.component';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    SharedModule,
   ],
 })
 export class ProjectsModule {}

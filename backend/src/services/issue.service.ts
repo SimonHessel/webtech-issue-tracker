@@ -1,20 +1,31 @@
-import { InjectRepository, Injectable } from "core";
+import { Injectable, InjectRepository } from "core";
 import { Issue } from "entities/issue.entity";
 import { IssueDTO } from "interfaces/Issue.dto";
-import { ProjectService } from "services/project.service";
-import { UserService } from "services/user.service";
-import { Repository } from "typeorm";
+import { IssueRepository } from "repositories/issue.repository";
+import { ProjectRepository } from "repositories/project.repository";
+import { UserRepository } from "repositories/user.repository";
 
 @Injectable()
 export class IssueService {
   constructor(
-    @InjectRepository(Issue) private issueRepository: Repository<Issue>,
-    private readonly userService: UserService,
-    private readonly projectService: ProjectService
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
+    @InjectRepository(ProjectRepository)
+    private readonly projectRepository: ProjectRepository,
+    @InjectRepository(IssueRepository)
+    private readonly issueRepository: IssueRepository
   ) {}
 
-  async getProjectIssues(id: number): Promise<Issue[]> {
-    return this.issueRepository.find({ where: { project: { id } } });
+  async getProjectIssues(
+    id: number,
+    skip: number,
+    take: number
+  ): Promise<Issue[]> {
+    return this.issueRepository.find({
+      where: { project: { id } },
+      skip,
+      take,
+    });
   }
 
   async createProjectIssue(
@@ -22,16 +33,19 @@ export class IssueService {
 
     { assignee, ...issue }: IssueDTO
   ): Promise<Issue> {
-    const [user, project] = await Promise.all([
-      this.userService.findUserByName(assignee),
-      this.projectService.findByID(projectID),
-    ]);
+    try {
+      const [user, project] = await Promise.all([
+        this.userRepository.findByUsername(assignee),
+        this.projectRepository.findOneOrFail(projectID),
+      ]);
 
-    if (!user || !project) throw "User or Project is not defined.";
-    return this.issueRepository.save({
-      ...issue,
-      assignee: user,
-      project,
-    });
+      return this.issueRepository.save({
+        ...issue,
+        assignee: user,
+        project,
+      });
+    } catch (error) {
+      throw "User or Project is not defined.";
+    }
   }
 }

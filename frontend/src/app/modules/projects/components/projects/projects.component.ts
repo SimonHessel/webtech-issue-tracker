@@ -8,13 +8,15 @@ import { ProjectsService } from 'modules/projects/services/projects.service';
   styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit {
-  projects: Project[] = [];
+  displayedColumns: string[] = ['name', 'members', 'other'];
+  dataSource: Project[] = [];
   constructor(private readonly projectsService: ProjectsService) {}
 
   ngOnInit(): void {
-    this.projectsService.projects.subscribe(
-      (projects) => (this.projects = projects)
-    );
+    this.projectsService.projects.subscribe((projects) => {
+      this.dataSource = projects;
+      console.log(projects);
+    });
   }
 
   public addProject() {

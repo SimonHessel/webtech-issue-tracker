@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'core/services/auth.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,17 +18,19 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private snackBar: MatSnackBar, private authService: AuthService ){}
+  constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router ){}
   onSubmit = () => {
     this.authService.register(
       this.registerForm.controls.eMail.value,
       this.registerForm.controls.username.value,
       this.registerForm.controls.password.value
-    ).subscribe();
-    /*
-    console.log(this.registerForm.controls.eMail.value);
-    console.log(this.registerForm.controls.username.value);
-    console.log(this.registerForm.controls.password.value);
-    */
+    ).subscribe(
+      (res) => this.router.navigateByUrl('/'),
+      (err) => this.snackBar.open(err, '', {
+        duration: 7000,
+        verticalPosition: 'top',
+        panelClass: ['snackBar-custom-style']
+      })
+    );
   };
 }

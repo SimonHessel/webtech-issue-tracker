@@ -130,7 +130,7 @@ export class ProjectsController {
     const id = parseInt(req.params.projectID);
     if (isNaN(id)) return res.status(400).send("id not a number");
     try {
-      if (this.projectService.deleteProject(id)) return res.status(200);
+      if (this.projectService.deleteProject(id)) return res.status(200).send();
 
       res.status(404).send();
     } catch (error) {

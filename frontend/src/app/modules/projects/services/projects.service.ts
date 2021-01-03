@@ -88,10 +88,18 @@ export class ProjectsService {
       );
   }
 
-  public deleteProject(projectId: string) {
+  public deleteProject(projectId: number) {
     return this.http
-      .delete<Project[]>(`projects/${projectId}`)
-      .subscribe(() => console.log('delete test'));
+      .delete(`projects/${projectId}`)
+      .pipe(
+        tap(() =>
+          this.projects$.next(
+            this.projects$
+              .getValue()
+              .filter((project) => project.id !== projectId)
+          )
+        )
+      );
   }
 
   private getProjects(options: FetchOptions) {

@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": " cp -R .githooks/* ../.git/hooks/",
-    "extract:i18n": "ng xi18n --ivy"
+    "extract:i18n": "ng xi18n --ivy",
+    "webpack:analyzer": "webpack-bundle-analyzer ./dist/webtech-project/stats.json",
+    "analyze": "ng build --prod --stats-json && npm run webpack:analyzer"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +28,7 @@
     "jwt-decode": "^3.1.2",
     "ngx-quicklink": "^0.2.6",
     "rxjs": "~6.6.0",
+    "subsink": "^1.0.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
@@ -60,6 +63,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.0.2",
+    "webpack-bundle-analyzer": "^4.3.0"
   }
 }

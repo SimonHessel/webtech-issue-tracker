@@ -5,11 +5,11 @@ import { ProjectsService } from 'modules/projects/services/projects.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
-  selector: 'app-kanban',
-  templateUrl: './kanban.component.html',
-  styleUrls: ['./kanban.component.scss'],
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
-export class KanbanComponent
+export class ListComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
   project: Project | undefined = undefined;

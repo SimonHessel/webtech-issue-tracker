@@ -5,18 +5,12 @@ import { IssueDTO } from "interfaces/Issue.dto";
 import { JWT } from "middlewares/jwt.middleware";
 import { ProjectSecurity } from "middlewares/projectSecurity.middleware";
 import { IssueService } from "services/issue.service";
-import { ProjectService } from "services/project.service";
-import { UserService } from "services/user.service";
 
 @JWT()
-@ProjectSecurity({ all: false })
+@ProjectSecurity()
 @Controller("issues")
 export class IssuesController {
-  constructor(
-    private issueService: IssueService,
-    private userService: UserService,
-    private projectService: ProjectService
-  ) {}
+  constructor(private issueService: IssueService) {}
 
   @POST("/:projectID")
   public async create(
@@ -25,24 +19,17 @@ export class IssuesController {
   ) {
     const { projectID } = req.params;
 
-    const { assignee, ...issue } = req.body;
+    const issue = req.body;
 
-    const [user, project] = await Promise.all([
-      this.userService.findUserByName(assignee),
-      this.projectService.findByID(projectID),
-    ]);
-
-    if (!user || !project) return res.sendStatus(404);
-
-    console.log(user, project);
-
-    // const createdIssue = await this.issueRepository.save({
-    //   ...issue,
-    //   assignee: user,
-    //   project,
-    // });
-    // res.send(createdIssue);
-    res.sendStatus(200);
+    try {
+      const createdIssue = await this.issueService.createProjectIssue(
+        projectID,
+        issue
+      );
+      return res.send(createdIssue);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   @GET("/:projectID")
@@ -50,7 +37,6 @@ export class IssuesController {
     req: Request<{ projectID: number }, unknown, Record<string, never>>,
     res: Response<Issue[]>
   ) {
-    console.log(req.body);
     const { projectID } = req.params;
     const issues = await this.issueService.getProjectIssues(projectID);
     res.send(issues);

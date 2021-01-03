@@ -10,10 +10,11 @@ import { Project } from "entities/project.entity";
 
 @Entity()
 export class User {
+  @Exclude()
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column()
+  @Column({ unique: true })
   public email!: string;
 
   @Exclude()
@@ -24,7 +25,7 @@ export class User {
   @Column({ default: 1 })
   public passwordVersion!: number;
 
-  @Column()
+  @Column({ unique: true })
   public username!: string;
 
   @Expose({ groups: ["user"] })

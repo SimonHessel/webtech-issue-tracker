@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
+import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent
+  extends UnsubscribeOnDestroyAdapter
+  implements OnInit {
   displayedColumns: string[] = ['name', 'members', 'other'];
   dataSource: Project[] = [];
-  constructor(private readonly projectsService: ProjectsService) {}
+  constructor(private readonly projectsService: ProjectsService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.search = this.search.bind(this);
@@ -24,6 +29,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   public search(value: string) {
-    this.projectsService.loadProjects({ search: value });
+    this.subs.sink = this.projectsService
+      .loadProjects({ search: value })
+      .subscribe();
   }
 }

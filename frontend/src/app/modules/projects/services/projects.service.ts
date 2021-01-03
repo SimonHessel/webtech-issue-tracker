@@ -38,7 +38,7 @@ export class ProjectsService {
       this.projectsFetched = true;
       this.getProjects({})
         .pipe(tap((projects) => this.projects$.next(projects)))
-        .toPromise();
+        .subscribe();
     }
 
     return this.projects$;
@@ -72,7 +72,9 @@ export class ProjectsService {
   }
 
   public loadProjects(options: FetchOptions) {
-    this.getProjects(options).pipe().toPromise();
+    return this.getProjects(options).pipe(
+      tap((projects) => this.projects$.next(projects))
+    );
   }
 
   public addProject() {

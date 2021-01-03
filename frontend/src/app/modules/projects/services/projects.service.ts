@@ -90,6 +90,20 @@ export class ProjectsService {
       );
   }
 
+  public deleteProject(projectId: number) {
+    return this.http
+      .delete(`projects/${projectId}`)
+      .pipe(
+        tap(() =>
+          this.projects$.next(
+            this.projects$
+              .getValue()
+              .filter((project) => project.id !== projectId)
+          )
+        )
+      );
+  }
+
   private getProjects(options: FetchOptions) {
     return this.http.get<Project[]>(this.apiEndpoint, {
       params: new HttpParams({

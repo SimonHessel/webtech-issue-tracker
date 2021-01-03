@@ -28,6 +28,9 @@ export class ProjectsComponent
     this.projectsService.addProject().subscribe((data) => console.log(data));
   }
 
+  public deleteProject(projectId: number) {
+    this.projectsService.deleteProject(projectId).toPromise();
+  }
   public search(value: string) {
     this.subs.sink = this.projectsService
       .loadProjects({ search: value })

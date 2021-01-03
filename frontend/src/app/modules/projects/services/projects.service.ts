@@ -1,8 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from 'core/models/project.model';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+interface FetchOptions {
+  search?: string;
+  skip?: string;
+  take?: string;
+}
 
 @Injectable()
 export class ProjectsService {
@@ -26,9 +32,9 @@ export class ProjectsService {
   get projects() {
     if (!this.projectsFetched) {
       this.projectsFetched = true;
-      this.getProjects()
+      this.getProjects({})
         .pipe(tap((projects) => this.projects$.next(projects)))
-        .subscribe((data) => console.log(data));
+        .toPromise();
     }
 
     return this.projects$;
@@ -38,6 +44,12 @@ export class ProjectsService {
     return this.http
       .get<Project>(`${this.apiEndpoint}/${id}`)
       .pipe(tap((project) => this.current$.next(project)));
+  }
+
+  public loadProjects(options: FetchOptions) {
+    this.getProjects(options)
+      .pipe(tap((projects) => this.projects$.next(projects)))
+      .toPromise();
   }
 
   public addProject() {
@@ -53,7 +65,11 @@ export class ProjectsService {
       );
   }
 
-  private getProjects() {
-    return this.http.get<Project[]>(this.apiEndpoint);
+  private getProjects(options: FetchOptions) {
+    return this.http.get<Project[]>(this.apiEndpoint, {
+      params: new HttpParams({
+        fromObject: options as { [param: string]: string },
+      }),
+    });
   }
 }

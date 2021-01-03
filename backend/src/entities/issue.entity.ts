@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { Priority } from "enums/priority.enum";
@@ -14,7 +15,9 @@ export class Issue {
   @Column()
   public description!: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    eager: true,
+  })
   public assignee!: User;
 
   @Column()
@@ -23,6 +26,7 @@ export class Issue {
   @Column()
   public status!: string;
 
+  @Expose({ groups: ["issue"] })
   @ManyToOne(() => Project, (project) => project.issues)
   public project!: Project;
 }

@@ -1,8 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from 'core/models/project.model';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import { IssuesService } from './issues.service';
+
+interface FetchOptions {
+  search?: string;
+  skip?: string;
+  take?: string;
+}
 
 @Injectable()
 export class ProjectsService {
@@ -17,7 +24,10 @@ export class ProjectsService {
     Project[]
   >([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private readonly issuesService: IssuesService
+  ) {}
 
   get current() {
     return this.current$;
@@ -26,18 +36,43 @@ export class ProjectsService {
   get projects() {
     if (!this.projectsFetched) {
       this.projectsFetched = true;
-      this.getProjects()
+      this.getProjects({})
         .pipe(tap((projects) => this.projects$.next(projects)))
-        .subscribe((data) => console.log(data));
+        .toPromise();
     }
 
     return this.projects$;
   }
 
   public setCurrentProject(id: number) {
-    return this.http
-      .get<Project>(`${this.apiEndpoint}/${id}`)
-      .pipe(tap((project) => this.current$.next(project)));
+    return this.projects$.pipe(
+      take(1),
+      map((projects) => projects.find((project) => project.id === id)),
+      switchMap((project) =>
+        project
+          ? of(project)
+          : this.http.get<Project>(`${this.apiEndpoint}/${id}`)
+      ),
+      switchMap((project) =>
+        project.issues
+          ? of(project)
+          : this.issuesService
+              .getIssuesByProject(project.id)
+              .pipe(map((issues) => ({ ...project, issues })))
+      ),
+      tap((project) =>
+        this.projects$.next(
+          this.projects$
+            .getValue()
+            .map((p) => (p.id === project.id ? project : p))
+        )
+      ),
+      tap((project) => this.current$.next(project))
+    );
+  }
+
+  public loadProjects(options: FetchOptions) {
+    this.getProjects(options).pipe().toPromise();
   }
 
   public addProject() {
@@ -59,7 +94,11 @@ export class ProjectsService {
       .subscribe(() => console.log('delete test'));
   }
 
-  private getProjects() {
-    return this.http.get<Project[]>(this.apiEndpoint);
+  private getProjects(options: FetchOptions) {
+    return this.http.get<Project[]>(this.apiEndpoint, {
+      params: new HttpParams({
+        fromObject: options as { [param: string]: string },
+      }),
+    });
   }
 }

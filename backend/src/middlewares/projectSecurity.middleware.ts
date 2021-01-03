@@ -1,21 +1,21 @@
 import {
   IMiddleware,
+  Injectable,
   InjectRepository,
   Middleware,
   Options,
-  Injectable,
 } from "core";
-import { User } from "entities/user.entity";
 import { NextFunction, Request, Response } from "express";
 import { TokenData } from "interfaces/tokenData.interface";
+import { UserRepository } from "repositories/user.repository";
 import { JWTService } from "services/jwt.service";
-import { Repository } from "typeorm";
 
 @Injectable()
 export class ProjectSecurityMiddleware implements IMiddleware {
   constructor(
     private jwtService: JWTService,
-    @InjectRepository(User) private userRepository: Repository<User>
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository
   ) {}
   async middleware(
     req: Request<{ projectID: string }, unknown, unknown>,
@@ -26,23 +26,24 @@ export class ProjectSecurityMiddleware implements IMiddleware {
     const tokenData: TokenData = res.locals.tokenData;
     if (tokenData.projects.some((id) => id === projectID)) next();
     else {
-      const [user] = await this.userRepository.find({
-        relations: ["projects"],
-        where: {
-          username: tokenData.username,
-        },
-      });
-      if (!user) return res.status(403).send("User does not exist.");
-      if (user.projects.some((project) => project.id === projectID)) {
-        this.jwtService.updateToken(
-          res,
-          {
-            projects: user.projects.map((project) => project.id),
-          },
-          tokenData
+      try {
+        const user = await this.userRepository.findByUsername(
+          tokenData.username
         );
-        next();
-      } else res.status(403).send("No permissions for this project");
+
+        if (user.projects.some((project) => project.id === projectID)) {
+          this.jwtService.updateToken(
+            res,
+            {
+              projects: user.projects.map((project) => project.id),
+            },
+            tokenData
+          );
+          next();
+        } else res.status(403).send("No permissions for this project");
+      } catch (error) {
+        return res.status(403).send("User does not exist.");
+      }
     }
   }
 }

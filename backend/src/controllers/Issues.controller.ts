@@ -4,10 +4,12 @@ import { Request, Response } from "express";
 import { IssueDTO } from "interfaces/Issue.dto";
 import { JWT } from "middlewares/jwt.middleware";
 import { ProjectSecurity } from "middlewares/projectSecurity.middleware";
+import { Serializer } from "middlewares/serlizer.middleware";
 import { IssueService } from "services/issue.service";
 
 @JWT()
 @ProjectSecurity()
+@Serializer()
 @Controller("issues")
 export class IssuesController {
   constructor(private issueService: IssueService) {}
@@ -34,11 +36,26 @@ export class IssuesController {
 
   @GET("/:projectID")
   public async read(
-    req: Request<{ projectID: number }, unknown, Record<string, never>>,
-    res: Response<Issue[]>
+    req: Request<
+      { projectID: string },
+      unknown,
+      unknown,
+      { skip: string; take: string }
+    >,
+    res: Response
   ) {
-    const { projectID } = req.params;
-    const issues = await this.issueService.getProjectIssues(projectID);
+    const projectID = parseInt(req.params.projectID, 10);
+    const skip = parseInt(req.query.skip || "0", 10);
+    const take = parseInt(req.query.take || "10", 10);
+
+    if (isNaN(skip) || isNaN(take))
+      return res.status(400).send("id not a number");
+
+    const issues = await this.issueService.getProjectIssues(
+      projectID,
+      skip,
+      take
+    );
     res.send(issues);
   }
 

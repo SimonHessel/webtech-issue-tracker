@@ -23,7 +23,7 @@ export class AuthController {
         .send("Username/Email or Password were not defined");
 
     try {
-      const user = await this.authService.findUsernameOrEmailAndPassword(
+      const user = await this.authService.findbyUsernameOrEmailAndPassword(
         usernameOrEmail,
         password
       );
@@ -37,7 +37,7 @@ export class AuthController {
       )
         return res.status(400).send("Malformed JWT token.");
 
-      await this.jwtService.setRefreshToken(res, user.username);
+      await this.jwtService.setRefreshToken(res, user);
     } catch (error) {
       return res.status(400).send(error);
     }

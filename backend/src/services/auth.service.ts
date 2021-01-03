@@ -1,24 +1,28 @@
 import bcrypt from "bcrypt";
-import { InjectRepository, Injectable } from "core";
+import { Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
-import { Repository } from "typeorm";
+import { UserRepository } from "repositories/user.repository";
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository
   ) {}
-  public async findUsernameOrEmailAndPassword(
+  public async findbyUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
   ): Promise<User> {
-    const user = await this.userRepository.findOne({
-      relations: ["projects"],
-      where: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-    });
-    if (!user) throw "No user found";
-    if (await bcrypt.compare(password, user.password)) return user;
-    else throw "Wrong password or username.";
+    try {
+      const user = await this.userRepository.findByUsernameOrEmail(
+        usernameOrEmail
+      );
+
+      if (await bcrypt.compare(password, user.password)) return user;
+      else throw "Wrong password or username.";
+    } catch (error) {
+      throw "No user found";
+    }
   }
 
   public async registerUser(

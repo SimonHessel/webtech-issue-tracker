@@ -13,10 +13,10 @@ export class ProjectsComponent implements OnInit {
   constructor(private readonly projectsService: ProjectsService) {}
 
   ngOnInit(): void {
-    this.projectsService.projects.subscribe((projects) => {
-      this.dataSource = projects;
-      console.log(projects);
-    });
+    this.search = this.search.bind(this);
+    this.projectsService.projects.subscribe(
+      (projects) => (this.dataSource = projects)
+    );
   }
 
   public addProject() {
@@ -25,5 +25,8 @@ export class ProjectsComponent implements OnInit {
 
   public deleteProject(projectId: string) {
     this.projectsService.deleteProject(projectId);
+  }
+  public search(value: string) {
+    this.projectsService.loadProjects({ search: value });
   }
 }

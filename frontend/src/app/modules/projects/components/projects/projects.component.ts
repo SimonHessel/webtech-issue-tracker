@@ -22,4 +22,8 @@ export class ProjectsComponent implements OnInit {
   public addProject() {
     this.projectsService.addProject().subscribe((data) => console.log(data));
   }
+
+  public deleteProject(projectId: string) {
+    this.projectsService.deleteProject(projectId);
+  }
 }

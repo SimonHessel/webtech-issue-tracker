@@ -53,6 +53,12 @@ export class ProjectsService {
       );
   }
 
+  public deleteProject(projectId: string) {
+    return this.http
+      .delete<Project[]>(`projects/${projectId}`)
+      .subscribe(() => console.log('delete test'));
+  }
+
   private getProjects() {
     return this.http.get<Project[]>(this.apiEndpoint);
   }

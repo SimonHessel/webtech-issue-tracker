@@ -17,6 +17,7 @@ export class User {
   @Column({ unique: true })
   public email!: string;
 
+  @Exclude()
   @Column({ select: false })
   public password!: string;
 

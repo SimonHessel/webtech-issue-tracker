@@ -83,9 +83,8 @@ export class ProjectsService {
 
   public loadProjects(options: FetchOptions) {
     const currentProjects = this.projects$.getValue();
-    const lastProjectID = currentProjects[currentProjects.length - 1].id;
 
-    if (options.skip && options.skip < lastProjectID) {
+    if (options.skip && options.skip < currentProjects.length - 1) {
       return of([]);
     }
     return this.getProjects(options).pipe(

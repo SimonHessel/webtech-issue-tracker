@@ -55,20 +55,8 @@ export class ProjectsComponent
 
           const options: Parameters<ProjectsService['getProjects']>[0] = {
             take: pageEvent.pageSize,
+            skip: this.dataSource.data.length - 1,
           };
-
-          const lastIndex =
-            ((pageEvent.previousPageIndex || 0) + 1) * pageEvent.pageSize - 1;
-          console.log(
-            this.dataSource.data.length < lastIndex
-              ? this.dataSource.data.length - 1
-              : lastIndex
-          );
-          options.skip = this.dataSource.data[
-            this.dataSource.data.length < lastIndex
-              ? this.dataSource.data.length - 1
-              : lastIndex
-          ].id;
 
           if (this.currentSearch) options.search = this.currentSearch;
           this.loadProjects(options);

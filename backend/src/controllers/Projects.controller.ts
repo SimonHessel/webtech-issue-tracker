@@ -109,7 +109,7 @@ export class ProjectsController {
     const id = parseInt(req.params.projectID);
     if (isNaN(id)) return res.status(400).send("id not a number");
     try {
-      const users = await this.userService.listUsersByProjectID(id);
+      const users = await this.projectService.listUsersByProjectID(id);
       res.send(users);
     } catch (error) {
       console.log(error);

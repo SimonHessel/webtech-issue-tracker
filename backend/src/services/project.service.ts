@@ -1,5 +1,6 @@
 import { Injectable, InjectRepository } from "core";
 import { Project } from "entities/project.entity";
+import { User } from "entities/user.entity";
 import { IssueRepository } from "repositories/issue.repository";
 import { ProjectRepository } from "repositories/project.repository";
 import { UserRepository } from "repositories/user.repository";
@@ -19,6 +20,10 @@ export class ProjectService {
 
   public async findByID(id: number) {
     return this.projectRepository.findOne(id, { relations: ["users"] });
+  }
+
+  public async listUsersByProjectID(id: number): Promise<User[]> {
+    return this.projectRepository.selectUsersFromProjectByID(id);
   }
 
   public async findByIDs(

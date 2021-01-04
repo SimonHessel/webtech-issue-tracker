@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from 'core/models/project.model';
+import { User } from 'core/models/user.model';
 import { BehaviorSubject, of } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { IssuesService } from './issues.service';
@@ -60,6 +61,13 @@ export class ProjectsService {
               .getIssuesByProject(project.id)
               .pipe(map((issues) => ({ ...project, issues })))
       ),
+      switchMap((project) =>
+        project.users
+          ? of(project)
+          : this.loadProjectUsers(project.id).pipe(
+              map((users) => ({ ...project, users }))
+            )
+      ),
       tap((project) =>
         this.projects$.next(
           this.projects$
@@ -102,6 +110,10 @@ export class ProjectsService {
           )
         )
       );
+  }
+
+  private loadProjectUsers(id: number) {
+    return this.http.get<User[]>(`${this.apiEndpoint}/${id}/users`);
   }
 
   private getProjects(options: FetchOptions) {

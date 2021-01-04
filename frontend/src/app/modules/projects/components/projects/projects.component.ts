@@ -1,9 +1,10 @@
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
+import { last, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -17,23 +18,54 @@ export class ProjectsComponent
 
   displayedColumns: string[] = ['name', 'members', 'other'];
   //dataSource: Project[] = [];
-  projects: Project[] = [];
-  dataSource = new MatTableDataSource<Project>(this.projects);
+  currentSearch = '';
+  dataSource = new MatTableDataSource<Project>([]);
+  length = 0;
   constructor(private readonly projectsService: ProjectsService) {
     super();
   }
 
   ngOnInit() {
     this.search = this.search.bind(this);
+    this.projectsService.projects.subscribe((projects) => {
+      this.dataSource.data = projects;
+      this.length = projects.length + 1;
+    });
   }
 
   ngAfterViewInit(): void {
-    console.log(this.dataSource);
     this.dataSource.paginator = this.paginator;
-    this.projectsService.projects.subscribe(
-      //vorher: this.dataSource = projects;
-      (projects) => (this.dataSource.data = projects)
-    );
+    this.subs.sink = this.paginator.page
+      .pipe(
+        tap((pageEvent: PageEvent) => {
+          if (
+            pageEvent.previousPageIndex &&
+            pageEvent.previousPageIndex > pageEvent.pageIndex
+          )
+            return;
+
+          const options: Parameters<ProjectsService['getProjects']>[0] = {
+            take: pageEvent.pageSize,
+          };
+
+          const lastIndex =
+            ((pageEvent.previousPageIndex || 0) + 1) * pageEvent.pageSize - 1;
+          console.log(
+            this.dataSource.data.length < lastIndex
+              ? this.dataSource.data.length - 1
+              : lastIndex
+          );
+          options.skip = this.dataSource.data[
+            this.dataSource.data.length < lastIndex
+              ? this.dataSource.data.length - 1
+              : lastIndex
+          ].id;
+
+          if (this.currentSearch) options.search = this.currentSearch;
+          this.loadProjects(options);
+        })
+      )
+      .subscribe();
   }
 
   public addProject() {
@@ -44,8 +76,11 @@ export class ProjectsComponent
     this.projectsService.deleteProject(projectId).toPromise();
   }
   public search(value: string) {
-    this.subs.sink = this.projectsService
-      .loadProjects({ search: value })
-      .subscribe();
+    this.currentSearch = value;
+    this.loadProjects({ search: value });
+  }
+
+  private loadProjects(options: Parameters<ProjectsService['getProjects']>[0]) {
+    this.subs.sink = this.projectsService.loadProjects(options).subscribe();
   }
 }

@@ -26,6 +26,7 @@ export class UserRepository extends Repository<User> {
         "user.username = :usernameOrEmail OR user.email = :usernameOrEmail",
         { usernameOrEmail }
       )
+      .addSelect("user.password")
       .getOneOrFail();
   }
 }

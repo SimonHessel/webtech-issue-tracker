@@ -1,4 +1,4 @@
-import { Expose } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { Priority } from "enums/priority.enum";
@@ -15,6 +15,8 @@ export class Issue {
   @Column()
   public description!: string;
 
+  @Type(() => User)
+  @Transform((user: User) => user.username)
   @ManyToOne(() => User, {
     eager: true,
   })

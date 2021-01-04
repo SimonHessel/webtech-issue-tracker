@@ -101,6 +101,23 @@ export class ProjectsController {
   }
 
   @MethodMiddleware(ProjectSecurityMiddleware)
+  @GET("/:projectID/users")
+  public async users(
+    req: Request<{ projectID: string }, unknown, unknown>,
+    res: Response
+  ) {
+    const id = parseInt(req.params.projectID);
+    if (isNaN(id)) return res.status(400).send("id not a number");
+    try {
+      const users = await this.projectService.listUsersByProjectID(id);
+      res.send(users);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("internal server error");
+    }
+  }
+
+  @MethodMiddleware(ProjectSecurityMiddleware)
   @PATCH("/:projectID")
   public async update(
     req: Request<
@@ -125,6 +142,7 @@ export class ProjectsController {
     }
   }
 
+  @MethodMiddleware(ProjectSecurityMiddleware)
   @DELETE("/:projectID")
   public async delete(req: Request<{ projectID: string }>, res: Response) {
     const id = parseInt(req.params.projectID);

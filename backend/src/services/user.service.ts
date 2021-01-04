@@ -10,10 +10,6 @@ export class UserService {
     private readonly userRepository: UserRepository
   ) {}
 
-  public async list(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
   public async findByUsername(username: string): Promise<User> {
     return this.userRepository.findByUsername(username);
   }

@@ -105,11 +105,11 @@ export class ProjectsService {
     );
   }
 
-  public addProject() {
+  public addProject(description: string, title: string) {
     return this.http
       .post<Project>(this.apiEndpoint, {
-        description: 'testdescription',
-        title: 'testtitle',
+        description,
+        title,
         users: [],
       })
       .pipe(

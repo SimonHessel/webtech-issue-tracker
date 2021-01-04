@@ -1,4 +1,4 @@
-import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { Controller, DELETE, PATCH, POST } from "core";
 import { User } from "entities/user.entity";
 import { Request, Response } from "express";
 import { UserDTO } from "interfaces/User.dto";
@@ -19,15 +19,6 @@ export class UsersController {
     res: Response<User>
   ) {
     res.sendStatus(200);
-  }
-
-  @GET("/")
-  public async read(
-    req: Request<Record<string, never>, unknown, unknown>,
-    res: Response
-  ) {
-    const users = await this.userService.list();
-    res.send(users);
   }
 
   @PATCH("/")

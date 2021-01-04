@@ -110,6 +110,7 @@ export class ProjectsService {
       .post<Project>(this.apiEndpoint, {
         description: 'testdescription',
         title: 'testtitle',
+        users: [],
       })
       .pipe(
         tap((project) => {

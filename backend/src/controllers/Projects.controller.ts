@@ -31,14 +31,14 @@ export class ProjectsController {
     res: Response
   ) {
     const { username, projects } = res.locals.tokenData as TokenData;
-    const { title, description } = req.body;
+    const { title, description, users } = req.body;
     if (!title || !description)
       res.status(400).send("Title or description are not defined");
     try {
       const project = await this.projectService.createProject(
         title,
         description,
-        username
+        users.some((name) => name === username) ? users : [...users, username]
       );
       this.jwtService.updateToken(
         res,

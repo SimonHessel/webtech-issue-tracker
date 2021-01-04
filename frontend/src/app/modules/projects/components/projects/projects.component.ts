@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -10,17 +11,28 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
 })
 export class ProjectsComponent
   extends UnsubscribeOnDestroyAdapter
-  implements OnInit {
+  implements AfterViewInit, OnInit {
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
   displayedColumns: string[] = ['name', 'members', 'other'];
-  dataSource: Project[] = [];
+  //dataSource: Project[] = [];
+  projects: Project[] = [];
+  dataSource = new MatTableDataSource<Project>(this.projects);
   constructor(private readonly projectsService: ProjectsService) {
     super();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.search = this.search.bind(this);
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.dataSource);
+    this.dataSource.paginator = this.paginator;
     this.projectsService.projects.subscribe(
-      (projects) => (this.dataSource = projects)
+      //vorher: this.dataSource = projects;
+      (projects) => (this.dataSource.data = projects)
     );
   }
 

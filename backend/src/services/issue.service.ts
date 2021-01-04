@@ -21,11 +21,15 @@ export class IssueService {
     skip: number,
     take: number
   ): Promise<Issue[]> {
-    return this.issueRepository.find({
-      where: { project: { id } },
-      skip,
-      take,
-    });
+    return this.issueRepository
+      .createQueryBuilder("issue")
+      .select(["issue", "assignee.username"])
+      .where("issue.projectId = :id", { id })
+      .skip(skip)
+      .take(take)
+      .leftJoin("issue.assignee", "assignee")
+
+      .getMany();
   }
 
   async createProjectIssue(

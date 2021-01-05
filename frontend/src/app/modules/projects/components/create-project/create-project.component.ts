@@ -27,7 +27,6 @@ export class CreateProjectComponent implements OnInit {
   }
 
   save(): void {
-    console.log('save');
     this.dialogRef.close({ title: this.title, description: this.description });
   }
 

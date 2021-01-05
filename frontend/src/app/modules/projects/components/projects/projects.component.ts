@@ -77,6 +77,8 @@ export class ProjectsComponent
     const dialogRef = this.dialog.open(CreateProjectComponent, {
       disableClose: true,
       data: { description: '', title: '' },
+      height: '80%',
+      width: '90%',
     });
 
     this.subs.sink = dialogRef

@@ -18,8 +18,6 @@ export class AuthService {
         usernameOrEmail
       );
 
-      console.log(user);
-
       if (await bcrypt.compare(password, user.password)) return user;
       else throw "Wrong password or username.";
     } catch (error) {

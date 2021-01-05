@@ -9,6 +9,8 @@ import { throwError } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { CreateProjectComponent } from '../create-project/create-project.component';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -28,8 +30,10 @@ export class ProjectsComponent
 
   constructor(
     private readonly projectsService: ProjectsService,
-    public dialog: MatDialog,
-    public router: Router
+    private dialog: MatDialog,
+    private router: Router,
+    private clipboard: Clipboard,
+    private snackBar: MatSnackBar
   ) {
     super();
   }
@@ -94,6 +98,11 @@ export class ProjectsComponent
         (data) => this.router.navigate(['./projects/', data.id]),
         (err) => {}
       );
+  }
+
+  public copy(id: number) {
+    this.clipboard.copy(`${window.location.host}${this.router.url}/${id}`);
+    this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
   }
 
   private addProject(description: string, title: string) {

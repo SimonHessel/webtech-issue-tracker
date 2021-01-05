@@ -7,6 +7,8 @@ import { ProjectGuardService } from './guards/project.guard';
 import { KanbanComponent } from './components/kanban/kanban.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -61,6 +63,8 @@ import { CreateProjectComponent } from './components/create-project/create-proje
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    ClipboardModule,
+    MatSnackBarModule,
   ],
 })
 export class ProjectsModule {}

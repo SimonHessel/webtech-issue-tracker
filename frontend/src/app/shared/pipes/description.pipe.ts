@@ -12,17 +12,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DescriptionPipe implements PipeTransform {
   constructor() {}
 
-  transform(description: string): string {
-    if (description.length > 60) {
+  transform(description: string, maxLength: number): string {
+    if (description.length > maxLength) {
       //trim the string to the maximum length
-      let trimmedString = description.substr(0, 60);
+      const trimmedString = description.substr(0, maxLength);
 
-      //re-trim if we are in the middle of a wor
-      trimmedString = trimmedString.substr(
-        0,
-        Math.min(trimmedString.length, trimmedString.lastIndexOf(' '))
+      //re-trim if we are in the middle of a word
+      return (
+        trimmedString.substr(
+          0,
+          Math.min(trimmedString.length, trimmedString.lastIndexOf(' '))
+        ) + '...'
       );
-      return trimmedString + '...';
     }
     return description;
   }

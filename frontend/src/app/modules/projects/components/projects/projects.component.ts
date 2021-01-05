@@ -69,9 +69,6 @@ export class ProjectsComponent
       .subscribe();
   }
 
-  public deleteProject(projectId: number) {
-    this.projectsService.deleteProject(projectId).toPromise();
-  }
   public search(value: string) {
     this.currentSearch = value;
     this.loadProjects({ search: value });
@@ -103,6 +100,25 @@ export class ProjectsComponent
   public copy(id: number) {
     this.clipboard.copy(`${window.location.host}${this.router.url}/${id}`);
     this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
+  }
+
+  public deleteProject(projectId: number) {
+    const snackBarRef = this.snackBar.open('Project has been deleted', 'undo', {
+      duration: 3000,
+    });
+
+    this.subs.sink = snackBarRef
+      .afterDismissed()
+      .pipe(
+        switchMap((event) =>
+          event.dismissedByAction
+            ? this.snackBar
+                .open('Deletion has been undone.', '', { duration: 3000 })
+                .afterDismissed()
+            : this.projectsService.deleteProject(projectId).toPromise()
+        )
+      )
+      .subscribe();
   }
 
   private addProject(description: string, title: string) {

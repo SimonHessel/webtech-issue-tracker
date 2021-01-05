@@ -8,7 +8,7 @@ import { KanbanComponent } from './components/kanban/kanban.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -49,6 +49,10 @@ import { DescriptionPipe } from 'shared/pipes/description.pipe';
     },
     {
       provide: MAT_DIALOG_DATA,
+      useValue: {},
+    },
+    {
+      provide: MatSnackBarRef,
       useValue: {},
     },
   ],

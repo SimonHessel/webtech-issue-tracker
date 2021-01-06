@@ -1,5 +1,5 @@
 import { User } from "entities/user.entity";
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, In, Repository } from "typeorm";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -10,6 +10,12 @@ export class UserRepository extends Repository<User> {
       },
       withProjects ? { relations: ["projects"] } : undefined
     );
+  }
+
+  findByUsernames(usernames: string[]): Promise<User[]> {
+    return this.find({
+      username: In(usernames),
+    });
   }
 
   findByUsernameOrEmail(

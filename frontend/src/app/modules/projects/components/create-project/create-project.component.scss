@@ -1,0 +1,56 @@
+.create-project {
+  // display: flex;
+  // flex-direction: column;
+  height: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      color: #666666;
+    }
+
+    .close-button {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #666666;
+    }
+  }
+
+  .body {
+    height: 90%;
+    form {
+      height: 80%;
+
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .input-description {
+          border: 1px solid #cfcfcf;
+          border-radius: 8px;
+          textarea {
+            height: 10rem;
+          }
+        }
+      }
+      .create-button {
+        width: 6.3rem;
+        height: 2.1rem;
+        background: #71d58b 0% 0% no-repeat padding-box;
+        border: 1px solid #b7eac5;
+        border-radius: 6px;
+        font: normal normal normal 22px/26px Segoe UI;
+        letter-spacing: 0px;
+        color: white;
+      }
+    }
+  }
+}

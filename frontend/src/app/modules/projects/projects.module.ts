@@ -30,6 +30,7 @@ import { SharedModule } from 'shared/shared.module';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 
 import { DescriptionPipe } from 'shared/pipes/description.pipe';
+import { UsersComponent } from './components/users/users.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -39,6 +40,7 @@ import { DescriptionPipe } from 'shared/pipes/description.pipe';
     ListComponent,
     CreateProjectComponent,
     DescriptionPipe,
+    UsersComponent,
   ],
   providers: [
     ProjectGuardService,

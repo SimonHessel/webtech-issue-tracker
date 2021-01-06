@@ -1,6 +1,8 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Project } from 'core/models/project.model';
@@ -9,8 +11,6 @@ import { throwError } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { CreateProjectComponent } from '../create-project/create-project.component';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',

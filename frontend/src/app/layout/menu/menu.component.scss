@@ -118,13 +118,15 @@
 
       .sidenav-toggle {
         width: 2.5rem;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
 
         .sizer {
           cursor: pointer;
           position: absolute;
           left: 0;
           height: 100%;
-          width: 2.5rem;
+          width: 3.5rem;
           display: flex;
           justify-content: space-evenly;
           .line {

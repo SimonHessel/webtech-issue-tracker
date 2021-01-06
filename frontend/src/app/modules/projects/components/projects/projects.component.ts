@@ -22,7 +22,7 @@ export class ProjectsComponent
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['name', 'members', 'other'];
+  displayedColumns: string[] = ['name', 'issues', 'other'];
   projects: Project[] = [];
   dataSource = new MatTableDataSource<Project>(this.projects);
   length = 0;

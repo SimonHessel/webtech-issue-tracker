@@ -8,7 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  *   {{ 2 | exponentialStrength:10 }}
  *   formats to: 1024
  */
-@Pipe({ name: 'description' })
+@Pipe({ name: 'description', pure: true })
 export class DescriptionPipe implements PipeTransform {
   constructor() {}
 

@@ -1,13 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
+import { filter } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-kanban',
   templateUrl: './kanban.component.html',
   styleUrls: ['./kanban.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanComponent
   extends UnsubscribeOnDestroyAdapter
@@ -16,7 +23,8 @@ export class KanbanComponent
 
   constructor(
     private route: ActivatedRoute,
-    private readonly projectService: ProjectsService
+    private readonly projectService: ProjectsService,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -26,8 +34,11 @@ export class KanbanComponent
     if (!idString) throw new Error('Project guard malfunction');
     const id = parseInt(idString, 10);
     this.subs.sink = this.projectService.setCurrentProject(id).subscribe();
-    this.subs.sink = this.projectService.current.subscribe(
-      (project) => (this.project = project)
-    );
+    this.subs.sink = this.projectService.current
+      .pipe(filter((project) => !!project))
+      .subscribe((project) => {
+        this.project = project;
+        this.cdRef.markForCheck();
+      });
   }
 }

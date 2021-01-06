@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
 import { filter, startWith } from 'rxjs/operators';
@@ -8,17 +14,21 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  avatar = '';
-  isShown = false;
-  id = '';
-  projectsIDRegex = new RegExp(/\/projects\/(?<id>\d+)(\/.*)?/);
+  public avatar = '';
+  public isShown = false;
+  public id = '';
+  private readonly projectsIDRegex = new RegExp(
+    /\/projects\/(?<id>\d+)(\/.*)?/
+  );
   constructor(
     private readonly auth: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -38,7 +48,6 @@ export class MenuComponent
   }
 
   public logOut() {
-    console.log('works');
     this.auth
       .logout()
       .subscribe((urltree) => this.router.navigateByUrl(urltree));

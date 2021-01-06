@@ -1,5 +1,11 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +21,7 @@ import { CreateProjectComponent } from '../create-project/create-project.compone
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsComponent
   extends UnsubscribeOnDestroyAdapter
@@ -121,6 +128,9 @@ export class ProjectsComponent
       .subscribe();
   }
 
+  public trackById(_: number, project: Project): number {
+    return project.id;
+  }
   private addProject(description: string, title: string) {
     return this.projectsService.addProject(description, title);
   }

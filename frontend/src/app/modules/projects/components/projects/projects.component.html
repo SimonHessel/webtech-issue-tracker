@@ -1,6 +1,6 @@
 <app-header [search]="search" header="Projects"> </app-header>
 
-<table mat-table [dataSource]="dataSource" class="table">
+<table mat-table [dataSource]="dataSource" [trackBy]="trackById" class="table">
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef class="name-header">Name</th>

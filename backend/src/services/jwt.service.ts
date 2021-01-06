@@ -1,4 +1,4 @@
-import { Injectable, InjectRepository } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
 import { Response } from "express";
 import { RefreshTokenData } from "interfaces/refreshTokenData.interface";
@@ -8,11 +8,13 @@ import { UserRepository } from "repositories/user.repository";
 import { signJWT, verifyJWT } from "utils/jwt.util";
 
 @Injectable()
-export class JWTService {
+export class JWTService extends BaseStructure {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository
-  ) {}
+  ) {
+    super();
+  }
 
   public async checkRefreshToken(token: string): Promise<User> {
     try {
@@ -22,6 +24,7 @@ export class JWTService {
       if (!!user && user.passwordVersion === version) return user;
       else throw "Password has been reset.";
     } catch (error) {
+      this.error(error);
       throw "Refreshtoken not valid or user not found.";
     }
   }

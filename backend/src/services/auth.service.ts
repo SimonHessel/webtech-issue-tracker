@@ -1,14 +1,16 @@
 import bcrypt from "bcrypt";
-import { Injectable, InjectRepository } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
 import { UserRepository } from "repositories/user.repository";
 
 @Injectable()
-export class AuthService {
+export class AuthService extends BaseStructure {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository
-  ) {}
+  ) {
+    super();
+  }
   public async findbyUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
@@ -23,7 +25,7 @@ export class AuthService {
       if (await bcrypt.compare(password, user.password)) return user;
       else throw "Wrong password or username.";
     } catch (error) {
-      console.log(error);
+      this.error(error);
       throw "No user found";
     }
   }
@@ -52,6 +54,7 @@ export class AuthService {
       const hash = await bcrypt.hash(password, 10);
       return this.userRepository.save({ email, username, password: hash });
     } catch (error) {
+      this.error(error);
       throw "Couldn't register user - hashing error";
     }
   }

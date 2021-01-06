@@ -1,4 +1,4 @@
-import { Injectable, InjectRepository } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { IssueRepository } from "repositories/issue.repository";
@@ -8,7 +8,7 @@ import { Like } from "typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Injectable()
-export class ProjectService {
+export class ProjectService extends BaseStructure {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
@@ -16,7 +16,9 @@ export class ProjectService {
     private readonly projectRepository: ProjectRepository,
     @InjectRepository(IssueRepository)
     private readonly issueRepository: IssueRepository
-  ) {}
+  ) {
+    super();
+  }
 
   public async findByID(id: number) {
     return this.projectRepository.findOne(id, { relations: ["users"] });
@@ -60,6 +62,7 @@ export class ProjectService {
       this.userRepository.save(user);
       return project;
     } catch (error) {
+      this.error(error);
       throw "User is not defined.";
     }
   }

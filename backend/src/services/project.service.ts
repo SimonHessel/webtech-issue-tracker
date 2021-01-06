@@ -46,20 +46,18 @@ export class ProjectService {
   public async createProject(
     title: string,
     description: string,
-    username: string
+    usernames: string[]
   ): Promise<Project> {
     try {
-      const user = await this.userRepository.findByUsername(username);
-      const project = await this.projectRepository.save({
+      const users = await this.userRepository.findByUsernames(usernames);
+      return this.projectRepository.save({
         title,
         description,
         issues: [],
-        users: [user],
+        users,
       });
-      user.projects.push(project);
-      this.userRepository.save(user);
-      return project;
     } catch (error) {
+      console.log(error);
       throw "User is not defined.";
     }
   }

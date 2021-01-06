@@ -8,8 +8,8 @@ import { IssuesService } from './issues.service';
 
 interface FetchOptions {
   search?: string;
-  skip?: string;
-  take?: string;
+  skip?: number;
+  take?: number;
 }
 
 @Injectable()
@@ -18,6 +18,8 @@ export class ProjectsService {
     Project | undefined
   >(undefined);
   private apiEndpoint = 'projects';
+
+  private currentSearch = '';
 
   private projectsFetched = false;
 
@@ -80,16 +82,34 @@ export class ProjectsService {
   }
 
   public loadProjects(options: FetchOptions) {
+    const currentProjects = this.projects$.getValue();
+
+    if (options.skip && options.skip < currentProjects.length - 1) {
+      return of([]);
+    }
     return this.getProjects(options).pipe(
-      tap((projects) => this.projects$.next(projects))
+      tap((projects) => {
+        if (
+          (options.search && options.search === this.currentSearch) ||
+          !!options.search === !!this.currentSearch
+        ) {
+          return this.projects$.next([
+            ...this.projects$.getValue(),
+            ...projects,
+          ]);
+        }
+        this.currentSearch = options.search || '';
+        return this.projects$.next(projects);
+      })
     );
   }
 
-  public addProject() {
+  public addProject(description: string, title: string) {
     return this.http
       .post<Project>(this.apiEndpoint, {
-        description: 'testdescription',
-        title: 'testtitle',
+        description,
+        title,
+        users: [],
       })
       .pipe(
         tap((project) => {

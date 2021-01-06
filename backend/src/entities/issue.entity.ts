@@ -29,6 +29,8 @@ export class Issue {
   public status!: string;
 
   @Expose({ groups: ["issue"] })
-  @ManyToOne(() => Project, (project) => project.issues)
+  @ManyToOne(() => Project, (project) => project.issues, {
+    onDelete: "CASCADE",
+  })
   public project!: Project;
 }

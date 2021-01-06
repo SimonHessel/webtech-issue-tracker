@@ -1,4 +1,5 @@
 import {
+  BaseStructure,
   IMiddleware,
   Injectable,
   InjectRepository,
@@ -11,12 +12,16 @@ import { UserRepository } from "repositories/user.repository";
 import { JWTService } from "services/jwt.service";
 
 @Injectable()
-export class ProjectSecurityMiddleware implements IMiddleware {
+export class ProjectSecurityMiddleware
+  extends BaseStructure
+  implements IMiddleware {
   constructor(
     private jwtService: JWTService,
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository
-  ) {}
+  ) {
+    super();
+  }
   async middleware(
     req: Request<{ projectID: string }, unknown, unknown>,
     res: Response,
@@ -42,6 +47,7 @@ export class ProjectSecurityMiddleware implements IMiddleware {
           next();
         } else res.status(403).send("No permissions for this project");
       } catch (error) {
+        this.error(error);
         return res.status(403).send("User does not exist.");
       }
     }

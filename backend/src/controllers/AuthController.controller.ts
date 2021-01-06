@@ -1,15 +1,17 @@
-import { Controller, GET, POST } from "core";
+import { Controller, GET, POST, BaseStructure } from "core";
 import { Request, Response } from "express";
 import { Login } from "interfaces/login.interface";
 import { AuthService } from "services/auth.service";
 import { JWTService } from "services/jwt.service";
 
 @Controller("auth")
-export class AuthController {
+export class AuthController extends BaseStructure {
   constructor(
     private jwtService: JWTService,
     private authService: AuthService
-  ) {}
+  ) {
+    super();
+  }
 
   @POST("/login")
   public async login(
@@ -39,6 +41,7 @@ export class AuthController {
 
       await this.jwtService.setRefreshToken(res, user);
     } catch (error) {
+      this.error(error);
       return res.status(400).send(error);
     }
     res.status(200).send();
@@ -53,6 +56,7 @@ export class AuthController {
     try {
       await this.authService.registerUser(email, username, password);
     } catch (error) {
+      this.error(error);
       return res.status(400).send(error);
     }
     res.sendStatus(200);

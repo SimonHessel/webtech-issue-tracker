@@ -1,4 +1,4 @@
-import { Injectable, InjectRepository } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { Issue } from "entities/issue.entity";
 import { IssueDTO } from "interfaces/Issue.dto";
 import { IssueRepository } from "repositories/issue.repository";
@@ -6,7 +6,7 @@ import { ProjectRepository } from "repositories/project.repository";
 import { UserRepository } from "repositories/user.repository";
 
 @Injectable()
-export class IssueService {
+export class IssueService extends BaseStructure {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
@@ -14,7 +14,9 @@ export class IssueService {
     private readonly projectRepository: ProjectRepository,
     @InjectRepository(IssueRepository)
     private readonly issueRepository: IssueRepository
-  ) {}
+  ) {
+    super();
+  }
 
   async getProjectIssues(
     id: number,
@@ -49,6 +51,7 @@ export class IssueService {
         project,
       });
     } catch (error) {
+      this.error(error);
       throw "User or Project is not defined.";
     }
   }

@@ -1,4 +1,12 @@
-import { Controller, DELETE, GET, MethodMiddleware, PATCH, POST } from "core";
+import {
+  BaseStructure,
+  Controller,
+  DELETE,
+  GET,
+  MethodMiddleware,
+  PATCH,
+  POST,
+} from "core";
 import { Project } from "entities/project.entity";
 import { Request, Response } from "express";
 import { ProjectDTO } from "interfaces/Project.dto";
@@ -18,12 +26,14 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 @ProjectSecurity({ all: false })
 @Serializer()
 @Controller("projects")
-export class ProjectsController {
+export class ProjectsController extends BaseStructure {
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
     private jwtService: JWTService
-  ) {}
+  ) {
+    super();
+  }
 
   @POST("/")
   public async create(
@@ -47,7 +57,7 @@ export class ProjectsController {
       );
       res.send(project);
     } catch (error) {
-      console.log("error:", error);
+      this.error(error);
       res.status(400).send(error);
     }
   }
@@ -79,6 +89,7 @@ export class ProjectsController {
       );
       res.send(projects);
     } catch (error) {
+      this.error(error);
       res.status(501).send(`${error}`);
     }
   }
@@ -96,6 +107,7 @@ export class ProjectsController {
       const project = await this.projectService.findByID(id);
       res.send(project);
     } catch (error) {
+      this.error(error);
       res.status(501).send(`${error}`);
     }
   }
@@ -112,7 +124,7 @@ export class ProjectsController {
       const users = await this.projectService.listUsersByProjectID(id);
       res.send(users);
     } catch (error) {
-      console.log(error);
+      this.error(error);
       res.status(500).send("internal server error");
     }
   }
@@ -138,6 +150,7 @@ export class ProjectsController {
       );
       res.send(project);
     } catch (error) {
+      this.error(error);
       res.status(501).send(`${error}`);
     }
   }

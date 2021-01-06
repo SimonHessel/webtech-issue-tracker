@@ -1,4 +1,4 @@
-import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { BaseStructure, Controller, DELETE, GET, PATCH, POST } from "core";
 import { Issue } from "entities/issue.entity";
 import { Request, Response } from "express";
 import { IssueDTO } from "interfaces/Issue.dto";
@@ -11,8 +11,10 @@ import { IssueService } from "services/issue.service";
 @ProjectSecurity()
 @Serializer()
 @Controller("issues")
-export class IssuesController {
-  constructor(private issueService: IssueService) {}
+export class IssuesController extends BaseStructure {
+  constructor(private issueService: IssueService) {
+    super();
+  }
 
   @POST("/:projectID")
   public async create(

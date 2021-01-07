@@ -73,15 +73,18 @@ export class ProjectService extends BaseStructure {
               "COUNT(*) as issue_amount",
             ])
             .from(Issue, "issue")
-            .groupBy("issue.status, issue.projectId")
-            .orderBy("issue.status"),
+            .groupBy("issue.status, issue.projectId"),
 
         "issues",
         "issue_project_id = project.id" // the answer
       )
+      .addOrderBy("issue_status")
       .skip(skip)
       .take(take)
+      .printSql()
       .getRawMany();
+
+    console.log(res);
 
     const projects: ProjectAndCount[] = [];
 
@@ -99,6 +102,9 @@ export class ProjectService extends BaseStructure {
           title,
           issueAmount: new Array(states.length).fill(0),
         });
+        projects[projects.length - 1].issueAmount[
+          project.issue_status
+        ] = parseInt(project.issue_amount, 10);
       }
     }
     return projects;

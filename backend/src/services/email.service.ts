@@ -52,8 +52,8 @@ export class EmailService {
   public async sendforgotPasswordMail(username: string) {
     const user = await this.userService.findUserByName(username);
     const randomToken = uuidv4();
-    
-    const link = 'http://localhost:4200/auth/password-reset/'+randomToken;
+    this.userRepository.update({id: user?.id}, {VerificationToken: randomToken});
+    const link = 'http://localhost:4200/auth/passwordreset/'+randomToken;
     const mailOptions = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
       to: user?.email,

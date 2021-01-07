@@ -2,9 +2,6 @@
   <mat-sidenav opened mode="side" position="start" class="sidenav-fixed">
     <div class="item-wrapper">
       <button class="profile">{{ avatar }}</button>
-      <button mat-icon-button (click)="innersidenav.toggle()" class="settings">
-        <mat-icon [inline]="true">settings</mat-icon>
-      </button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -19,20 +16,20 @@
         <div class="second-sidenav-content">
           <div class="second-sidenav__upper-content">
             <h1>Issue Tracker</h1>
-            <button mat-icon-button routerLink="/projects" class="projects">
+            <button mat-button routerLink="/projects" class="projects">
               <mat-icon [inline]="true">list</mat-icon>
               Projects
             </button>
             <button
               [routerLink]="['/projects/' + id + '/kanban']"
-              mat-icon-button
+              mat-button
               *ngIf="isShown"
             >
               <mat-icon [inline]="true">view_column</mat-icon>
               Kanban
             </button>
             <button
-              mat-icon-button
+              mat-button
               *ngIf="isShown"
               [routerLink]="['/projects/' + id + '/users']"
             >
@@ -41,7 +38,7 @@
             </button>
             <!--Router Link muss ggf. geändert werden-->
             <button
-              mat-icon-button
+              mat-button
               *ngIf="isShown"
               [routerLink]="['/projects/' + id + '/settings']"
             >
@@ -50,11 +47,11 @@
             </button>
           </div>
           <div class="second-sidenav__lower-content">
-            <button routerLink="/settings" mat-icon-button>
+            <button routerLink="/settings" mat-button>
               <mat-icon [inline]="true">account_box</mat-icon>
               Account settings
             </button>
-            <button mat-icon-button (click)="logOut()">
+            <button mat-button (click)="logOut()">
               <mat-icon [inline]="true">login</mat-icon>
               Logout
             </button>
@@ -62,6 +59,14 @@
         </div>
       </mat-sidenav>
       <mat-sidenav-content class="sidenav-content">
+        <div class="sidenav-toggle">
+          <div class="sizer" (click)="innersidenav.toggle()">
+            <div class="line"></div>
+          </div>
+          <button mat-mini-fab (click)="innersidenav.toggle()">
+            <mat-icon>{{ getIcon(innersidenav.opened) }}</mat-icon>
+          </button>
+        </div>
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>

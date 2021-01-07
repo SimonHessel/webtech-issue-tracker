@@ -46,6 +46,10 @@ export class MenuComponent
       });
   }
 
+  public getIcon(open: boolean) {
+    return open ? 'keyboard_arrow_left' : 'keyboard_arrow_right';
+  }
+
   public logOut() {
     this.auth
       .logout()

@@ -18,7 +18,7 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
 export class MenuComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  public avatar = '';
+  public username = '';
   public isShown = false;
   public id = '';
   private readonly projectsIDRegex = new RegExp(
@@ -33,7 +33,7 @@ export class MenuComponent
   }
 
   ngOnInit(): void {
-    this.avatar = this.auth.getMe?.username.charAt(0).toLocaleUpperCase() || '';
+    this.username = this.auth.getMe?.username || '';
     this.subs.sink = this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

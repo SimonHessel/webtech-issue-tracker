@@ -1,4 +1,3 @@
-import { Breakpoints } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,15 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Issue } from 'core/models/issue.model';
-import { Project } from 'core/models/project.model';
+import { Project, ProjectWithStates } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-
-type ProjectWithStates = Omit<Project, 'issues'> & {
-  issues: Issue[][];
-};
 
 @Component({
   selector: 'app-kanban',
@@ -25,7 +19,7 @@ type ProjectWithStates = Omit<Project, 'issues'> & {
 export class KanbanComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  project: Project | undefined = undefined;
+  project: ProjectWithStates | undefined = undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,12 +54,21 @@ export class KanbanComponent
             }
           }
 
-          return project;
+          return project as ProjectWithStates;
         })
       )
       .subscribe((project) => {
         this.project = project;
+        console.log(project);
         this.cdRef.markForCheck();
       });
+  }
+
+  public addBoard() {
+    //this.boards.push('');
+  }
+
+  public addIssue(board: number) {
+    // this.boards[board].push('issue');
   }
 }

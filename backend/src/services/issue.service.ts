@@ -27,6 +27,7 @@ export class IssueService extends BaseStructure {
       .createQueryBuilder("issue")
       .select(["issue", "assignee.username"])
       .where("issue.projectId = :id", { id })
+      .orderBy("issue.status", "ASC")
       .skip(skip)
       .take(take)
       .leftJoin("issue.assignee", "assignee")

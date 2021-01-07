@@ -5,6 +5,8 @@ import { User } from "entities/user.entity";
 import { UserService } from "services/user.service";
 import { v4 as uuidv4 } from 'uuid';
 
+
+
 @Injectable()
 export class EmailService {
   constructor(
@@ -24,7 +26,7 @@ export class EmailService {
   public async sendRegisterMail(username: string) {
     const user = await this.userService.findUserByName(username);
     const randomToken = uuidv4();
-    // random token in datenbank speichern
+    this.userRepository.update({id: user?.id}, {VerificationToken: randomToken});
     const link = 'http://localhost:4200/auth/confirm/' + randomToken;
     const mailOptions = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
@@ -37,7 +39,7 @@ export class EmailService {
 
     this.transport.sendMail(
       mailOptions, 
-      function (err, data) 
+      function (err) 
       {
       if (err) {
         throw 'An error occured and email could not be sent'
@@ -49,9 +51,9 @@ export class EmailService {
 
   public async sendforgotPasswordMail(username: string) {
     const user = await this.userService.findUserByName(username);
-    const VerificationToken = uuidv4();
-    const link = 'http://localhost:4200/auth/password-reset/'+VerificationToken;
-    // randomToken in datenbank speichern
+    const randomToken = uuidv4();
+    
+    const link = 'http://localhost:4200/auth/password-reset/'+randomToken;
     const mailOptions = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
       to: user?.email,
@@ -60,7 +62,7 @@ export class EmailService {
             '</br><a href='+link+'></a>Click here to reset Password </p>',
     };
 
-    this.transport.sendMail(mailOptions, function (err, data) {
+    this.transport.sendMail(mailOptions, function (err) {
       if (err) {
         throw 'An error occured and email could not be sent'
       } else {
@@ -80,7 +82,7 @@ export class EmailService {
             '</br><a href='+link+'>Click here</a></p>',
     };
 
-    this.transport.sendMail(mailOptions, function (err, data) {
+    this.transport.sendMail(mailOptions, function (err) {
       if (err) {
         throw 'An error occured and email could not be sent'
       } else {

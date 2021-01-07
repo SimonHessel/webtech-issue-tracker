@@ -5,10 +5,15 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
-import { filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
+
+type ProjectWithStates = Omit<Project, 'issues'> & {
+  issues: Issue[][];
+};
 
 @Component({
   selector: 'app-kanban',
@@ -35,7 +40,23 @@ export class KanbanComponent
     const id = parseInt(idString, 10);
     this.subs.sink = this.projectService.setCurrentProject(id).subscribe();
     this.subs.sink = this.projectService.current
-      .pipe(filter((project) => !!project))
+      .pipe(
+        filter((project) => !!project),
+        distinctUntilChanged(),
+        map((value) => {
+          const { issues, ...project } = value as Project;
+          if (issues) {
+            (project as ProjectWithStates).issues = new Array(
+              project.states.length
+            ).fill([]);
+            for (const issue of issues) {
+              (project as ProjectWithStates).issues[issue.status].push(issue);
+            }
+          }
+
+          return project;
+        })
+      )
       .subscribe((project) => {
         this.project = project;
         this.cdRef.markForCheck();

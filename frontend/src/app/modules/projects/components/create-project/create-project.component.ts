@@ -1,4 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -6,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProjectComponent implements OnInit {
   projectForm = new FormGroup({

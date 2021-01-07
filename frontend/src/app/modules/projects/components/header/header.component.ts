@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
@@ -8,6 +15,7 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent
   extends UnsubscribeOnDestroyAdapter

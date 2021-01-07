@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
@@ -8,6 +8,7 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent
   extends UnsubscribeOnDestroyAdapter

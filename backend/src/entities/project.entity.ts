@@ -20,6 +20,9 @@ export class Project {
   @Column()
   public description!: string;
 
+  @Column("simple-array", { default: "open,in progress,doing" })
+  public states!: string[];
+
   @OneToMany(() => Issue, (issue) => issue.project)
   public issues!: Issue[];
 

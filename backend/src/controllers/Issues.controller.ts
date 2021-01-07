@@ -48,7 +48,7 @@ export class IssuesController extends BaseStructure {
   ) {
     const projectID = parseInt(req.params.projectID, 10);
     const skip = parseInt(req.query.skip || "0", 10);
-    const take = parseInt(req.query.take || "10", 10);
+    const take = parseInt(req.query.take || "50", 10);
 
     if (isNaN(skip) || isNaN(take))
       return res.status(400).send("id not a number");

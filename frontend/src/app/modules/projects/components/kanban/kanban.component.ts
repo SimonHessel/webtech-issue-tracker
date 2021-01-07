@@ -1,3 +1,4 @@
+import { Breakpoints } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -45,10 +46,15 @@ export class KanbanComponent
         distinctUntilChanged(),
         map((value) => {
           const { issues, ...project } = value as Project;
+
           if (issues) {
             (project as ProjectWithStates).issues = new Array(
               project.states.length
-            ).fill([]);
+            );
+            for (let i = 0; i < project.states.length; i++) {
+              (project as ProjectWithStates).issues[i] = [];
+            }
+
             for (const issue of issues) {
               (project as ProjectWithStates).issues[issue.status].push(issue);
             }

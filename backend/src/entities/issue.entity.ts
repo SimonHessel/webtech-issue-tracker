@@ -1,3 +1,4 @@
+import { Expose, Transform, Type } from "class-transformer";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { Priority } from "enums/priority.enum";
@@ -14,15 +15,22 @@ export class Issue {
   @Column()
   public description!: string;
 
-  @ManyToOne(() => User)
+  @Type(() => User)
+  @Transform((user: User) => user.username)
+  @ManyToOne(() => User, {
+    eager: true,
+  })
   public assignee!: User;
 
   @Column()
   public priority!: Priority;
 
   @Column()
-  public status!: string;
+  public status!: number;
 
-  @ManyToOne(() => Project, (project) => project.issues)
+  @Expose({ groups: ["issue"] })
+  @ManyToOne(() => Project, (project) => project.issues, {
+    onDelete: "CASCADE",
+  })
   public project!: Project;
 }

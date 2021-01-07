@@ -5,6 +5,7 @@ import { ListComponent } from './components/list/list.component';
 import { KanbanComponent } from './components/kanban/kanban.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectGuardService } from './guards/project.guard';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
@@ -25,9 +26,11 @@ const routes: Routes = [
         component: ListComponent,
       },
       {
-        path: ':issueID',
+        path: 'issues/:issueID',
         component: IssueComponent,
       },
+      { path: 'users', component: UsersComponent },
+
       {
         path: '**',
         redirectTo: 'kanban',

@@ -5,7 +5,7 @@ import { Application } from "express";
 import swaggerUi from "swagger-ui-express";
 import { Injector } from "./injector";
 import { SwaggerGenerator } from "./Swagger";
-import { log, Type } from "./utils";
+import { info, Type } from "./utils";
 import { isMultiMiddleware } from "./utils/middlware.util";
 
 export class App {
@@ -63,7 +63,7 @@ export class App {
 
   public listen() {
     this.app.listen(this.port, () => {
-      log("Application", `App listening on the http://localhost:${this.port}`);
+      info("Application", `App listening on the http://localhost:${this.port}`);
     });
   }
 }

@@ -1,13 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
+
+type ProjectWithStates = Omit<Project, 'issues'> & {
+  issues: Issue[][];
+};
 
 @Component({
   selector: 'app-kanban',
   templateUrl: './kanban.component.html',
   styleUrls: ['./kanban.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanComponent
   extends UnsubscribeOnDestroyAdapter
@@ -16,7 +28,8 @@ export class KanbanComponent
 
   constructor(
     private route: ActivatedRoute,
-    private readonly projectService: ProjectsService
+    private readonly projectService: ProjectsService,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -25,9 +38,28 @@ export class KanbanComponent
     const idString = this.route.snapshot.paramMap.get('id');
     if (!idString) throw new Error('Project guard malfunction');
     const id = parseInt(idString, 10);
-    this.projectService.setCurrentProject(id).toPromise();
-    this.subs.sink = this.projectService.current.subscribe(
-      (project) => (this.project = project)
-    );
+    this.subs.sink = this.projectService.setCurrentProject(id).subscribe();
+    this.subs.sink = this.projectService.current
+      .pipe(
+        filter((project) => !!project),
+        distinctUntilChanged(),
+        map((value) => {
+          const { issues, ...project } = value as Project;
+          if (issues) {
+            (project as ProjectWithStates).issues = new Array(
+              project.states.length
+            ).fill([]);
+            for (const issue of issues) {
+              (project as ProjectWithStates).issues[issue.status].push(issue);
+            }
+          }
+
+          return project;
+        })
+      )
+      .subscribe((project) => {
+        this.project = project;
+        this.cdRef.markForCheck();
+      });
   }
 }

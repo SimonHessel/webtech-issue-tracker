@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ENTITIES_MEDTADATA, ENTITY_MEDTADATA } from "./constants";
 import "reflect-metadata";
+import { getCustomRepository } from "typeorm";
+import { ENTITIES_MEDTADATA, ENTITY_MEDTADATA } from "./constants";
 import { Type } from "./utils/inject.util";
-import { getRepository } from "typeorm";
 
 export const Injector = new (class {
   private cache = new Map<Type<any>, any>();
@@ -26,7 +26,9 @@ export const Injector = new (class {
     });
 
     const entity = Reflect.getMetadata(ENTITY_MEDTADATA, target);
-    const obj = entity ? getRepository(entity) : new target(...injections);
+    const obj = entity
+      ? getCustomRepository(entity)
+      : new target(...injections);
     this.cache.set(target, obj);
 
     return obj;

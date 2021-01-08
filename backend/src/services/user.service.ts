@@ -1,27 +1,19 @@
-import { InjectRepository, Injectable } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
-import { Repository } from "typeorm";
+import { UserRepository } from "repositories/user.repository";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseStructure {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>
-  ) {}
-
-  public async list(): Promise<User[]> {
-    return this.userRepository.find();
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository
+  ) {
+    super();
   }
 
-  public async findUserByName(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({
-      where: { username },
-      relations: ["projects"],
-    });
-  }
-
-  public async saveUser(user: User) {
-    this.userRepository.save(user);
+  public async findByUsername(username: string): Promise<User> {
+    return this.userRepository.findByUsername(username);
   }
 
   public async updateUser(

@@ -24,7 +24,7 @@ export class User {
   public isVerified!: boolean;
 
   @Exclude()
-  @Column()
+  @Column({ select: false })
   public password!: string;
 
   @Exclude()

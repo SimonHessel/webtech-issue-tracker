@@ -6,5 +6,7 @@ export interface Project {
   title: string;
   description: string;
   issues?: Issue[];
-  users: User[];
+  users?: User[];
+  states: string[];
+  issueAmount?: number[];
 }

@@ -1,8 +1,16 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from 'core/models/project.model';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { User } from 'core/models/user.model';
+import { BehaviorSubject, of } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import { IssuesService } from './issues.service';
+
+interface FetchOptions {
+  search?: string;
+  skip?: number;
+  take?: number;
+}
 
 @Injectable()
 export class ProjectsService {
@@ -11,13 +19,18 @@ export class ProjectsService {
   >(undefined);
   private apiEndpoint = 'projects';
 
+  private currentSearch = '';
+
   private projectsFetched = false;
 
   private projects$: BehaviorSubject<Project[]> = new BehaviorSubject<
     Project[]
   >([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private readonly issuesService: IssuesService
+  ) {}
 
   get current() {
     return this.current$;
@@ -26,25 +39,77 @@ export class ProjectsService {
   get projects() {
     if (!this.projectsFetched) {
       this.projectsFetched = true;
-      this.getProjects()
+      this.getProjects({})
         .pipe(tap((projects) => this.projects$.next(projects)))
-        .subscribe((data) => console.log(data));
+        .subscribe();
     }
 
     return this.projects$;
   }
 
   public setCurrentProject(id: number) {
-    return this.http
-      .get<Project>(`${this.apiEndpoint}/${id}`)
-      .pipe(tap((project) => this.current$.next(project)));
+    return this.projects$.pipe(
+      take(1),
+      map((projects) => projects.find((project) => project.id === id)),
+      switchMap((project) =>
+        project
+          ? of(project)
+          : this.http.get<Project>(`${this.apiEndpoint}/${id}`)
+      ),
+      switchMap((project) =>
+        project.issues
+          ? of(project)
+          : this.issuesService
+              .getIssuesByProject(project.id)
+              .pipe(map((issues) => ({ ...project, issues })))
+      ),
+      switchMap((project) =>
+        project.users
+          ? of(project)
+          : this.loadProjectUsers(project.id).pipe(
+              map((users) => ({ ...project, users }))
+            )
+      ),
+      tap((project) =>
+        this.projects$.next(
+          this.projects$
+            .getValue()
+            .map((p) => (p.id === project.id ? project : p))
+        )
+      ),
+      tap((project) => this.current$.next(project))
+    );
   }
 
-  public addProject() {
+  public loadProjects(options: FetchOptions) {
+    const currentProjects = this.projects$.getValue();
+
+    if (options.skip && options.skip < currentProjects.length - 1) {
+      return of([]);
+    }
+    return this.getProjects(options).pipe(
+      tap((projects) => {
+        if (
+          (options.search && options.search === this.currentSearch) ||
+          !!options.search === !!this.currentSearch
+        ) {
+          return this.projects$.next([
+            ...this.projects$.getValue(),
+            ...projects,
+          ]);
+        }
+        this.currentSearch = options.search || '';
+        return this.projects$.next(projects);
+      })
+    );
+  }
+
+  public addProject(description: string, title: string) {
     return this.http
       .post<Project>(this.apiEndpoint, {
-        description: 'testdescription',
-        title: 'testtitle',
+        description,
+        title,
+        users: [],
       })
       .pipe(
         tap((project) => {
@@ -53,7 +118,29 @@ export class ProjectsService {
       );
   }
 
-  private getProjects() {
-    return this.http.get<Project[]>(this.apiEndpoint);
+  public deleteProject(projectId: number) {
+    return this.http
+      .delete(`projects/${projectId}`)
+      .pipe(
+        tap(() =>
+          this.projects$.next(
+            this.projects$
+              .getValue()
+              .filter((project) => project.id !== projectId)
+          )
+        )
+      );
+  }
+
+  private loadProjectUsers(id: number) {
+    return this.http.get<User[]>(`${this.apiEndpoint}/${id}/users`);
+  }
+
+  private getProjects(options: FetchOptions) {
+    return this.http.get<Project[]>(this.apiEndpoint, {
+      params: new HttpParams({
+        fromObject: options as { [param: string]: string },
+      }),
+    });
   }
 }

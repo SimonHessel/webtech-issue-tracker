@@ -1,19 +1,32 @@
-import { NgModule } from '@angular/core';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
-
-import { ProjectsRoutingModule } from './projects-routing.module';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { ProjectGuardService } from './guards/project.guard';
-import { KanbanComponent } from './components/kanban/kanban.component';
-import { HeaderComponent } from './components/header/header.component';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-
-import { ProjectsService } from './services/projects.service';
-import { IssueComponent } from './components/issue/issue.component';
-import { ListComponent } from './components/list/list.component';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from 'shared/shared.module';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { HeaderComponent } from './components/header/header.component';
+import { IssueComponent } from './components/issue/issue.component';
+import { KanbanComponent } from './components/kanban/kanban.component';
+import { ListComponent } from './components/list/list.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { UsersComponent } from './components/users/users.component';
+import { ProjectGuardService } from './guards/project.guard';
+import { ProjectsRoutingModule } from './projects-routing.module';
+import { ProjectsService } from './services/projects.service';
+
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -21,8 +34,26 @@ import { SharedModule } from 'shared/shared.module';
     HeaderComponent,
     IssueComponent,
     ListComponent,
+    CreateProjectComponent,
+
+    UsersComponent,
   ],
-  providers: [ProjectGuardService, ProjectsService],
+  providers: [
+    ProjectGuardService,
+    ProjectsService,
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {},
+    },
+    {
+      provide: MatSnackBarRef,
+      useValue: {},
+    },
+  ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -30,6 +61,15 @@ import { SharedModule } from 'shared/shared.module';
     MatIconModule,
     MatCardModule,
     SharedModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ClipboardModule,
+    MatSnackBarModule,
   ],
 })
 export class ProjectsModule {}

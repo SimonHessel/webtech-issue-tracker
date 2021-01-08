@@ -8,7 +8,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "skipTests": true
+          "skipTests": true,
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:class": {
           "skipTests": true
@@ -21,9 +22,6 @@
         },
         "@schematics/angular:service": {
           "skipTests": true
-        },
-        "@schematics/angular:component": {
-          "style": "scss"
         },
         "@schematics/angular:application": {
           "strict": true

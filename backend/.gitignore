@@ -12,7 +12,8 @@ Desktop.ini
 .directory
 *~
 
-
+# env
+.env
 # npm
 node_modules
 *.log

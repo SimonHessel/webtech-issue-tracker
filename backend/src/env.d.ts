@@ -12,5 +12,7 @@ declare namespace NodeJS {
     RFRESH_TOKEN_COKKIE_NAME: string;
     ACCESS_TOKEN_HEADER_NAME: string;
     FRONTEND_DOMAINS: string;
+    SMTP_USERNAME: string;
+    SMTP_PASSWORD: string;
   }
 }

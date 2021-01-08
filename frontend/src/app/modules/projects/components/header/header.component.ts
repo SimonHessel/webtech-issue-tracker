@@ -1,14 +1,48 @@
-import { Component, Input, OnInit } from '@angular/core';
+/* eslint-disable @typescript-eslint/member-ordering */
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent
+  extends UnsubscribeOnDestroyAdapter
+  implements OnInit {
   @Input() header = '';
+  @ViewChild('search', { static: true })
+  searchInput!: ElementRef;
+  @Input() search: ((value: string) => void) | undefined = undefined;
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.search)
+      this.subs.sink = fromEvent(this.searchInput.nativeElement, 'keyup')
+        .pipe(
+          map(
+            (event) =>
+              (event as KeyboardEvent & { target: HTMLInputElement }).target
+                .value
+          ),
+
+          debounceTime(500),
+
+          distinctUntilChanged()
+        )
+        .subscribe(this.search);
+  }
 }

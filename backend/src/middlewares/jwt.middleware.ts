@@ -1,11 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { IMiddleware, Middleware, Options, Injectable } from "core";
+import {
+  IMiddleware,
+  Middleware,
+  Options,
+  Injectable,
+  BaseStructure,
+} from "core";
 import { verifyJWT } from "utils/jwt.util";
 import { TokenData } from "interfaces/tokenData.interface";
 
 @Injectable()
-export class JWTMiddleware implements IMiddleware {
-  constructor() {}
+export class JWTMiddleware extends BaseStructure implements IMiddleware {
+  constructor() {
+    super();
+  }
   async middleware(
     req: Request<{ projectID: string }, unknown, unknown>,
     res: Response,
@@ -27,6 +35,7 @@ export class JWTMiddleware implements IMiddleware {
       res.locals.tokenData = tokenData;
       next();
     } catch (err) {
+      this.error(err);
       res.status(401).send(err);
     }
   }

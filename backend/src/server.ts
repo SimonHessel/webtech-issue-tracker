@@ -3,7 +3,7 @@ import { HealthController } from "controllers/Health.controller";
 import { IssuesController } from "controllers/Issues.controller";
 import { ProjectsController } from "controllers/Projects.controller";
 import { UsersController } from "controllers/Users.controller";
-import { App, log } from "core";
+import { App, info } from "core";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -30,7 +30,7 @@ createConnection({
 })
   .then(() => {
     console.timeEnd("start");
-    log("DatabaseService", "Initlized");
+    info("DataBaseStructure", "Initlized");
     const app = new App({
       port: 5000,
       controllers: [

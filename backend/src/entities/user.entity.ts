@@ -17,10 +17,12 @@ export class User {
   @Column({ unique: true })
   public email!: string;
 
-  @Column({select: false})
+  @Exclude()
+  @Column({ select: false, nullable: true })
   public VerificationToken!: string;
-  
-  @Column({select: false, default:false})
+
+  @Exclude()
+  @Column({ select: false, default: false })
   public isVerified!: boolean;
 
   @Exclude()

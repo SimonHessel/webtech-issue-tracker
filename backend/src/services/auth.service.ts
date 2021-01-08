@@ -2,12 +2,14 @@ import bcrypt from "bcrypt";
 import { BaseStructure, Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
 import { UserRepository } from "repositories/user.repository";
+import { EmailService } from "services/email.service";
 
 @Injectable()
 export class AuthService extends BaseStructure {
   constructor(
     @InjectRepository(UserRepository)
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly emailService: EmailService
   ) {
     super();
   }
@@ -50,10 +52,17 @@ export class AuthService extends BaseStructure {
 
     try {
       const hash = await bcrypt.hash(password, 10);
-      return this.userRepository.save({ email, username, password: hash });
+      const user = await this.userRepository.save({
+        email,
+        username,
+        password: hash,
+      });
+
+      // await this.emailService.sendRegisterMail(user);
+      return user;
     } catch (error) {
       this.error(error);
-      throw "Couldn't register user - hashing error";
+      throw "Couldn't register user.";
     }
   }
 }

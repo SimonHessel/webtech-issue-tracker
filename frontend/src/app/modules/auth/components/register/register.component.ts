@@ -16,7 +16,7 @@ export class RegisterComponent {
       Validators.required,
       Validators.minLength(5),
     ]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router ){}

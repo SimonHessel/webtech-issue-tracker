@@ -3,30 +3,32 @@ import { User } from "entities/user.entity";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
 import { UserRepository } from "repositories/user.repository";
-import { UserService } from "services/user.service";
 import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class EmailService extends BaseStructure {
-  private transport = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: process.env.SMTP_USERNAME,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+  private transport: Mail | undefined;
 
   constructor(
     @InjectRepository(UserRepository)
-    private readonly userRepository: UserRepository,
-    private readonly userService: UserService
+    private readonly userRepository: UserRepository
   ) {
     super();
-    this.verifySMTP();
+    if (process.env.SMTP_USERNAME && process.env.SMTP_PASSWORD) {
+      this.transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: process.env.SMTP_USERNAME,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+      this.verifySMTP();
+    }
   }
 
-  private verifySMTP() {
+  private async verifySMTP() {
+    if (!this.transport) return this.error("Transport is not defined.");
     try {
       return this.transport.verify();
     } catch (error) {
@@ -35,6 +37,7 @@ export class EmailService extends BaseStructure {
   }
 
   private sendMail(options: Mail.Options) {
+    if (!this.transport) return this.error("Transport is not defined.");
     try {
       return this.transport.sendMail(options);
     } catch (error) {

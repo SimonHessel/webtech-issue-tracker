@@ -84,8 +84,6 @@ export class ProjectService extends BaseStructure {
       .printSql()
       .getRawMany();
 
-    console.log(res);
-
     const projects: ProjectAndCount[] = [];
 
     for (const { description, title, id, ...project } of res) {

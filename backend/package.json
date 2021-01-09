@@ -10,7 +10,7 @@
     "start:prod": "node -r ./tsconfig-paths-bootstrap.js src/server.js",
     "build": "tsc -p . && cp tsconfig* ./dist/",
     "lint": "eslint",
-    "lint:changes": "npm run lint -- $(git diff --name-only --cached --relative=backend | grep  -E .ts)",
+    "lint:changes": "npm run lint -- $(git diff --name-only --cached --relative=backend | grep  -E '\\.ts$')",
     "lint:all": "npm run lint -- . --ext .ts",
     "postinstall": "cp -R .githooks/* ../.git/hooks/"
   },

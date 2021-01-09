@@ -3,10 +3,17 @@ import { CommonModule } from '@angular/common';
 import { UnsubscribeOnDestroyAdapter } from './utils/UnsubscribeOnDestroyAdapter';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { JoinPipe } from './pipes/join.pipe';
+import { AvatarPipe } from './pipes/avatar.pipe';
 
+const declarations = [
+  UnsubscribeOnDestroyAdapter,
+  DescriptionPipe,
+  JoinPipe,
+  AvatarPipe,
+];
 @NgModule({
-  declarations: [UnsubscribeOnDestroyAdapter, DescriptionPipe, JoinPipe],
+  declarations,
   imports: [CommonModule],
-  exports: [UnsubscribeOnDestroyAdapter, DescriptionPipe, JoinPipe],
+  exports: declarations,
 })
 export class SharedModule {}

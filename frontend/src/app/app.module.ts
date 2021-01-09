@@ -21,6 +21,7 @@ import { MenuComponent } from './layout/menu/menu.component';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

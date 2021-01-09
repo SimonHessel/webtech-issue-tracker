@@ -10,3 +10,7 @@ export interface Project {
   states: string[];
   issueAmount?: number[];
 }
+
+export type ProjectWithStates = Omit<Project, 'issues'> & {
+  issues: Issue[][];
+};

@@ -1,6 +1,6 @@
 <div class="register">
   <mat-toolbar>
-    <span> Register </span>
+    <span>Register</span>
   </mat-toolbar>
   <mat-card>
     <mat-card-content>
@@ -14,9 +14,16 @@
             name="eMail"
             formControlName="eMail"
           />
-          <mat-error i18n="@@registeremailerror" *ngIf="!registerForm.valid">
-            Please enter a correct E-Mail Address
-          </mat-error> </mat-form-field
+          <mat-error
+            i18n="@@registeremailerror"
+            *ngIf="
+              !registerForm.controls.eMail?.valid &&
+              (registerForm.controls.eMail?.dirty ||
+                registerForm.controls.eMail?.touched)
+            "
+          >
+            Please enter a correct E-Mail address </mat-error
+          ><br /> </mat-form-field
         ><br />
 
         <label i18n="@@username" for="username">Username</label><br />
@@ -27,7 +34,17 @@
             name="username"
             id="username"
             formControlName="username"
-          /> </mat-form-field
+          />
+          <mat-error
+            i18n="@@registerusernameerror"
+            *ngIf="
+              !registerForm.controls.username?.valid &&
+              (registerForm.controls.username?.dirty ||
+                registerForm.controls.username?.touched)
+            "
+          >
+            Please enter a correct username </mat-error
+          ><br /> </mat-form-field
         ><br />
 
         <label i18n="@@password" for="password">Password</label><br />
@@ -39,7 +56,17 @@
             id="password"
             formControlName="password"
           />
-        </mat-form-field>
+          <mat-error
+            i18n="@@registerpassworderror"
+            *ngIf="
+              !registerForm.controls.password?.valid &&
+              (registerForm.controls.password?.dirty ||
+                registerForm.controls.password?.touched)
+            "
+          >
+            Please enter a password with at least 6 characters </mat-error
+          ><br /> </mat-form-field
+        ><br />
 
         <p>
           <button

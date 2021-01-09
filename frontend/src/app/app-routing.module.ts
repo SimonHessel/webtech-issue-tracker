@@ -13,27 +13,22 @@ const routes: Routes = [
     redirectTo: 'projects',
   },
   {
+    path: 'auth',
+    canActivate: [AuthGuardService],
+    loadChildren: () =>
+      import('modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: '',
+    component: MenuComponent,
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'auth',
-
+        path: 'projects',
         loadChildren: () =>
-          import('modules/auth/auth.module').then((m) => m.AuthModule),
-      },
-      {
-        path: '',
-        component: MenuComponent,
-        children: [
-          {
-            path: 'projects',
-            loadChildren: () =>
-              import('modules/projects/projects.module').then(
-                (m) => m.ProjectsModule
-              ),
-          },
-        ],
+          import('modules/projects/projects.module').then(
+            (m) => m.ProjectsModule
+          ),
       },
     ],
   },

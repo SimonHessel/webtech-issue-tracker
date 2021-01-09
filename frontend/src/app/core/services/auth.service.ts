@@ -77,14 +77,17 @@ export class AuthService {
     password: string
   ): Observable<unknown> {
     return this.http
-      .post(`${this.apiEndpoint}/register`, {
-        username,
-        email,
-        password,
-      })
-      .pipe(
-        mapTo(true),
-        catchError((error) => throwError(error.error))
-      );
+      .post(
+        `${this.apiEndpoint}/register`,
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((error) => throwError(error.error)));
   }
 }

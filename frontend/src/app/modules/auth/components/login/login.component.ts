@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +17,11 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
     remember: new FormControl(),
   });
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     super();
   }
 
@@ -29,8 +33,16 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
       )
       .subscribe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        () => this.router.navigateByUrl('/'),
-        (err) => window.alert(err)
+        () => {
+          this.snackBar.dismiss();
+          this.router.navigateByUrl('/');
+        },
+        (err) =>
+          this.snackBar.open(err, '', {
+            duration: 7000,
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          })
       );
   }
 }

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'core/services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,12 +16,35 @@ export class RegisterComponent {
       Validators.required,
       Validators.minLength(5),
     ]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
+  constructor(
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router
+  ) {}
   onSubmit = () => {
-    console.log(this.registerForm.controls.eMail.value);
-    console.log(this.registerForm.controls.username.value);
-    console.log(this.registerForm.controls.password.value);
+    this.authService
+      .register(
+        this.registerForm.controls.username.value,
+        this.registerForm.controls.eMail.value,
+        this.registerForm.controls.password.value
+      )
+      .subscribe(
+        (_) => {
+          this.snackBar.open('Please verify your Email.', '', {
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          });
+          this.router.navigateByUrl('/auth/login');
+        },
+        (err) =>
+          this.snackBar.open(err, '', {
+            duration: 7000,
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          })
+      );
   };
 }

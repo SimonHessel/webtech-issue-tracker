@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
@@ -13,6 +14,12 @@ import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
+  providers: [
+    {
+      provide: MatSnackBarRef,
+      useValue: {},
+    },
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -24,6 +31,7 @@ import { RegisterComponent } from './components/register/register.component';
     MatCardModule,
     MatCheckboxModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
 })
 export class AuthModule {}

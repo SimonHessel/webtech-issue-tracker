@@ -19,19 +19,32 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router ){}
+  constructor(
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router
+  ) {}
   onSubmit = () => {
-    this.authService.register(
-      this.registerForm.controls.eMail.value,
-      this.registerForm.controls.username.value,
-      this.registerForm.controls.password.value
-    ).subscribe(
-      (res) => this.router.navigateByUrl('/'),
-      (err) => this.snackBar.open(err, '', {
-        duration: 7000,
-        verticalPosition: 'top',
-        panelClass: ['snackBar-custom-style']
-      })
-    );
+    this.authService
+      .register(
+        this.registerForm.controls.username.value,
+        this.registerForm.controls.eMail.value,
+        this.registerForm.controls.password.value
+      )
+      .subscribe(
+        (_) => {
+          this.snackBar.open('Please verify your Email.', '', {
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          });
+          this.router.navigateByUrl('/auth/login');
+        },
+        (err) =>
+          this.snackBar.open(err, '', {
+            duration: 7000,
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          })
+      );
   };
 }

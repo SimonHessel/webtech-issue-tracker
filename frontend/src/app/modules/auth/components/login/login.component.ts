@@ -17,7 +17,11 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
     remember: new FormControl(),
   });
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     super();
   }
 
@@ -29,12 +33,16 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
       )
       .subscribe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        () => this.router.navigateByUrl('/'),
-        (err) => this.snackBar.open(err, '', {
-        duration: 7000,
-        verticalPosition: 'top',
-        panelClass: ['snackBar-custom-style']
-        })
+        () => {
+          this.snackBar.dismiss();
+          this.router.navigateByUrl('/');
+        },
+        (err) =>
+          this.snackBar.open(err, '', {
+            duration: 7000,
+            verticalPosition: 'top',
+            panelClass: ['snackBar-custom-style'],
+          })
       );
   }
 }

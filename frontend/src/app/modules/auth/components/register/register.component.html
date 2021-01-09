@@ -5,7 +5,7 @@
   <mat-card>
     <mat-card-content>
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-        <label for="eMail">E-Mail</label><br/>
+        <label for="eMail" i18n="@@eMail">E-Mail</label><br/>
         <mat-form-field appearance="outline">
           <input 
             matInput
@@ -14,7 +14,9 @@
             name="eMail"
             formControlName="eMail"
           />
-          <mat-error *ngIf="
+          <mat-error
+          i18n="@@eMailerror" 
+          *ngIf="
           !registerForm.controls.eMail?.valid &&
           (registerForm.controls.eMail?.dirty ||
           registerForm.controls.eMail?.touched)
@@ -23,7 +25,7 @@
           </mat-error><br/>
         </mat-form-field><br/>
 
-        <label for="username">Username</label><br/>
+        <label for="username" i18n="@@username">Username</label><br/>
         <mat-form-field appearance="outline">
           <input 
             matInput
@@ -32,7 +34,9 @@
             id="username"
             formControlName="username"
           />
-          <mat-error *ngIf="
+          <mat-error
+          i18n="@@usernamerrror"
+          *ngIf="
           !registerForm.controls.username?.valid &&
           (registerForm.controls.username?.dirty ||
           registerForm.controls.username?.touched)
@@ -41,7 +45,7 @@
           </mat-error><br/>
         </mat-form-field><br/>
 
-        <label for="password">Password</label><br/>
+        <label for="password" i18n="@@password">Password</label><br/>
         <mat-form-field appearance="outline">
           <input 
             matInput
@@ -50,7 +54,9 @@
             id="password"
             formControlName="password"
           />
-          <mat-error *ngIf="
+          <mat-error
+          @@registerpassworderror 
+          *ngIf="
           !registerForm.controls.password?.valid &&
           (registerForm.controls.password?.dirty ||
           registerForm.controls.password?.touched)
@@ -61,6 +67,7 @@
 
         <p>
           <button 
+            i18n="@@registerbutton"
             mat-button
             type="submit"
             [disabled]="!registerForm.valid"

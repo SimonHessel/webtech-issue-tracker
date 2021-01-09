@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { SubSink } from 'subsink';
 
-@Component({ template: '' })
+@Component({ template: '', changeDetection: ChangeDetectionStrategy.OnPush })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class UnsubscribeOnDestroyAdapter implements OnDestroy {
   /**The subscription sink object that stores all subscriptions */

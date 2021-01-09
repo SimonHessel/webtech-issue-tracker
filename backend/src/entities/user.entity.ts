@@ -18,7 +18,15 @@ export class User {
   public email!: string;
 
   @Exclude()
-  @Column()
+  @Column({ select: false, nullable: true })
+  public VerificationToken!: string;
+
+  @Exclude()
+  @Column({ select: false, default: false })
+  public isVerified!: boolean;
+
+  @Exclude()
+  @Column({ select: false })
   public password!: string;
 
   @Exclude()

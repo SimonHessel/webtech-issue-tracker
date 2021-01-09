@@ -1,24 +1,33 @@
 import bcrypt from "bcrypt";
-import { InjectRepository, Injectable } from "core";
+import { BaseStructure, Injectable, InjectRepository } from "core";
 import { User } from "entities/user.entity";
-import { Repository } from "typeorm";
+import { UserRepository } from "repositories/user.repository";
+import { EmailService } from "services/email.service";
 
 @Injectable()
-export class AuthService {
+export class AuthService extends BaseStructure {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>
-  ) {}
-  public async findUsernameOrEmailAndPassword(
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
+    private readonly emailService: EmailService
+  ) {
+    super();
+  }
+  public async findbyUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
   ): Promise<User> {
-    const user = await this.userRepository.findOne({
-      relations: ["projects"],
-      where: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-    });
-    if (!user) throw "No user found";
-    if (await bcrypt.compare(password, user.password)) return user;
-    else throw "Wrong password or username.";
+    try {
+      const user = await this.userRepository.findByUsernameOrEmail(
+        usernameOrEmail
+      );
+
+      if (await bcrypt.compare(password, user.password)) return user;
+      else throw "Wrong password or username.";
+    } catch (error) {
+      this.error(error);
+      throw "No user found";
+    }
   }
 
   public async registerUser(
@@ -43,9 +52,17 @@ export class AuthService {
 
     try {
       const hash = await bcrypt.hash(password, 10);
-      return this.userRepository.save({ email, username, password: hash });
+      const user = await this.userRepository.save({
+        email,
+        username,
+        password: hash,
+      });
+
+      // await this.emailService.sendRegisterMail(user);
+      return user;
     } catch (error) {
-      throw "Couldn't register user - hashing error";
+      this.error(error);
+      throw "Couldn't register user.";
     }
   }
 }

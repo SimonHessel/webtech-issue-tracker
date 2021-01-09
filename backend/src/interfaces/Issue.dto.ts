@@ -5,5 +5,5 @@ export interface IssueDTO {
   description: string;
   assignee: UserDTO["username"];
   priority: Priority;
-  status: string;
+  status: number;
 }

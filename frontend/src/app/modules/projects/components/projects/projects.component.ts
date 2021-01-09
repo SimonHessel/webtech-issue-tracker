@@ -100,7 +100,7 @@ export class ProjectsComponent
       )
       .subscribe(
         (data) => this.router.navigate(['./projects/', data.id]),
-        (err) => {}
+        (_) => {}
       );
   }
 

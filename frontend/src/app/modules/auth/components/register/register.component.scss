@@ -1,38 +1,36 @@
-
-label{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 19px;
   color: #797c85;
 }
 
-mat-toolbar{
-  background-color: #587BAD;
+mat-toolbar {
+  background-color: #587bad;
   color: white;
-  
 }
 
-span{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+span {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 36px;
 }
 
-button{
+button {
   color: white;
   padding-left: 40px;
   padding-right: 40px;
   margin-left: 90px;
-  background-color: #71D58B;
+  background-color: #71d58b;
   border: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
 }
 
-mat-form-field{
+mat-form-field {
   width: 330px;
   margin-top: -1em;
 }
 
-p{
+p {
   margin-top: 8px;
 }
 
@@ -43,39 +41,38 @@ p{
   transform: translate(-50%, -50%);
 }
 
-input{  
+input {
   font-size: 15px;
 }
 
-mat-checkbox{
+mat-checkbox {
   font-size: 14px;
   margin-left: 5px;
 }
 
-mat-card{
-  background-color: #FFFFFF;
+mat-card {
+  background-color: #ffffff;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  background-color: #EBECF0;
+  background-color: #ebecf0;
   border-radius: 1px solid;
   margin-top: 10px;
 }
 
-.mat-toolbar{
+.mat-toolbar {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-::ng-deep .custom-style{
-  background-color: #587BAD;
+::ng-deep .custom-style {
+  background-color: #587bad;
   color: white;
   .mat-simple-snackbar-action {
     color: white !important;
   }
   span {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
   }
 }
-

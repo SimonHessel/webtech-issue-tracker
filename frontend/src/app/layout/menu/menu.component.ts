@@ -8,7 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
 import { filter, startWith } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-
+import { MediaObserver } from '@angular/flex-layout';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -27,6 +27,7 @@ export class MenuComponent
   constructor(
     private readonly auth: AuthService,
     private readonly router: Router,
+    public media: MediaObserver,
     private readonly cdRef: ChangeDetectorRef
   ) {
     super();

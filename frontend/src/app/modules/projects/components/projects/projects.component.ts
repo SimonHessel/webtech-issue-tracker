@@ -2,6 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -30,17 +31,17 @@ export class ProjectsComponent
   paginator!: MatPaginator;
 
   displayedColumns: string[] = ['name', 'issues', 'other'];
-  projects: Project[] = [];
-  dataSource = new MatTableDataSource<Project>(this.projects);
+  dataSource = new MatTableDataSource<Project>([]);
   length = 0;
   currentSearch = '';
 
   constructor(
     private readonly projectsService: ProjectsService,
-    private dialog: MatDialog,
-    private router: Router,
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar
+    private readonly dialog: MatDialog,
+    private readonly router: Router,
+    private readonly clipboard: Clipboard,
+    private readonly snackBar: MatSnackBar,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -50,6 +51,7 @@ export class ProjectsComponent
     this.projectsService.projects.subscribe((projects) => {
       this.dataSource.data = projects;
       this.length = projects.length + 1;
+      this.cdRef.markForCheck();
     });
   }
 

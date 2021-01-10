@@ -18,7 +18,7 @@
       [cdkDropListData]="state"
       class="board-content"
       (cdkDropListDropped)="drop($event)">
-        <div class="issues" *ngFor="let issue of state" cdkDrag>
+        <div class="issues" *ngFor="let issue of state; trackBy: trackByMethod" cdkDrag>
           <div
             class="priority"
             [ngClass]="{

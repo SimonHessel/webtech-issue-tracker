@@ -35,7 +35,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="loginbutton" datatype="html">
@@ -59,7 +59,7 @@
         <target>Nutzername</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registerbutton" datatype="html">
@@ -67,15 +67,71 @@
         <target>Registrieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">51,52</context>
+          <context context-type="linenumber">78,79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registeremailerror" datatype="html">
-        <source> Please enter a correct E-Mail Address </source>
+        <source> Please enter a correct E-Mail address </source>
         <target>Bitte geben Sie eine korrekte E-Mail Adresse ein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">18,19</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registerusernameerror" datatype="html">
+        <source> Please enter a correct username </source>
+        <target>Bitte geben Sie einen korrekten Nutzernamen ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registerpassworderror" datatype="html">
+        <source> Please enter a password with at least 6 characters </source>
+        <target>Bitte geben Sie ein Passwort mit mindestens 6 Buchstaben ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+        <source>Search</source>
+        <target>Suche</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/header/header.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="newproject" datatype="html">
+        <source> New Project </source>
+        <target>Neues Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="name" datatype="html">
+        <source> Name </source>
+        <target>Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="issues" datatype="html">
+        <source> Issues </source>
+        <target>Aufgabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="other" datatype="html">
+        <source> Other </source>
+        <target>Sonstiges</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
+          <context context-type="linenumber">28,29</context>
         </context-group>
       </trans-unit>
     </body>

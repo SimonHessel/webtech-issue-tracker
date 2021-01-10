@@ -9,6 +9,8 @@ import { Project, ProjectWithStates } from 'core/models/project.model';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Issue } from 'core/models/issue.model';
 
 @Component({
   selector: 'app-kanban',
@@ -59,16 +61,21 @@ export class KanbanComponent
       )
       .subscribe((project) => {
         this.project = project;
-        console.log(project);
         this.cdRef.markForCheck();
       });
   }
 
-  public addBoard() {
-    //this.boards.push('');
-  }
-
-  public addIssue(board: number) {
-    // this.boards[board].push('issue');
+  //state und reihenfolge anpassen
+  drop(event: CdkDragDrop<Issue[]>) {
+    console.log(this.project?.issues);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+    console.log(this.project?.issues);
   }
 }

@@ -112,15 +112,20 @@ export class ProjectService extends BaseStructure {
     title: string,
     description: string,
     usernames: string[]
-  ): Promise<Project> {
+  ): Promise<ProjectAndCount> {
     try {
       const users = await this.userRepository.findByUsernames(usernames);
-      return this.projectRepository.save({
+      const project = await this.projectRepository.save({
         title,
         description,
         issues: [],
         users,
       });
+
+      return {
+        ...project,
+        issueAmount: new Array(project.states.length).fill(0),
+      };
     } catch (error) {
       this.error(error);
       throw "User is not defined.";

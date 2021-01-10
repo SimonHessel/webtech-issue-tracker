@@ -67,7 +67,6 @@ export class KanbanComponent
 
   //state und reihenfolge anpassen
   drop(event: CdkDragDrop<Issue[]>) {
-    console.log(this.project?.issues);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -76,6 +75,9 @@ export class KanbanComponent
                         event.previousIndex,
                         event.currentIndex);
     }
-    console.log(this.project?.issues);
+  }
+
+  trackByMethod(index: number, issue: Issue): number{
+    return issue.id;
   }
 }

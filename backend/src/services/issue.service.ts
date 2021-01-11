@@ -18,6 +18,30 @@ export class IssueService extends BaseStructure {
     super();
   }
 
+  async moveIssue(
+    projectID: number,
+    id: number,
+    position: number,
+    status: number
+  ) {
+    this.issueRepository
+      .createQueryBuilder("issue")
+      .update()
+      .set({
+        position: () => "position +1",
+      })
+      .where(
+        'issue.position >= :position AND issue.status = :status AND "issue"."projectId" = :projectID',
+        { position, projectID, status }
+      )
+      .execute();
+
+    return this.issueRepository.update(id, {
+      position,
+      status,
+    });
+  }
+
   async getProjectIssues(
     id: number,
     skip: number,
@@ -28,6 +52,7 @@ export class IssueService extends BaseStructure {
       .select(["issue", "assignee.username"])
       .where("issue.projectId = :id", { id })
       .orderBy("issue.status", "ASC")
+      .addOrderBy("issue.position")
       .skip(skip)
       .take(take)
       .leftJoin("issue.assignee", "assignee")
@@ -41,15 +66,17 @@ export class IssueService extends BaseStructure {
     { assignee, ...issue }: IssueDTO
   ): Promise<Issue> {
     try {
-      const [user, project] = await Promise.all([
+      const [user, project, lastPostion] = await Promise.all([
         this.userRepository.findByUsername(assignee),
         this.projectRepository.findOneOrFail(projectID),
+        this.issueRepository.findLastPostionOfStatus(projectID, issue.status),
       ]);
 
       return this.issueRepository.save({
         ...issue,
         assignee: user,
         project,
+        position: lastPostion + 1,
       });
     } catch (error) {
       this.error(error);

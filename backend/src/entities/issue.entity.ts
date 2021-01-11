@@ -25,8 +25,11 @@ export class Issue {
   @Column()
   public priority!: Priority;
 
-  @Column()
+  @Column({ default: 0 })
   public status!: number;
+
+  @Column()
+  public position!: number;
 
   @Expose({ groups: ["issue"] })
   @ManyToOne(() => Project, (project) => project.issues, {

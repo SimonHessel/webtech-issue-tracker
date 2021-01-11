@@ -10,7 +10,22 @@ export class IssuesService {
 
   constructor(private readonly http: HttpClient) {}
 
-  public getIssuesByProject(id: number) {
-    return this.http.get<Issue[]>(`${this.apiEndpoint}/${id}`);
+  public getIssuesByProject(projectID: number) {
+    return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`);
+  }
+
+  public updateStatusOrder(
+    projectID: number,
+    id: number,
+    position: number,
+    status: number
+  ) {
+    return this.http.patch<Issue>(
+      `${this.apiEndpoint}/${projectID}/${id}/reorder`,
+      {
+        position,
+        status,
+      }
+    );
   }
 }

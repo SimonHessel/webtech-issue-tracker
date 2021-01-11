@@ -9,6 +9,7 @@ import { SharedModule } from 'shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './layout/menu/menu.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -21,6 +22,7 @@ import { MenuComponent } from './layout/menu/menu.component';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
+    FlexLayoutModule,
     SharedModule,
   ],
   providers: [],

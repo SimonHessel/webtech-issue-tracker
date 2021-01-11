@@ -13,12 +13,18 @@
   <mat-card *ngFor="let state of project.issues; let i = index" class="board">
     <div class="header">{{ project.states[i] }}</div>
     <mat-card-content>
-      <div cdkDropList 
-      id="{{project.issues.indexOf(state)}}" 
-      [cdkDropListData]="state"
-      class="board-content"
-      (cdkDropListDropped)="drop($event)">
-        <div class="issues" *ngFor="let issue of state; trackBy: trackByMethod" cdkDrag>
+      <div
+        cdkDropList
+        id="{{ project.issues.indexOf(state) }}"
+        [cdkDropListData]="state"
+        class="board-content"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="issues"
+          *ngFor="let issue of state; trackBy: trackByMethod"
+          cdkDrag
+        >
           <div
             class="priority"
             [ngClass]="{

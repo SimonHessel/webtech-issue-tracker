@@ -7,4 +7,5 @@ export interface Issue {
   assignee: string;
   priority: Priority;
   status: number;
+  position: number;
 }

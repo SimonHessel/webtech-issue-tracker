@@ -70,6 +70,31 @@ export class IssuesController extends BaseStructure {
     res.sendStatus(200);
   }
 
+  @PATCH("/:projectID/:id/reorder")
+  public async move(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      {
+        position: number;
+        status: number;
+      }
+    >,
+    res: Response
+  ) {
+    const id = parseInt(req.params.id, 10);
+    const projectID = parseInt(req.params.projectID, 10);
+    const { position, status } = req.body;
+    if (isNaN(id) || isNaN(projectID) || !position)
+      return res.status(400).send("Id ist not a number");
+    try {
+      res.send(this.issueService.moveIssue(projectID, id, position, status));
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Some error.");
+    }
+  }
+
   @DELETE("/:projectID/:id")
   public delete(
     req: Request<

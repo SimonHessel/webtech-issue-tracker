@@ -106,12 +106,12 @@ export class ProjectsComponent
       );
   }
 
-  public copy(id: number) {
+  public copy(id: Project['id']) {
     this.clipboard.copy(`${window.location.host}${this.router.url}/${id}`);
     this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
   }
 
-  public deleteProject(projectId: number) {
+  public deleteProject(projectId: Project['id']) {
     const snackBarRef = this.snackBar.open('Project has been deleted', 'undo', {
       duration: 3000,
     });
@@ -130,7 +130,7 @@ export class ProjectsComponent
       .subscribe();
   }
 
-  public trackById(_: number, project: Project): number {
+  public trackById(_: number, project: Project): Project['id'] {
     return project.id;
   }
   private addProject(description: string, title: string) {

@@ -33,16 +33,16 @@ export class ProjectService extends BaseStructure {
     super();
   }
 
-  public async findByID(id: number) {
+  public async findByID(id: Project["id"]) {
     return this.projectRepository.findOne(id, { relations: ["users"] });
   }
 
-  public async listUsersByProjectID(id: number): Promise<User[]> {
+  public async listUsersByProjectID(id: Project["id"]): Promise<User[]> {
     return this.projectRepository.selectUsersFromProjectByID(id);
   }
 
   public async findByIDs(
-    ids: number[],
+    ids: Project["id"][],
     skip: number,
     take: number,
     search?: string
@@ -133,7 +133,7 @@ export class ProjectService extends BaseStructure {
   }
 
   public async updateProject(
-    id: number,
+    id: Project["id"],
     updatedProject: QueryDeepPartialEntity<Project>
   ): Promise<Project> {
     await this.projectRepository.update(id, updatedProject);
@@ -142,7 +142,7 @@ export class ProjectService extends BaseStructure {
     else throw "Internal Server error";
   }
 
-  public async deleteProject(id: number): Promise<boolean> {
+  public async deleteProject(id: Project["id"]): Promise<boolean> {
     return !!this.projectRepository.delete(id);
   }
 }

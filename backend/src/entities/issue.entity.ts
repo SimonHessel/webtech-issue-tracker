@@ -1,14 +1,12 @@
 import { Expose, Transform, Type } from "class-transformer";
+import { PrimaryID } from "entities/id.entity";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { Priority } from "enums/priority.enum";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 
 @Entity()
-export class Issue {
-  @PrimaryGeneratedColumn()
-  public id!: number;
-
+export class Issue extends PrimaryID {
   @Column()
   public title!: string;
 

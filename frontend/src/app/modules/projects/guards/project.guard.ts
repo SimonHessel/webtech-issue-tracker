@@ -12,8 +12,8 @@ export class ProjectGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) {
-    const id = parseInt(route.params.id, 10);
-    if (isNaN(id)) return this.router.parseUrl('/projects');
+    const { id } = route.params;
+    if (!id) return this.router.parseUrl('/projects');
 
     const projects = this.auth.getMe?.projects;
     if (!projects) return this.router.parseUrl('/projects');

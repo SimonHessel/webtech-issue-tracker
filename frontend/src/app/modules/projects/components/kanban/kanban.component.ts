@@ -1,21 +1,21 @@
 import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Issue } from 'core/models/issue.model';
 import { Project, ProjectWithStates } from 'core/models/project.model';
+import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import { Issue } from 'core/models/issue.model';
-import { IssuesService } from 'modules/projects/services/issues.service';
 
 @Component({
   selector: 'app-kanban',
@@ -38,9 +38,9 @@ export class KanbanComponent
   }
 
   ngOnInit(): void {
-    const idString = this.route.snapshot.paramMap.get('id');
-    if (!idString) throw new Error('Project guard malfunction');
-    const id = parseInt(idString, 10);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) throw new Error('Project guard malfunction');
+
     this.subs.sink = this.projectService.setCurrentProject(id).subscribe();
     this.subs.sink = this.projectService.current
       .pipe(
@@ -119,7 +119,7 @@ export class KanbanComponent
         .subscribe();
   }
 
-  trackByMethod(index: number, issue: Issue): number {
+  trackByMethod(index: number, issue: Issue): Issue['id'] {
     return issue.id;
   }
 }

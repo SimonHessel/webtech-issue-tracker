@@ -22,7 +22,7 @@ export class MenuComponent
   public isShown = false;
   public id = '';
   private readonly projectsIDRegex = new RegExp(
-    /\/projects\/(?<id>\d+)(\/.*)?/
+    /\/projects\/(?<id>[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12})(\/.*)?/
   );
   constructor(
     private readonly auth: AuthService,

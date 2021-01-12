@@ -78,7 +78,7 @@ export class ProjectsController extends BaseStructure {
     const { search } = req.query;
 
     if (isNaN(skip) || isNaN(take))
-      return res.status(400).send("id not a number");
+      return res.status(400).send("ID is undefined");
 
     try {
       const projects = await this.projectService.findByIDs(
@@ -100,11 +100,11 @@ export class ProjectsController extends BaseStructure {
     req: Request<{ projectID: string }, unknown, unknown>,
     res: Response
   ) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
 
     try {
-      const project = await this.projectService.findByID(id);
+      const project = await this.projectService.findByID(projectID);
       res.send(project);
     } catch (error) {
       this.error(error);
@@ -118,10 +118,10 @@ export class ProjectsController extends BaseStructure {
     req: Request<{ projectID: string }, unknown, unknown>,
     res: Response
   ) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
     try {
-      const users = await this.projectService.listUsersByProjectID(id);
+      const users = await this.projectService.listUsersByProjectID(projectID);
       res.send(users);
     } catch (error) {
       this.error(error);
@@ -139,13 +139,13 @@ export class ProjectsController extends BaseStructure {
     >,
     res: Response<Project | string>
   ) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
     const updatedProject = req.body;
     if (!updatedProject) return res.status(400).send("Body malformed.");
     try {
       const project = await this.projectService.updateProject(
-        id,
+        projectID,
         updatedProject
       );
       res.send(project);
@@ -158,10 +158,11 @@ export class ProjectsController extends BaseStructure {
   @MethodMiddleware(ProjectSecurityMiddleware)
   @DELETE("/:projectID")
   public async delete(req: Request<{ projectID: string }>, res: Response) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
     try {
-      if (this.projectService.deleteProject(id)) return res.status(200).send();
+      if (this.projectService.deleteProject(projectID))
+        return res.status(200).send();
 
       res.status(404).send();
     } catch (error) {

@@ -3,7 +3,7 @@ import { EntityRepository, Repository } from "typeorm";
 
 @EntityRepository(Project)
 export class ProjectRepository extends Repository<Project> {
-  public async selectUsersFromProjectByID(id: number) {
+  public async selectUsersFromProjectByID(id: Project["id"]) {
     const project = await this.createQueryBuilder("project")
       .select(["users", "project.id"])
       .where("project.id = :id", { id })

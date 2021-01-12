@@ -2,6 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -30,17 +31,17 @@ export class ProjectsComponent
   paginator!: MatPaginator;
 
   displayedColumns: string[] = ['name', 'issues', 'other'];
-  projects: Project[] = [];
-  dataSource = new MatTableDataSource<Project>(this.projects);
+  dataSource = new MatTableDataSource<Project>([]);
   length = 0;
   currentSearch = '';
 
   constructor(
     private readonly projectsService: ProjectsService,
-    private dialog: MatDialog,
-    private router: Router,
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar
+    private readonly dialog: MatDialog,
+    private readonly router: Router,
+    private readonly clipboard: Clipboard,
+    private readonly snackBar: MatSnackBar,
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -50,6 +51,7 @@ export class ProjectsComponent
     this.projectsService.projects.subscribe((projects) => {
       this.dataSource.data = projects;
       this.length = projects.length + 1;
+      this.cdRef.markForCheck();
     });
   }
 
@@ -104,12 +106,12 @@ export class ProjectsComponent
       );
   }
 
-  public copy(id: number) {
+  public copy(id: Project['id']) {
     this.clipboard.copy(`${window.location.host}${this.router.url}/${id}`);
     this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
   }
 
-  public deleteProject(projectId: number) {
+  public deleteProject(projectId: Project['id']) {
     const snackBarRef = this.snackBar.open('Project has been deleted', 'undo', {
       duration: 3000,
     });
@@ -128,7 +130,7 @@ export class ProjectsComponent
       .subscribe();
   }
 
-  public trackById(_: number, project: Project): number {
+  public trackById(_: number, project: Project): Project['id'] {
     return project.id;
   }
   private addProject(description: string, title: string) {

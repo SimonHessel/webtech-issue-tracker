@@ -9,4 +9,41 @@
     <mat-icon>share</mat-icon>
   </button>
 </app-header>
-<pre>{{ project | json }}</pre>
+<div class="board-wrap" *ngIf="project" cdkDropListGroup>
+  <mat-card *ngFor="let state of project.issues; let i = index" class="board">
+    <div class="header">{{ project.states[i] }}</div>
+    <mat-card-content>
+      <div
+        cdkDropList
+        id="{{ project.issues.indexOf(state) }}"
+        [cdkDropListData]="state"
+        class="board-content"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="issues"
+          *ngFor="let issue of state; trackBy: trackByMethod"
+          cdkDrag
+        >
+          <div
+            class="priority"
+            [ngClass]="{
+              low: issue.priority === 0,
+              medium: issue.priority === 1,
+              high: issue.priority === 2
+            }"
+          ></div>
+          <div class="issue-content">
+            <div class="issue-text">
+              <h1>{{ issue.id }} {{ issue.title }}</h1>
+              <p>{{ issue.description | description: 100 }}</p>
+            </div>
+            <div class="avatar" mat-card-avatar>
+              {{ issue.assignee | avatar }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

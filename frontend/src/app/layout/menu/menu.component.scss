@@ -115,6 +115,7 @@
     .sidenav-content {
       background: #f4f5f7;
       display: flex;
+      overflow: hidden;
 
       .sidenav-toggle {
         width: 2.5rem;

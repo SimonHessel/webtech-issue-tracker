@@ -18,7 +18,7 @@ export class IssuesController extends BaseStructure {
 
   @POST("/:projectID")
   public async create(
-    req: Request<{ projectID: number }, unknown, IssueDTO>,
+    req: Request<{ projectID: string }, unknown, IssueDTO>,
     res: Response<Issue>
   ) {
     const { projectID } = req.params;
@@ -46,12 +46,12 @@ export class IssuesController extends BaseStructure {
     >,
     res: Response
   ) {
-    const projectID = parseInt(req.params.projectID, 10);
+    const { projectID } = req.params;
     const skip = parseInt(req.query.skip || "0", 10);
     const take = parseInt(req.query.take || "50", 10);
 
     if (isNaN(skip) || isNaN(take))
-      return res.status(400).send("id not a number");
+      return res.status(400).send("ID is undefined");
 
     const issues = await this.issueService.getProjectIssues(
       projectID,
@@ -68,6 +68,31 @@ export class IssuesController extends BaseStructure {
   ) {
     const { projectID, id } = req.params;
     res.sendStatus(200);
+  }
+
+  @PATCH("/:projectID/:id/reorder")
+  public async move(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      {
+        position: number;
+        status: number;
+      }
+    >,
+    res: Response
+  ) {
+    const { id, projectID } = req.params;
+
+    const { position, status } = req.body;
+    if (!id || !projectID || !position)
+      return res.status(400).send("IDs and or Position are undefined.");
+    try {
+      res.send(this.issueService.moveIssue(projectID, id, position, status));
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Some error.");
+    }
   }
 
   @DELETE("/:projectID/:id")

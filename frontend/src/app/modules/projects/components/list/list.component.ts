@@ -23,9 +23,9 @@ export class ListComponent
   }
 
   ngOnInit(): void {
-    const idString = this.route.snapshot.paramMap.get('id');
-    if (!idString) throw new Error('Project guard malfunction');
-    const id = parseInt(idString, 10);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) throw new Error('Project guard malfunction');
+
     this.subs.sink = this.projectService.setCurrentProject(id).subscribe();
     this.subs.sink = this.projectService.current.subscribe(
       (project) => (this.project = project)

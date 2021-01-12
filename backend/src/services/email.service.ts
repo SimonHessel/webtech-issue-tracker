@@ -1,4 +1,5 @@
 import { BaseStructure, Injectable, InjectRepository } from "core";
+import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
@@ -92,7 +93,7 @@ export class EmailService extends BaseStructure {
     return this.sendMail(mailOptions);
   }
 
-  public async sendinvitedToAProjectMail(user: User, projectID: number) {
+  public async sendinvitedToAProjectMail(user: User, projectID: Project["id"]) {
     const link = "http://localhost:4200/projects/" + projectID;
     const mailOptions: Mail.Options = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',

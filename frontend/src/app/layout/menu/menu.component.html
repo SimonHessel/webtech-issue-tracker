@@ -1,7 +1,7 @@
 <mat-sidenav-container class="main-container">
   <mat-sidenav opened mode="side" position="start" class="sidenav-fixed">
     <div class="item-wrapper">
-      <button class="profile">{{ avatar }}</button>
+      <button class="profile">{{ username | avatar }}</button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -11,6 +11,7 @@
         mode="side"
         position="start"
         #innersidenav
+        opened="{{ media.isActive('gt-sm') }}"
         class="second-sidenav"
       >
         <div class="second-sidenav-content">
@@ -64,7 +65,7 @@
             <div class="line"></div>
           </div>
           <button mat-mini-fab (click)="innersidenav.toggle()">
-            <mat-icon>{{ getIcon(innersidenav.opened) }}</mat-icon>
+            <mat-icon>{{ innersidenav.opened | direction }}</mat-icon>
           </button>
         </div>
         <router-outlet></router-outlet>

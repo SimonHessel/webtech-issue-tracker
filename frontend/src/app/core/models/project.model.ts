@@ -1,8 +1,8 @@
+import { PrimaryID } from './id.model';
 import { Issue } from './issue.model';
 import { User } from './user.model';
 
-export interface Project {
-  id: number;
+export interface Project extends PrimaryID {
   title: string;
   description: string;
   issues?: Issue[];
@@ -10,3 +10,7 @@ export interface Project {
   states: string[];
   issueAmount?: number[];
 }
+
+export type ProjectWithStates = Omit<Project, 'issues'> & {
+  issues: Issue[][];
+};

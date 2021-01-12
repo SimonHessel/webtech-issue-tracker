@@ -4,11 +4,11 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
 import { filter, startWith } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -18,22 +18,23 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
 export class MenuComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  public avatar = '';
+  public username = '';
   public isShown = false;
   public id = '';
   private readonly projectsIDRegex = new RegExp(
-    /\/projects\/(?<id>\d+)(\/.*)?/
+    /\/projects\/(?<id>[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12})(\/.*)?/
   );
   constructor(
     private readonly auth: AuthService,
     private readonly router: Router,
+    public media: MediaObserver,
     private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.avatar = this.auth.getMe?.username.charAt(0).toLocaleUpperCase() || '';
+    this.username = this.auth.getMe?.username || '';
     this.subs.sink = this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -44,10 +45,6 @@ export class MenuComponent
         this.id = res?.groups?.id ? res?.groups?.id : '';
         this.isShown = !!this.id;
       });
-  }
-
-  public getIcon(open: boolean) {
-    return open ? 'keyboard_arrow_left' : 'keyboard_arrow_right';
   }
 
   public logOut() {

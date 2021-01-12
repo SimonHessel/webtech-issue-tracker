@@ -3,24 +3,30 @@
 <table mat-table [dataSource]="dataSource" [trackBy]="trackById" class="table">
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef class="name-header">Name</th>
+    <th i18n="@@name" mat-header-cell *matHeaderCellDef class="name-header">
+      Name
+    </th>
     <td mat-cell *matCellDef="let project">
       <a [routerLink]="['./', project.id]" class="project-link">
-        {{ project.id }} {{ project.title }}
+        {{ project.title }}
         {{ project.description | description: 60 }}
       </a>
     </td>
   </ng-container>
   <!-- Members Column -->
   <ng-container matColumnDef="issues">
-    <th mat-header-cell *matHeaderCellDef class="issues-header">Members</th>
+    <th i18n="@@issues" mat-header-cell *matHeaderCellDef class="issues-header">
+      Issues
+    </th>
     <td mat-cell *matCellDef="let project">
       {{ project.issueAmount | join: "|" }}
     </td>
   </ng-container>
   <!-- Other Column -->
   <ng-container matColumnDef="other">
-    <th mat-header-cell *matHeaderCellDef class="other-header">Other</th>
+    <th i18n="@@other" mat-header-cell *matHeaderCellDef class="other-header">
+      Other
+    </th>
     <td mat-cell *matCellDef="let project">
       <div class="other-column-buttons">
         <button mat-icon-button (click)="copy(project.id)" type="button">
@@ -38,7 +44,12 @@
 </table>
 
 <div class="new-project-button">
-  <button (click)="openDialog()" mat-flat-button class="new-project">
+  <button
+    i18n="@@newproject"
+    (click)="openDialog()"
+    mat-flat-button
+    class="new-project"
+  >
     New Project
   </button>
 </div>

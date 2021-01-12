@@ -47,7 +47,7 @@ export class ProjectsService {
     return this.projects$;
   }
 
-  public setCurrentProject(id: number) {
+  public setCurrentProject(id: Project['id']) {
     return this.projects$.pipe(
       take(1),
       map((projects) => projects.find((project) => project.id === id)),
@@ -118,7 +118,7 @@ export class ProjectsService {
       );
   }
 
-  public deleteProject(projectId: number) {
+  public deleteProject(projectId: Project['id']) {
     return this.http
       .delete(`projects/${projectId}`)
       .pipe(
@@ -132,7 +132,7 @@ export class ProjectsService {
       );
   }
 
-  private loadProjectUsers(id: number) {
+  private loadProjectUsers(id: Project['id']) {
     return this.http.get<User[]>(`${this.apiEndpoint}/${id}/users`);
   }
 

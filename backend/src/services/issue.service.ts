@@ -1,5 +1,6 @@
 import { BaseStructure, Injectable, InjectRepository } from "core";
 import { Issue } from "entities/issue.entity";
+import { Project } from "entities/project.entity";
 import { IssueDTO } from "interfaces/Issue.dto";
 import { IssueRepository } from "repositories/issue.repository";
 import { ProjectRepository } from "repositories/project.repository";
@@ -19,10 +20,10 @@ export class IssueService extends BaseStructure {
   }
 
   async moveIssue(
-    projectID: number,
-    id: number,
-    position: number,
-    status: number
+    projectID: Project["id"],
+    id: Issue["id"],
+    position: Issue["position"],
+    status: Issue["status"]
   ) {
     this.issueRepository
       .createQueryBuilder("issue")
@@ -43,7 +44,7 @@ export class IssueService extends BaseStructure {
   }
 
   async getProjectIssues(
-    id: number,
+    id: Issue["id"],
     skip: number,
     take: number
   ): Promise<Issue[]> {
@@ -61,7 +62,7 @@ export class IssueService extends BaseStructure {
   }
 
   async createProjectIssue(
-    projectID: number,
+    projectID: Project["id"],
 
     { assignee, ...issue }: IssueDTO
   ): Promise<Issue> {

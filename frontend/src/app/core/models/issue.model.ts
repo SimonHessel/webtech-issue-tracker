@@ -1,7 +1,7 @@
 import { Priority } from 'core/enums/priority.enum';
+import { PrimaryID } from './id.model';
 
-export interface Issue {
-  id: number;
+export interface Issue extends PrimaryID {
   title: string;
   description: string;
   assignee: string;

@@ -1,5 +1,7 @@
+import { Project } from './project.model';
+
 export interface Me {
-  projects: number[];
+  projects: Project['id'][];
   username: string;
   email: string;
   iat: number;

@@ -1,4 +1,6 @@
+import { User } from "entities/user.entity";
+
 export interface RefreshTokenData {
-  username: string;
-  version: number;
+  username: User["username"];
+  version: User["passwordVersion"];
 }

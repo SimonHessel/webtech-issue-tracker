@@ -17,7 +17,7 @@ export class UsersController extends BaseStructure {
 
   @POST("/")
   public async create(
-    req: Request<{ projectid: number }, unknown, UserDTO>,
+    req: Request<{ projectid: string }, unknown, UserDTO>,
     res: Response<User>
   ) {
     res.sendStatus(200);
@@ -43,7 +43,7 @@ export class UsersController extends BaseStructure {
 
   @DELETE("/:id")
   public async delete(
-    req: Request<{ id: number }, unknown, unknown>,
+    req: Request<{ id: string }, unknown, unknown>,
     res: Response
   ) {
     const { username } = res.locals.tokenData;

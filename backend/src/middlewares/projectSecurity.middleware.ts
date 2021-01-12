@@ -27,7 +27,7 @@ export class ProjectSecurityMiddleware
     res: Response,
     next: NextFunction
   ) {
-    const projectID = parseInt(req.params.projectID);
+    const { projectID } = req.params;
     const tokenData: TokenData = res.locals.tokenData;
     if (tokenData.projects.some((id) => id === projectID)) next();
     else {

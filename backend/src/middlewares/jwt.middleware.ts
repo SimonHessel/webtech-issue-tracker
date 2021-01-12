@@ -15,7 +15,7 @@ export class JWTMiddleware extends BaseStructure implements IMiddleware {
     super();
   }
   async middleware(
-    req: Request<{ projectID: string }, unknown, unknown>,
+    req: Request<unknown, unknown, unknown>,
     res: Response,
     next: NextFunction
   ) {

@@ -4,12 +4,14 @@ import { UnsubscribeOnDestroyAdapter } from './utils/UnsubscribeOnDestroyAdapter
 import { DescriptionPipe } from './pipes/description.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { AvatarPipe } from './pipes/avatar.pipe';
+import { DirectionPipe } from './pipes/direction.pipe';
 
 const declarations = [
   UnsubscribeOnDestroyAdapter,
   DescriptionPipe,
   JoinPipe,
   AvatarPipe,
+  DirectionPipe,
 ];
 @NgModule({
   declarations,

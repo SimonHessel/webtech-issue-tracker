@@ -65,7 +65,7 @@
             <div class="line"></div>
           </div>
           <button mat-mini-fab (click)="innersidenav.toggle()">
-            <mat-icon>{{ getIcon(innersidenav.opened) }}</mat-icon>
+            <mat-icon>{{ innersidenav.opened | direction }}</mat-icon>
           </button>
         </div>
         <router-outlet></router-outlet>

@@ -4,11 +4,11 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'core/services/auth.service';
 import { filter, startWith } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-import { MediaObserver } from '@angular/flex-layout';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -45,10 +45,6 @@ export class MenuComponent
         this.id = res?.groups?.id ? res?.groups?.id : '';
         this.isShown = !!this.id;
       });
-  }
-
-  public getIcon(open: boolean) {
-    return open ? 'keyboard_arrow_left' : 'keyboard_arrow_right';
   }
 
   public logOut() {

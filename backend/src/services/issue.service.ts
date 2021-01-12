@@ -43,6 +43,20 @@ export class IssueService extends BaseStructure {
     });
   }
 
+  async updateIssue(
+    id: Issue["id"],
+    issue: Parameters<IssueRepository["update"]>[1]
+  ) {
+    const res = await this.issueRepository
+      .createQueryBuilder()
+      .update()
+      .set(issue)
+      .where("issue.id = :id", { id })
+      .output(Object.keys(issue))
+      .execute();
+    return res.raw[0] as Parameters<IssueRepository["update"]>[1];
+  }
+
   async getProjectIssues(
     id: Issue["id"],
     skip: number,

@@ -1,5 +1,7 @@
+import { User } from "entities/user.entity";
+
 export interface Register {
-  email: string;
-  username: string;
-  password: string;
+  email: User["email"];
+  username: User["username"];
+  password: User["password"];
 }

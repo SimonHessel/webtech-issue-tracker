@@ -1,5 +1,7 @@
+import { User } from "entities/user.entity";
+
 export interface UserDTO {
-  username: string;
-  email: string;
-  password?: string;
+  username: User["username"];
+  email: User["email"];
+  password?: User["password"];
 }

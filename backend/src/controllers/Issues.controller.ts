@@ -76,12 +76,49 @@ export class IssuesController extends BaseStructure {
   }
 
   @PATCH("/:projectID/:id")
-  public update(
-    req: Request<{ projectID: string; id: string }, unknown, IssueDTO>,
-    res: Response<Issue>
+  public async update(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      Parameters<IssueService["updateIssue"]>[1]
+    >,
+    res: Response
   ) {
-    const { projectID, id } = req.params;
-    res.sendStatus(200);
+    const { id } = req.params;
+    const issuePartial = req.body;
+
+    try {
+      const issue = await this.issueService.updateIssue(id, issuePartial);
+      res.send(issue);
+    } catch (error) {
+      this.error(error);
+      res.status(400).send("Issue not found");
+    }
+  }
+
+  @PATCH("/:projectID/:id/reorder")
+  public async move(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      {
+        position: number;
+        status: number;
+      }
+    >,
+    res: Response
+  ) {
+    const { id, projectID } = req.params;
+
+    const { position, status } = req.body;
+    if (!id || !projectID || !position)
+      return res.status(400).send("IDs and or Position are undefined.");
+    try {
+      res.send(this.issueService.moveIssue(projectID, id, position, status));
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Some error.");
+    }
   }
 
   @PATCH("/:projectID/:id/reorder")

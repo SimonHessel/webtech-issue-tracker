@@ -18,6 +18,16 @@ export class IssuesService {
   public getIssueByID(projectID: Project['id'], id: Issue['id']) {
     return this.http.get<Issue>(`${this.apiEndpoint}/${projectID}/${id}`);
   }
+  public updateIssue(
+    projectID: Project['id'],
+    id: Issue['id'],
+    issue: Partial<Issue>
+  ) {
+    return this.http.patch<Partial<Issue>>(
+      `${this.apiEndpoint}/${projectID}/${id}`,
+      issue
+    );
+  }
 
   public updateStatusOrder(
     projectID: Project['id'],

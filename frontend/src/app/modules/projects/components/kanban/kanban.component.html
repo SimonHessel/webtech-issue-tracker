@@ -21,6 +21,7 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
+          [routerLink]="['../issues/', issue.id]"
           class="issues"
           *ngFor="let issue of state; trackBy: trackByMethod"
           cdkDrag

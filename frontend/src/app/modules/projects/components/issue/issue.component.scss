@@ -1,0 +1,76 @@
+.content-wrapper {
+  margin-top: 3rem;
+  height: 50%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+
+  .main {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 9px 0px 0px 9px;
+
+    width: 60%;
+  }
+
+  .side-wrapper {
+    background-color: #f9f9f9;
+    border: 1px solid #cccccc;
+    border-radius: 0px 8px 9px 0px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    .side-header {
+      height: 9%;
+      background-color: #ededed;
+      border-bottom: 1px solid #cccccc;
+      color: #666666;
+      font-size: 1.1rem;
+      line-height: 2.7rem;
+      padding-left: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+
+      .close {
+        color: #999999;
+        font-size: 1.3rem;
+      }
+    }
+
+    .side-content {
+      flex: 1;
+      color: #666666;
+      font-size: 1.1rem;
+      line-height: 1.4rem;
+      padding-left: 0.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .side-buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      .share {
+        color: #666666;
+        margin: 0.5rem auto 0.5rem 0.5rem;
+      }
+
+      .assign,
+      .edit {
+        background-color: #ededed;
+        color: #666666;
+        font-size: 1.1rem;
+        line-height: 2.3rem;
+        margin: 0.5rem;
+      }
+
+      .delete {
+        background: #ffe5e5;
+        color: #ff5050;
+        font-size: 1.1rem;
+        line-height: 2.3rem;
+        margin: 0.5rem;
+      }
+    }
+  }
+}

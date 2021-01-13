@@ -15,6 +15,10 @@ export class IssuesService {
     return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`);
   }
 
+  public getIssueByID(projectID: Project['id'], id: Issue['id']) {
+    return this.http.get<Issue>(`${this.apiEndpoint}/${projectID}/${id}`);
+  }
+
   public updateStatusOrder(
     projectID: Project['id'],
     id: Issue['id'],

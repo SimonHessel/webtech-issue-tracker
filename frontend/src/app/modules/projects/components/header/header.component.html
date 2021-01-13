@@ -5,6 +5,7 @@
   </div>
 
   <input
+    [ngClass]="{ none: !displaySearch }"
     type="text"
     i18n-placeholder="@@search"
     #search

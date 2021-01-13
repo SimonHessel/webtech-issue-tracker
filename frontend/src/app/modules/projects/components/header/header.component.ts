@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
@@ -15,7 +8,7 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent
   extends UnsubscribeOnDestroyAdapter
@@ -24,7 +17,7 @@ export class HeaderComponent
   @ViewChild('search', { static: true })
   searchInput!: ElementRef;
   @Input() search: ((value: string) => void) | undefined = undefined;
-
+  @Input() displaySearch = true;
   constructor() {
     super();
   }

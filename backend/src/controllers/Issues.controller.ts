@@ -146,6 +146,31 @@ export class IssuesController extends BaseStructure {
     }
   }
 
+  @PATCH("/:projectID/:id/reorder")
+  public async move(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      {
+        position: number;
+        status: number;
+      }
+    >,
+    res: Response
+  ) {
+    const { id, projectID } = req.params;
+
+    const { position, status } = req.body;
+    if (!id || !projectID || !position)
+      return res.status(400).send("IDs and or Position are undefined.");
+    try {
+      res.send(this.issueService.moveIssue(projectID, id, position, status));
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Some error.");
+    }
+  }
+
   @DELETE("/:projectID/:id")
   public delete(
     req: Request<

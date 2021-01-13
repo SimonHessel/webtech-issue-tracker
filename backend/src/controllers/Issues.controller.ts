@@ -61,6 +61,20 @@ export class IssuesController extends BaseStructure {
     res.send(issues);
   }
 
+  @GET("/:projectID/:id")
+  public async singleIssue(
+    req: Request<{ projectID: string; id: string }, unknown, unknown>,
+    res: Response
+  ) {
+    const { id } = req.params;
+    try {
+      const issue = await this.issueService.getIssueByID(id);
+      res.send(issue);
+    } catch (error) {
+      res.status(400).send("Issue not found");
+    }
+  }
+
   @PATCH("/:projectID/:id")
   public update(
     req: Request<{ projectID: string; id: string }, unknown, IssueDTO>,

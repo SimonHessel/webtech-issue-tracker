@@ -4,13 +4,19 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Priority } from 'core/enums/priority.enum';
 import { Issue } from 'core/models/issue.model';
+import { Project } from 'core/models/project.model';
 import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'core/models/user.model';
 
 @Component({
   selector: 'app-issue',
@@ -22,11 +28,20 @@ export class IssueComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
   issue: Issue | undefined = undefined;
+  edit = false;
+  priority = '';
+  issueForm = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+  });
   constructor(
     private route: ActivatedRoute,
     private readonly projectService: ProjectsService,
     private readonly issuesService: IssuesService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly snackBar: MatSnackBar,
+    private readonly router: Router,
+    private readonly clipboard: Clipboard
   ) {
     super();
   }
@@ -49,7 +64,89 @@ export class IssueComponent
       )
       .subscribe((issue) => {
         this.issue = issue;
+        this.priority = Priority[issue.priority];
+        console.log(this.issue.project);
+        this.issueForm.patchValue({
+          title: this.issue.title,
+          description: this.issue.description,
+        });
         this.cdRef.markForCheck();
       });
+  }
+
+  public assignAssignee(newAssignee: string) {
+    if (this.issue && this.issue.project) {
+      this.subs.sink = this.issuesService
+        .updateIssue(this.issue.project.id, this.issue.id, {
+          assignee: newAssignee,
+        })
+        .subscribe((newIssue) => {
+          if (this.issue) {
+            this.issue = { ...this.issue, ...newIssue };
+          }
+          this.cdRef.markForCheck();
+        });
+    }
+  }
+
+  public editIssue() {
+    this.edit = !this.edit;
+    if (this.issue && this.issue.project) {
+      this.subs.sink = this.issuesService
+        .updateIssue(this.issue.project.id, this.issue.id, {
+          title: this.issueForm.value.title,
+          description: this.issueForm.value.description,
+        })
+        .subscribe((newIssue) => {
+          if (this.issue) {
+            this.issue = { ...this.issue, ...newIssue };
+          }
+          this.cdRef.markForCheck();
+        });
+    }
+  }
+
+  public changePriority(newPriority: number) {
+    if (this.issue && this.issue.project) {
+      this.subs.sink = this.issuesService
+        .updateIssue(this.issue.project.id, this.issue.id, {
+          priority: newPriority,
+        })
+        .subscribe((newIssue) => {
+          if (this.issue) {
+            this.issue = { ...this.issue, ...newIssue };
+            this.priority = Priority[this.issue.priority];
+          }
+          this.cdRef.markForCheck();
+        });
+    }
+  }
+
+  public deleteIssue(issueId: Issue['id'], projectId: Project['id']) {
+    const snackBarRef = this.snackBar.open('Issue has been deleted', 'undo', {
+      duration: 3000,
+    });
+
+    this.subs.sink = snackBarRef
+      .afterDismissed()
+      .pipe(
+        switchMap((event) =>
+          event.dismissedByAction
+            ? this.snackBar
+                .open('Deletion has been undone.', '', { duration: 3000 })
+                .afterDismissed()
+            : this.issuesService.deleteIssue(projectId, issueId).toPromise()
+        )
+      )
+      .subscribe(() => {
+        this.router.navigate([
+          '/projects/' + this.issue?.project?.id + '/kanban',
+        ]);
+      });
+  }
+
+  public copy() {
+    this.clipboard.copy(`${window.location.host}${this.router.url}`);
+    this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
   }
 }

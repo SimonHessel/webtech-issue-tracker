@@ -10,23 +10,111 @@
   </button>
 </app-header>
 <div class="content-wrapper">
-  <div class="main">Main Content</div>
+  <div class="main">
+    <div class="main-header">
+      <div class="priority" [ngClass]="priority"></div>
+      <h1 *ngIf="!edit">{{ issue?.title }}</h1>
+      <form novalidate [formGroup]="issueForm" *ngIf="edit">
+        <mat-form-field appearance="standard">
+          <mat-label>Issue Title</mat-label>
+          <input matInput type="text" formControlName="title" />
+          <mat-error
+            *ngIf="
+              !issueForm.controls.title?.valid &&
+              (issueForm.controls.title.dirty ||
+                issueForm.controls.title?.touched)
+            "
+          >
+            Please enter a Titel
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <button mat-button [matMenuTriggerFor]="prioMenu" class="priority-menu">
+        Priority
+      </button>
+      <mat-menu #prioMenu="matMenu">
+        <button
+          mat-menu-item
+          *ngIf="priority !== 'low'"
+          (click)="changePriority(0)"
+        >
+          Low
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="priority !== 'medium'"
+          (click)="changePriority(1)"
+        >
+          Medium
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="priority !== 'high'"
+          (click)="changePriority(2)"
+        >
+          High
+        </button>
+      </mat-menu>
+    </div>
+    <p class="issue-description" *ngIf="!edit">{{ issue?.description }}</p>
+    <form novalidate [formGroup]="issueForm" *ngIf="edit">
+      <mat-form-field appearance="standard">
+        <mat-label>Issue Description</mat-label>
+        <input matInput type="text" formControlName="description" />
+        <mat-error
+          *ngIf="
+            !issueForm.controls.description?.valid &&
+            (issueForm.controls.description.dirty ||
+              issueForm.controls.description?.touched)
+          "
+        >
+          Please enter a Description
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
   <div class="side-wrapper">
     <div class="side-header">
-      Author: {{ "idk wer der autor ist" }}
-      <button class="close" mat-icon-button><mat-icon>close</mat-icon></button>
+      Author: {{ "Hier Autor einfügen" }}
+      <button class="close" mat-icon-button [routerLink]="['../../kanban']">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
     <div class="side-content">
       <p>Assignee: {{ issue?.assignee }}</p>
-      <p>Priority: {{ issue?.priority }}</p>
+      <p>Priority: {{ priority }}</p>
     </div>
     <div class="side-buttons">
-      <button class="share" mat-icon-button>
+      <button class="share" mat-icon-button (click)="copy()">
         <mat-icon>share</mat-icon>
       </button>
-      <button class="assign" mat-flat-button>assign</button>
-      <button class="edit" mat-flat-button>edit</button>
-      <button class="delete" mat-flat-button>delete</button>
+      <button class="assign" mat-flat-button [matMenuTriggerFor]="assignMenu">
+        assign
+      </button>
+      <mat-menu #assignMenu="matMenu" yPosition="above">
+        <button
+          mat-menu-item
+          *ngFor="let user of issue?.project?.users"
+          (click)="assignAssignee(user.username)"
+        >
+          {{ user.username }}
+        </button>
+      </mat-menu>
+      <button
+        class="edit"
+        mat-flat-button
+        (click)="editIssue()"
+        [ngClass]="{ edit: edit === false, save: edit === true }"
+      >
+        {{ !edit ? "edit" : "save" }}
+      </button>
+      <button
+        class="delete"
+        mat-flat-button
+        (click)="deleteIssue(issue!.id, (issue?.project)!.id)"
+      >
+        delete
+      </button>
     </div>
   </div>
 </div>

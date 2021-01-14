@@ -18,7 +18,7 @@ export class Project extends PrimaryID {
   @OneToMany(() => Issue, (issue) => issue.project)
   public issues!: Issue[];
 
-  @Expose({ groups: ["project"] })
+  @Expose({ groups: ["project", "issue"] })
   @ManyToMany(() => User, (user) => user.projects)
   public users!: User[];
 }

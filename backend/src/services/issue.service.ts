@@ -76,7 +76,9 @@ export class IssueService extends BaseStructure {
   }
 
   async getIssueByID(id: Issue["id"]) {
-    return this.issueRepository.findOneOrFail(id, { relations: ["project"] });
+    return this.issueRepository.findOneOrFail(id, {
+      relations: ["project", "project.users"],
+    });
   }
 
   async createProjectIssue(

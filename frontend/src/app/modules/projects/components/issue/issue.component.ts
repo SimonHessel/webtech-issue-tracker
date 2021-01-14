@@ -29,6 +29,7 @@ export class IssueComponent
   issue: Issue | undefined = undefined;
   edit = false;
   priority = '';
+  status = '';
   issueForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
@@ -64,7 +65,7 @@ export class IssueComponent
       .subscribe((issue) => {
         this.issue = issue;
         this.priority = Priority[issue.priority];
-        console.log(this.issue.project);
+        if (issue.project) this.status = issue.project.states[issue.status];
         this.issueForm.patchValue({
           title: this.issue.title,
           description: this.issue.description,
@@ -73,7 +74,23 @@ export class IssueComponent
       });
   }
 
-  public assignAssignee(newAssignee: string) {
+  public changeStatus(state: string) {
+    if (this.issue && this.issue.project) {
+      this.subs.sink = this.issuesService
+        .updateIssue(this.issue.project.id, this.issue.id, {
+          status: this.issue.project.states.indexOf(state),
+        })
+        .subscribe((newIssue) => {
+          if (this.issue) {
+            this.issue = { ...this.issue, ...newIssue };
+          }
+          this.status = state;
+          this.cdRef.markForCheck();
+        });
+    }
+  }
+
+  public reassignAssignee(newAssignee: string) {
     if (this.issue && this.issue.project) {
       this.subs.sink = this.issuesService
         .updateIssue(this.issue.project.id, this.issue.id, {
@@ -102,6 +119,16 @@ export class IssueComponent
           }
           this.cdRef.markForCheck();
         });
+    }
+  }
+
+  public cancelEdit() {
+    this.edit = !this.edit;
+    if (this.issue) {
+      this.issueForm.patchValue({
+        title: this.issue.title,
+        description: this.issue.description,
+      });
     }
   }
 

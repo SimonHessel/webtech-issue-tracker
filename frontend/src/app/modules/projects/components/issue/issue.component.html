@@ -55,6 +55,20 @@
           High
         </button>
       </mat-menu>
+      <button mat-button [matMenuTriggerFor]="stateMenu" class="status-menu">
+        Status
+      </button>
+      <mat-menu #stateMenu="matMenu">
+        <ng-container *ngFor="let state of issue?.project?.states">
+          <button
+            mat-menu-item
+            *ngIf="state !== status"
+            (click)="changeStatus(state)"
+          >
+            {{ state }}
+          </button>
+        </ng-container>
+      </mat-menu>
     </div>
     <p class="issue-description" *ngIf="!edit">{{ issue?.description }}</p>
     <form novalidate [formGroup]="issueForm" *ngIf="edit">
@@ -72,6 +86,14 @@
         </mat-error>
       </mat-form-field>
     </form>
+    <button
+      mat-button
+      class="cancel-button"
+      *ngIf="edit"
+      (click)="cancelEdit()"
+    >
+      Cancel
+    </button>
   </div>
   <div class="side-wrapper">
     <div class="side-header">
@@ -83,19 +105,25 @@
     <div class="side-content">
       <p>Assignee: {{ issue?.assignee }}</p>
       <p>Priority: {{ priority }}</p>
+      <p>Status: {{ status }}</p>
     </div>
     <div class="side-buttons">
-      <button class="share" mat-icon-button (click)="copy()">
+      <button class="share" mat-icon-button (click)="copy()" *ngIf="!edit">
         <mat-icon>share</mat-icon>
       </button>
-      <button class="assign" mat-flat-button [matMenuTriggerFor]="assignMenu">
+      <button
+        class="assign"
+        mat-flat-button
+        [matMenuTriggerFor]="assignMenu"
+        *ngIf="!edit"
+      >
         assign
       </button>
-      <mat-menu #assignMenu="matMenu" yPosition="above">
+      <mat-menu #assignMenu="matMenu" yPosition="below">
         <button
           mat-menu-item
           *ngFor="let user of issue?.project?.users"
-          (click)="assignAssignee(user.username)"
+          (click)="reassignAssignee(user.username)"
         >
           {{ user.username }}
         </button>
@@ -111,6 +139,7 @@
       <button
         class="delete"
         mat-flat-button
+        *ngIf="!edit"
         (click)="deleteIssue(issue!.id, (issue?.project)!.id)"
       >
         delete
@@ -118,5 +147,3 @@
     </div>
   </div>
 </div>
-
-<p>{{ issue | json }}</p>

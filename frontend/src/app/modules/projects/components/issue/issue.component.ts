@@ -16,7 +16,6 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'core/models/user.model';
 
 @Component({
   selector: 'app-issue',

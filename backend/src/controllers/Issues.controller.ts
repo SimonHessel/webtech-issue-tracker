@@ -71,6 +71,7 @@ export class IssuesController extends BaseStructure {
       const issue = await this.issueService.getIssueByID(id);
       res.send(issue);
     } catch (error) {
+      this.error(error);
       res.status(400).send("Issue not found");
     }
   }

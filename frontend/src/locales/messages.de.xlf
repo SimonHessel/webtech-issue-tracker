@@ -224,7 +224,7 @@ Priorität</target>
         <target>Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">169,170</context>
+          <context context-type="linenumber">173,174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="save" datatype="html">
@@ -232,25 +232,7 @@ Priorität</target>
         <target>Speichern</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">161</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6ac53240b02c559e451f29ec20743addd5ec697b" datatype="html">
-        <source>{VAR_SELECT, select, low {low} medium {medium} high {high}}</source>
-        <target>{VAR_SELECT, select, low {Niedrig} medium {Mittel} high {Hoch}}
-</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2dc015dfe6cd1bb1c5e03d29db5a3e4c704fa163" datatype="html">
-        <source> <x id="ICU" equiv-text="{ priority, select, low{low} medium{medium} high{high}}         "/> </source>
-        <target><x id="ICU" equiv-text="{ priority, select, low{Niedrig} medium{Mittel} high{Hoch}}         "/>
-</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">125,126</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
@@ -258,7 +240,23 @@ Priorität</target>
         <target>Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6ac53240b02c559e451f29ec20743addd5ec697b" datatype="html">
+        <source>{VAR_SELECT, select, low {low} medium {medium} high {high}}</source>
+        <target>{VAR_SELECT, select, low {Niedrig} medium {Mittel} high {Hoch}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2dc015dfe6cd1bb1c5e03d29db5a3e4c704fa163" datatype="html">
+        <source> <x id="ICU" equiv-text="{ priority, select, low{low} medium{medium} high{high}}         "/> </source>
+        <target><x id="ICU" equiv-text="{ priority, select, low {Niedrig} medium {Mittel} high {Hoch}}         "/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
+          <context context-type="linenumber">125,126</context>
         </context-group>
       </trans-unit>
     </body>

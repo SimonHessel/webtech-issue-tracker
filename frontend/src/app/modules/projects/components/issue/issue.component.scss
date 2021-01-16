@@ -122,8 +122,13 @@
       color: #666666;
       font-size: 1.1rem;
       line-height: 1.4rem;
-      padding-left: 0.5rem;
       padding-top: 0.5rem;
+
+      span {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+      }
     }
 
     .side-buttons {

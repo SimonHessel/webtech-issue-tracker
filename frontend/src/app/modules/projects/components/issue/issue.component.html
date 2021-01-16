@@ -24,12 +24,18 @@
               (issueForm.controls.title.dirty ||
                 issueForm.controls.title?.touched)
             "
+            i18n="@@titelerror"
           >
             Please enter a Titel
           </mat-error>
         </mat-form-field>
       </form>
-      <button mat-button [matMenuTriggerFor]="prioMenu" class="priority-menu">
+      <button
+        mat-button
+        [matMenuTriggerFor]="prioMenu"
+        class="priority-menu"
+        i18n="@@priority"
+      >
         Priority
       </button>
       <mat-menu #prioMenu="matMenu">
@@ -37,6 +43,7 @@
           mat-menu-item
           *ngIf="priority !== 'low'"
           (click)="changePriority(0)"
+          i18n="@@low"
         >
           Low
         </button>
@@ -44,6 +51,7 @@
           mat-menu-item
           *ngIf="priority !== 'medium'"
           (click)="changePriority(1)"
+          i18n="@@medium"
         >
           Medium
         </button>
@@ -51,6 +59,7 @@
           mat-menu-item
           *ngIf="priority !== 'high'"
           (click)="changePriority(2)"
+          i18n="@@high"
         >
           High
         </button>
@@ -81,6 +90,7 @@
             (issueForm.controls.description.dirty ||
               issueForm.controls.description?.touched)
           "
+          i18n="@@descriptionerror"
         >
           Please enter a Description
         </mat-error>
@@ -91,21 +101,32 @@
       class="cancel-button"
       *ngIf="edit"
       (click)="cancelEdit()"
+      i18n="@@cancel"
     >
       Cancel
     </button>
   </div>
   <div class="side-wrapper">
     <div class="side-header">
-      Author: {{ "Hier Autor einfügen" }}
+      <p i18n="@@author">Author</p>
+      {{ "Hier Autor einfügen" }}
       <button class="close" mat-icon-button [routerLink]="['../../kanban']">
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="side-content">
-      <p>Assignee: {{ issue?.assignee }}</p>
-      <p>Priority: {{ priority }}</p>
-      <p>Status: {{ status }}</p>
+      <span
+        ><p i18n="@@assignee">Assignee</p>
+        <p>{{ issue?.assignee }}</p></span
+      >
+      <span
+        ><p i18n="@@priority">Priority</p>
+        <p>{{ priority }}</p></span
+      >
+      <span
+        ><p>Status</p>
+        <p>{{ status }}</p></span
+      >
     </div>
     <div class="side-buttons">
       <button class="share" mat-icon-button (click)="copy()" *ngIf="!edit">
@@ -116,6 +137,7 @@
         mat-flat-button
         [matMenuTriggerFor]="assignMenu"
         *ngIf="!edit"
+        i18n="@@assign"
       >
         assign
       </button>
@@ -134,13 +156,14 @@
         (click)="editIssue()"
         [ngClass]="{ edit: edit === false, save: edit === true }"
       >
-        {{ !edit ? "edit" : "save" }}
+        <span i18n="@@editandsave">{{ !edit ? "edit" : "save" }}</span>
       </button>
       <button
         class="delete"
         mat-flat-button
         *ngIf="!edit"
         (click)="deleteIssue(issue!.id, (issue?.project)!.id)"
+        i18n="@@delete"
       >
         delete
       </button>

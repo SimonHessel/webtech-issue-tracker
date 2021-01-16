@@ -51,6 +51,10 @@
         flex-direction: column;
         justify-content: space-between;
 
+        span {
+          padding: 0.5rem;
+        }
+
         .second-sidenav__upper-content {
           display: flex;
           flex-direction: column;

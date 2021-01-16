@@ -167,6 +167,10 @@ Priorität</target>
         <source> Please enter a Titel </source>
         <target>Bitte geben sie einen Titel ein</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">29,30</context>
         </context-group>
@@ -198,6 +202,10 @@ Priorität</target>
       <trans-unit id="descriptionerror" datatype="html">
         <source> Please enter a Description </source>
         <target>Bitte geben sie eine Beschreibung ein</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">95,96</context>
@@ -257,6 +265,78 @@ Priorität</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">125,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projects" datatype="html">
+        <source>Projects</source>
+        <target>Projekte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/menu/menu.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountsettings" datatype="html">
+        <source>Account settings</source>
+        <target>Account Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/menu/menu.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logout" datatype="html">
+        <source>Logout</source>
+        <target>Ausloggen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/menu/menu.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>Users</source>
+        <target>Benutzer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/menu/menu.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings" datatype="html">
+        <source>Settings</source>
+        <target>Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/layout/menu/menu.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="create" datatype="html">
+        <source> Create </source>
+        <target>Erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createproject" datatype="html">
+        <source>Create new Project</source>
+        <target>Erstelle ein neues Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projecttitle" datatype="html">
+        <source>Project titel</source>
+        <target>Projekt Titel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>Description</source>
+        <target>Beschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
     </body>

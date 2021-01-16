@@ -1,6 +1,6 @@
 <div class="create-project">
   <div class="header">
-    <h1>Create new Project</h1>
+    <h1 i18n="@@createproject">Create new Project</h1>
     <button mat-icon-button (click)="onNoClick()" class="close-button">
       <mat-icon [inline]="true">close</mat-icon>
     </button>
@@ -9,7 +9,7 @@
     <form [formGroup]="projectForm" novalidate>
       <div>
         <mat-form-field appearance="standard" class="input-title">
-          <mat-label>Project name</mat-label>
+          <mat-label i18n="@@projecttitle">Project titel</mat-label>
           <input
             matInput
             type="text"
@@ -19,6 +19,7 @@
             formControlName="title"
           />
           <mat-error
+            i18n="@@titelerror"
             *ngIf="
               !projectForm.controls.title?.valid &&
               (projectForm.controls.title.dirty ||
@@ -30,7 +31,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="standard" class="input-description">
-          <mat-label>Description</mat-label>
+          <mat-label i18n="@@description">Description</mat-label>
           <textarea
             matInput
             type="text"
@@ -39,6 +40,7 @@
             formControlName="description"
           ></textarea>
           <mat-error
+            i18n="@@descriptionerror"
             *ngIf="
               !projectForm.controls.description?.valid &&
               (projectForm.controls.description?.dirty ||
@@ -50,6 +52,7 @@
         </mat-form-field>
       </div>
       <button
+        i18n="@@create"
         mat-button
         class="create-button"
         type="submit"

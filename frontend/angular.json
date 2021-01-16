@@ -88,6 +88,9 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "de": {
+              "localize": ["de"]
             }
           }
         },
@@ -99,6 +102,9 @@
           "configurations": {
             "production": {
               "browserTarget": "webtech-project:build:production"
+            },
+            "de": {
+              "browserTarget": "webtech-project:build:de"
             }
           }
         },

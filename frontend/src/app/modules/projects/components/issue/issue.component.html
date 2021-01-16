@@ -121,7 +121,9 @@
       >
       <span
         ><p i18n="@@priority">Priority</p>
-        <p>{{ priority }}</p></span
+        <p i18n>
+          { priority, select, low{low} medium{medium} high{high}}
+        </p></span
       >
       <span
         ><p>Status</p>
@@ -156,7 +158,7 @@
         (click)="editIssue()"
         [ngClass]="{ edit: edit === false, save: edit === true }"
       >
-        <span i18n="@@editandsave">{{ !edit ? "edit" : "save" }}</span>
+        {{ !edit ? "edit" : "save" }}
       </button>
       <button
         class="delete"

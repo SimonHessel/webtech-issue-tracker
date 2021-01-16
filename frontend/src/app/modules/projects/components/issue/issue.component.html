@@ -158,7 +158,10 @@
         (click)="editIssue()"
         [ngClass]="{ edit: edit === false, save: edit === true }"
       >
-        {{ !edit ? "edit" : "save" }}
+        <ng-container *ngIf="edit; else not_edit" i18n="@@save"
+          >save</ng-container
+        >
+        <ng-template #not_edit i18n="@@edit">edit</ng-template>
       </button>
       <button
         class="delete"

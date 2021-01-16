@@ -223,12 +223,12 @@
         <target> delete </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">170,171</context>
+          <context context-type="linenumber">169,170</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="editandsave" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ !edit ? &quot;edit&quot; : &quot;save&quot; }}"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{ !edit ? &quot;edit&quot; : &quot;save&quot; }}"/></target>
+      <trans-unit id="save" datatype="html">
+        <source>save</source>
+        <target>save</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">161</context>
@@ -248,6 +248,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">125,126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source>
+        <target>edit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
     </body>

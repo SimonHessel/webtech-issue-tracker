@@ -224,15 +224,23 @@ Priorität</target>
         <target>Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">168,169</context>
+          <context context-type="linenumber">169,170</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="editandsave" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ !edit ? &quot;edit&quot; : &quot;save&quot; }}"/></source>
-        <target> <x id="INTERPOLATION" equiv-text="{{ !edit ? &quot;Bearbeiten&quot; :  &quot;Speichern&quot;}}"/> </target>
+      <trans-unit id="save" datatype="html">
+        <source>save</source>
+        <target>Speichern</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
           <context context-type="linenumber">159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source>
+        <target>Bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
     </body>

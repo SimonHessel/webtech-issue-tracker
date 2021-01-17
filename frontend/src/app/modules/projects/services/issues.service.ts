@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
+import { mapTo } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,10 @@ export class IssuesService {
   }
 
   public deleteIssue(projectID: Project['id'], id: Issue['id']) {
-    return this.http.delete(`${this.apiEndpoint}/${projectID}/${id}`);
+    return this.http
+      .delete(`${this.apiEndpoint}/${projectID}/${id}`, {
+        responseType: 'text',
+      })
+      .pipe(mapTo(true));
   }
 }

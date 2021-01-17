@@ -13,7 +13,7 @@ import { Project } from 'core/models/project.model';
 import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -161,14 +161,26 @@ export class IssueComponent
             ? this.snackBar
                 .open('Deletion has been undone.', '', { duration: 3000 })
                 .afterDismissed()
-            : this.issuesService.deleteIssue(projectId, issueId).toPromise()
-        )
+            : this.issuesService.deleteIssue(projectId, issueId)
+        ),
+
+        tap(
+          (res) =>
+            res === true &&
+            this.router.navigate([
+              '/projects/' + this.issue?.project?.id + '/kanban',
+            ])
+        ),
+        catchError((err) => {
+          console.log(err);
+          return this.snackBar
+            .open('Deletion has failed.', '', {
+              duration: 3000,
+            })
+            .afterDismissed();
+        })
       )
-      .subscribe(() => {
-        this.router.navigate([
-          '/projects/' + this.issue?.project?.id + '/kanban',
-        ]);
-      });
+      .subscribe();
   }
 
   public copy() {

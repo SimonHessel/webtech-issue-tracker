@@ -32,6 +32,14 @@
             <button
               mat-button
               *ngIf="isShown"
+              [routerLink]="['/projects/' + id + '/issues']"
+            >
+              <mat-icon [inline]="true">view_list</mat-icon>
+              <span i18n="@@issues">Issues</span>
+            </button>
+            <button
+              mat-button
+              *ngIf="isShown"
               [routerLink]="['/projects/' + id + '/users']"
             >
               <mat-icon [inline]="true">group</mat-icon>

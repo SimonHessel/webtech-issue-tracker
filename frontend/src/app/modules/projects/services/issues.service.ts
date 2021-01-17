@@ -35,12 +35,13 @@ export class IssuesService {
     position: Issue['position'],
     status: Issue['status']
   ) {
-    return this.http.patch<Issue>(
+    return this.http.patch(
       `${this.apiEndpoint}/${projectID}/${id}/reorder`,
       {
         position,
         status,
-      }
+      },
+      { responseType: 'text' }
     );
   }
 

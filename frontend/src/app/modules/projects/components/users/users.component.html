@@ -10,4 +10,20 @@
   </button>
 </app-header>
 
-{{ project?.users | json }}
+<mat-list *ngIf="project">
+  <ng-container *ngFor="let user of project.users">
+    <mat-list-item>
+      <mat-icon mat-list-icon>person</mat-icon>
+      <a
+        [routerLink]="['../issues']"
+        [queryParams]="{
+          assignee: user.username
+        }"
+        mat-line
+        >{{ user.username }}</a
+      >
+      <div mat-line>{{ user.email }}</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-list>

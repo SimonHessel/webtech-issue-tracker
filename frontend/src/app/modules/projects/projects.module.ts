@@ -28,6 +28,7 @@ import { UsersComponent } from './components/users/users.component';
 import { ProjectGuardService } from './guards/project.guard';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsService } from './services/projects.service';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ProjectsService } from './services/projects.service';
     MatSnackBarModule,
     DragDropModule,
     MatMenuModule,
+    MatListModule,
   ],
 })
 export class ProjectsModule {}

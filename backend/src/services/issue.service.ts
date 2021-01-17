@@ -88,4 +88,8 @@ export class IssueService extends BaseStructure {
       throw "User or Project is not defined.";
     }
   }
+
+  async deleteIssueByID(id: Issue["id"]) {
+    return this.issueRepository.delete(id);
+  }
 }

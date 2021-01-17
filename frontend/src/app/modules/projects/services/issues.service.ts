@@ -46,6 +46,8 @@ export class IssuesService {
   }
 
   public deleteIssue(projectID: Project['id'], id: Issue['id']) {
-    return this.http.delete(`${this.apiEndpoint}/${projectID}/${id}`);
+    return this.http.delete(`${this.apiEndpoint}/${projectID}/${id}`, {
+      responseType: 'text',
+    });
   }
 }

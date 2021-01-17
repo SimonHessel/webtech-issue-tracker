@@ -128,7 +128,7 @@ export class IssuesController extends BaseStructure {
   }
 
   @DELETE("/:projectID/:id")
-  public delete(
+  public async delete(
     req: Request<
       { projectID: string; id: string },
       unknown,
@@ -137,6 +137,16 @@ export class IssuesController extends BaseStructure {
     res: Response
   ) {
     const { projectID, id } = req.params;
-    res.sendStatus(200);
+
+    if (!id || !projectID) return res.status(400).send("IDs are undefined.");
+
+    try {
+      await this.issueService.deleteIssueByID(id);
+
+      return res.status(200);
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Deletion failed");
+    }
   }
 }

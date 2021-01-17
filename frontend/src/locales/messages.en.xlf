@@ -99,7 +99,7 @@
         <target>Search</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/header/header.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newproject" datatype="html">
@@ -142,28 +142,28 @@
         <source> Priority </source>
         <target> Priority </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">28,29</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="author" datatype="html">
         <source>Author</source>
         <target>Author</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assignee" datatype="html">
         <source>Assignee</source>
         <target>Assignee</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="titelerror" datatype="html">
@@ -174,32 +174,32 @@
           <context context-type="linenumber">29,30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">29,30</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">18,19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="low" datatype="html">
         <source> Low </source>
         <target> Low </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">48,49</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">37,38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="medium" datatype="html">
         <source> Medium </source>
         <target> Medium </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">56,57</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="high" datatype="html">
         <source> High </source>
         <target> High </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">64,65</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="descriptionerror" datatype="html">
@@ -210,64 +210,48 @@
           <context context-type="linenumber">50,51</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">84,85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cancel" datatype="html">
         <source> Cancel </source>
         <target> Cancel </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">106,107</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">95,96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assign" datatype="html">
         <source> assign </source>
         <target> assign </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">144,145</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">134,135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
         <source> delete </source>
         <target> delete </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">173,174</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">163,164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="save" datatype="html">
         <source>save</source>
         <target>save</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
         <source>edit</source>
         <target>edit</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">164</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6ac53240b02c559e451f29ec20743addd5ec697b" datatype="html">
-        <source>{VAR_SELECT, select, low {low} medium {medium} high {high}}</source>
-        <target>{VAR_SELECT, select, low {low} medium {medium} high {high}}</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2dc015dfe6cd1bb1c5e03d29db5a3e4c704fa163" datatype="html">
-        <source> <x id="ICU" equiv-text="{ priority, select, low{low} medium{medium} high{high}}         "/> </source>
-        <target> <x id="ICU" equiv-text="{ priority, select, low{low} medium{medium} high{high}}         "/> </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.html</context>
-          <context context-type="linenumber">125,126</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projects" datatype="html">
@@ -346,52 +330,52 @@
         <source>Issue has been deleted</source>
         <target>Issue has been deleted</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="undo" datatype="html">
         <source>undo</source>
         <target>undo</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.ts</context>
-          <context context-type="linenumber">154</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
           <context context-type="linenumber">123</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deleteundone" datatype="html">
         <source>Deletion has been undone.</source>
         <target>Deletion has been undone.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.ts</context>
-          <context context-type="linenumber">167</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
           <context context-type="linenumber">136</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deletefailed" datatype="html">
         <source>Deletion has failed.</source>
         <target>Deletion has failed.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.ts</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="linkhasbeencopied" datatype="html">
         <source>Link has been copied</source>
         <target>Link has been copied</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue/issue.component.ts</context>
-          <context context-type="linenumber">199</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
           <context context-type="linenumber">112</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectdelete" datatype="html">
@@ -400,6 +384,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
           <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7b48110530699dd51d25d59f6da05df753ef350f" datatype="html">
+        <source>{VAR_SELECT, select, low {low} medium {medium} high {high}}</source>
+        <target>{VAR_SELECT, select, low {low} medium {medium} high {high}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2375aa62ade64c1ec0fa0f20fd6edf1fe5f8397c" datatype="html">
+        <source> <x id="ICU" equiv-text="{ (issue?.priority | priority), select, low{low} medium{medium}           high{high}}         "/> </source>
+        <target> <x id="ICU" equiv-text="{ (issue?.priority | priority), select, low{low} medium{medium}           high{high}}         "/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
+          <context context-type="linenumber">114,116</context>
         </context-group>
       </trans-unit>
     </body>

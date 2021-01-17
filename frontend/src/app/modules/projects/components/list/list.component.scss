@@ -1,0 +1,21 @@
+mat-list-item {
+  cursor: pointer;
+  margin: -0.5rem 0;
+  mat-icon {
+    &.low {
+      color: #587aac;
+    }
+    &.medium {
+      color: #f6c131;
+    }
+    &.high {
+      color: #e22e4f;
+    }
+  }
+
+  .title {
+    color: #587aac;
+    text-decoration: none;
+    width: fit-content;
+  }
+}

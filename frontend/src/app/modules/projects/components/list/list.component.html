@@ -1,4 +1,4 @@
-<app-header header="{{ project?.title }}">
+<app-header displaySearch header="{{ project?.title }}">
   <button mat-icon-button class="button">
     <mat-icon>info</mat-icon>
   </button>
@@ -9,3 +9,24 @@
     <mat-icon>share</mat-icon>
   </button>
 </app-header>
+
+<mat-list *ngIf="project">
+  <ng-container *ngFor="let issue of project.issues">
+    <mat-list-item (click)="toggleSelectedIssue(issue)">
+      <mat-icon
+        [ngClass]="{
+          low: issue.priority === 0,
+          medium: issue.priority === 1,
+          high: issue.priority === 2
+        }"
+        mat-list-icon
+        >assignment</mat-icon
+      >
+      <a class="title" [routerLink]="issue.id" mat-line>{{ issue.title }}</a>
+      <div mat-line>{{ issue.description | description: 40 }}</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-list>
+
+{{ currentIssue | json }}

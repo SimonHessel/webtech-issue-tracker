@@ -13,7 +13,7 @@ import { Project } from 'core/models/project.model';
 import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -150,8 +150,8 @@ export class IssueComponent
 
   public deleteIssue(issueId: Issue['id'], projectId: Project['id']) {
     const snackBarRef = this.snackBar.open(
-      $localize`:@@6418844871954917379:`,
-      $localize`:@@4529258443538479124:`,
+      $localize`:@@issuedeleted:Issue has been deleted`,
+      $localize`:@@undo:undo`,
       {
         duration: 3000,
       }
@@ -163,24 +163,44 @@ export class IssueComponent
         switchMap((event) =>
           event.dismissedByAction
             ? this.snackBar
-                .open($localize`:@@3230667219782296046:`, '', {
-                  duration: 3000,
-                })
+                .open(
+                  $localize`:@@deleteundone:Deletion has been undone.`,
+                  '',
+                  {
+                    duration: 3000,
+                  }
+                )
                 .afterDismissed()
-            : this.issuesService.deleteIssue(projectId, issueId).toPromise()
-        )
+            : this.issuesService.deleteIssue(projectId, issueId)
+        ),
+
+        tap(
+          (res) =>
+            res === true &&
+            this.router.navigate([
+              '/projects/' + this.issue?.project?.id + '/kanban',
+            ])
+        ),
+        catchError((err) => {
+          console.log(err);
+          return this.snackBar
+            .open($localize`:@@deletefailed:Deletion has failed.`, '', {
+              duration: 3000,
+            })
+            .afterDismissed();
+        })
       )
-      .subscribe(() => {
-        this.router.navigate([
-          '/projects/' + this.issue?.project?.id + '/kanban',
-        ]);
-      });
+      .subscribe();
   }
 
   public copy() {
     this.clipboard.copy(`${window.location.host}${this.router.url}`);
-    this.snackBar.open($localize`:@@1801671542332624782:`, '', {
-      duration: 2500,
-    });
+    this.snackBar.open(
+      $localize`:@@linkhasbeencopied:Link has been copied`,
+      '',
+      {
+        duration: 2500,
+      }
+    );
   }
 }

@@ -150,8 +150,8 @@ export class IssueComponent
 
   public deleteIssue(issueId: Issue['id'], projectId: Project['id']) {
     const snackBarRef = this.snackBar.open(
-      $localize`:@@6418844871954917379:`,
-      $localize`:@@4529258443538479124:`,
+      $localize`:@@issuedeleted:Issue has been deleted`,
+      $localize`:@@undo:undo`,
       {
         duration: 3000,
       }
@@ -163,9 +163,13 @@ export class IssueComponent
         switchMap((event) =>
           event.dismissedByAction
             ? this.snackBar
-                .open($localize`:@@3230667219782296046:`, '', {
-                  duration: 3000,
-                })
+                .open(
+                  $localize`:@@deleteundone:Deletion has been undone.`,
+                  '',
+                  {
+                    duration: 3000,
+                  }
+                )
                 .afterDismissed()
             : this.issuesService.deleteIssue(projectId, issueId)
         ),
@@ -180,7 +184,7 @@ export class IssueComponent
         catchError((err) => {
           console.log(err);
           return this.snackBar
-            .open('Deletion has failed.', '', {
+            .open($localize`:@@deletefailed:Deletion has failed.`, '', {
               duration: 3000,
             })
             .afterDismissed();
@@ -191,8 +195,12 @@ export class IssueComponent
 
   public copy() {
     this.clipboard.copy(`${window.location.host}${this.router.url}`);
-    this.snackBar.open($localize`:@@1801671542332624782:`, '', {
-      duration: 2500,
-    });
+    this.snackBar.open(
+      $localize`:@@linkhasbeencopied:Link has been copied`,
+      '',
+      {
+        duration: 2500,
+      }
+    );
   }
 }

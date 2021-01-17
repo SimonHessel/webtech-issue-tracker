@@ -124,7 +124,7 @@ export class ProjectsComponent
             ? this.snackBar
                 .open('Deletion has been undone.', '', { duration: 3000 })
                 .afterDismissed()
-            : this.projectsService.deleteProject(projectId).toPromise()
+            : this.projectsService.deleteProject(projectId)
         )
       )
       .subscribe();

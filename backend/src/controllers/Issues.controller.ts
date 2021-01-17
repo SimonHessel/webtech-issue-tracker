@@ -115,10 +115,15 @@ export class IssuesController extends BaseStructure {
     if (!id || !projectID || !position)
       return res.status(400).send("IDs and or Position are undefined.");
     try {
-      res.send(this.issueService.moveIssue(projectID, id, position, status));
+      await this.issueService.updateIssueStatusAndOrder(
+        projectID,
+        id,
+        position,
+        status
+      );
+      return res.sendStatus(200);
     } catch (error) {
-      this.error(error);
-      return res.status(400).send("Some error.");
+      return res.status(400).send(error);
     }
   }
 

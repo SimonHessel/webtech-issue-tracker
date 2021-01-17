@@ -19,42 +19,30 @@ export class IssueService extends BaseStructure {
     super();
   }
 
-  async moveIssue(
+  async updateIssueStatusAndOrder(
     projectID: Project["id"],
     id: Issue["id"],
     position: Issue["position"],
     status: Issue["status"]
   ) {
-    this.issueRepository
-      .createQueryBuilder("issue")
-      .update()
-      .set({
-        position: () => "position +1",
-      })
-      .where(
-        'issue.position >= :position AND issue.status = :status AND "issue"."projectId" = :projectID',
-        { position, projectID, status }
-      )
-      .execute();
+    try {
+      this.issueRepository.updatePositionOfIssues(projectID, position, status);
 
-    return this.issueRepository.update(id, {
-      position,
-      status,
-    });
+      this.issueRepository.update(id, {
+        position,
+        status,
+      });
+    } catch (error) {
+      this.error(error);
+      throw "Issue could not be moved.";
+    }
   }
 
   async updateIssue(
     id: Issue["id"],
-    issue: Parameters<IssueRepository["update"]>[1]
+    issue: Parameters<IssueRepository["updateByIDAndReturn"]>[1]
   ) {
-    const res = await this.issueRepository
-      .createQueryBuilder()
-      .update()
-      .set(issue)
-      .where("issue.id = :id", { id })
-      .output(Object.keys(issue))
-      .execute();
-    return res.raw[0] as Parameters<IssueRepository["update"]>[1];
+    return this.issueRepository.updateByIDAndReturn(id, issue);
   }
 
   async getProjectIssues(
@@ -62,17 +50,7 @@ export class IssueService extends BaseStructure {
     skip: number,
     take: number
   ): Promise<Issue[]> {
-    return this.issueRepository
-      .createQueryBuilder("issue")
-      .select(["issue", "assignee.username"])
-      .where("issue.projectId = :id", { id })
-      .orderBy("issue.status", "ASC")
-      .addOrderBy("issue.position")
-      .skip(skip)
-      .take(take)
-      .leftJoin("issue.assignee", "assignee")
-
-      .getMany();
+    return this.issueRepository.findIssuesAndAssigneeUsername(id, skip, take);
   }
 
   async getIssueByID(id: Issue["id"]) {

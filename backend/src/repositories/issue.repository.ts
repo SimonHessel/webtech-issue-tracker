@@ -21,11 +21,34 @@ export class IssueRepository extends Repository<Issue> {
   public async findIssuesAndAssigneeUsername(
     id: Issue["id"],
     skip: Parameters<SelectQueryBuilder<Issue>["skip"]>[0],
-    take: Parameters<SelectQueryBuilder<Issue>["take"]>[0]
+    take: Parameters<SelectQueryBuilder<Issue>["take"]>[0],
+    filter: {
+      search?: string;
+      assignee?: string;
+      status?: Issue["status"];
+      priority?: Issue["priority"];
+    }
   ) {
-    return this.createQueryBuilder("issue")
+    const queryBuilder = this.createQueryBuilder("issue")
       .select(["issue", "assignee.username"])
-      .where("issue.projectId = :id", { id })
+      .where("issue.projectId = :id", { id });
+
+    const { search, assignee, status, priority } = filter;
+    if (search)
+      queryBuilder.andWhere("issue.title like :search", {
+        search: `%${search}%`,
+      });
+    if (status !== undefined)
+      queryBuilder.andWhere("issue.status = :status", { status });
+    if (priority !== undefined)
+      queryBuilder.andWhere("issue.priority = :priority", { priority });
+
+    if (assignee)
+      queryBuilder.andWhere("assignee.username = :assignee", {
+        assignee,
+      });
+
+    return queryBuilder
       .orderBy("issue.status", "ASC")
       .addOrderBy("issue.position")
       .skip(skip)

@@ -42,7 +42,14 @@ export class IssuesController extends BaseStructure {
       { projectID: string },
       unknown,
       unknown,
-      { skip: string; take: string }
+      {
+        skip?: string;
+        take?: string;
+        assignee?: string;
+        status: string;
+        search: string;
+        priority: string;
+      }
     >,
     res: Response
   ) {
@@ -50,13 +57,23 @@ export class IssuesController extends BaseStructure {
     const skip = parseInt(req.query.skip || "0", 10);
     const take = parseInt(req.query.take || "50", 10);
 
-    if (isNaN(skip) || isNaN(take))
-      return res.status(400).send("ID is undefined");
+    const { assignee, search } = req.query;
+    const filter: Parameters<IssueService["getProjectIssues"]>[3] = {
+      assignee,
+      search,
+    };
+
+    const priority = parseInt(req.query.priority);
+    if (!isNaN(priority)) filter.priority = priority;
+
+    const status = parseInt(req.query.status);
+    if (!isNaN(status)) filter.status = status;
 
     const issues = await this.issueService.getProjectIssues(
       projectID,
       skip,
-      take
+      take,
+      filter
     );
     res.send(issues);
   }

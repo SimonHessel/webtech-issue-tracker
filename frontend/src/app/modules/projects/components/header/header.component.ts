@@ -20,9 +20,12 @@ export class HeaderComponent
 
   displaySearch = false;
   // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input('displaySearch') set setDisplaySearch(displaySearch: boolean | '') {
+  @Input('search-display') set setDisplaySearch(displaySearch: boolean | '') {
     this.displaySearch = displaySearch === '' || displaySearch;
   }
+
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input('search-default') default = '';
   constructor() {
     super();
   }

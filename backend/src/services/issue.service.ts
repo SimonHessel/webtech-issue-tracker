@@ -48,9 +48,15 @@ export class IssueService extends BaseStructure {
   async getProjectIssues(
     id: Issue["id"],
     skip: number,
-    take: number
+    take: number,
+    filter: Parameters<IssueRepository["findIssuesAndAssigneeUsername"]>[3]
   ): Promise<Issue[]> {
-    return this.issueRepository.findIssuesAndAssigneeUsername(id, skip, take);
+    return this.issueRepository.findIssuesAndAssigneeUsername(
+      id,
+      skip,
+      take,
+      filter
+    );
   }
 
   async getIssueByID(id: Issue["id"]) {

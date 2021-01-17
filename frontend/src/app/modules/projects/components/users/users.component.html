@@ -1,1 +1,13 @@
-<p>users works!</p>
+<app-header header="{{ project?.title }}">
+  <button mat-icon-button class="button">
+    <mat-icon>info</mat-icon>
+  </button>
+  <button mat-icon-button class="button">
+    <mat-icon>people</mat-icon>
+  </button>
+  <button mat-icon-button class="button">
+    <mat-icon>share</mat-icon>
+  </button>
+</app-header>
+
+{{ project?.users | json }}

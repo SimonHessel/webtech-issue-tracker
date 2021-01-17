@@ -29,6 +29,7 @@ import { ProjectGuardService } from './guards/project.guard';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsService } from './services/projects.service';
 import { MatListModule } from '@angular/material/list';
+import { IssueViewComponent } from './components/issue-view/issue-view.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,8 @@ import { MatListModule } from '@angular/material/list';
     CreateProjectComponent,
 
     UsersComponent,
+
+    IssueViewComponent,
   ],
   providers: [
     ProjectGuardService,

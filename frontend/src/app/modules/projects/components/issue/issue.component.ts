@@ -4,18 +4,13 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Priority } from 'core/enums/priority.enum';
+import { ActivatedRoute } from '@angular/router';
 import { Issue } from 'core/models/issue.model';
-import { Project } from 'core/models/project.model';
 import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
 import { of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-issue',
@@ -26,22 +21,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class IssueComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  issue: Issue | undefined = undefined;
-  edit = false;
-  priority = '';
-  status = '';
-  issueForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-  });
+  currentIssue: Issue | undefined = undefined;
+
   constructor(
     private route: ActivatedRoute,
     private readonly projectService: ProjectsService,
     private readonly issuesService: IssuesService,
-    private readonly cdRef: ChangeDetectorRef,
-    private readonly snackBar: MatSnackBar,
-    private readonly router: Router,
-    private readonly clipboard: Clipboard
+    private readonly cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -63,144 +49,8 @@ export class IssueComponent
         })
       )
       .subscribe((issue) => {
-        this.issue = issue;
-        this.priority = Priority[issue.priority];
-        if (issue.project) this.status = issue.project.states[issue.status];
-        this.issueForm.patchValue({
-          title: this.issue.title,
-          description: this.issue.description,
-        });
+        this.currentIssue = issue;
         this.cdRef.markForCheck();
       });
-  }
-
-  public changeStatus(state: string) {
-    if (this.issue && this.issue.project) {
-      this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
-          status: this.issue.project.states.indexOf(state),
-        })
-        .subscribe((newIssue) => {
-          if (this.issue) {
-            this.issue = { ...this.issue, ...newIssue };
-          }
-          this.status = state;
-          this.cdRef.markForCheck();
-        });
-    }
-  }
-
-  public reassignAssignee(newAssignee: string) {
-    if (this.issue && this.issue.project) {
-      this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
-          assignee: newAssignee,
-        })
-        .subscribe((newIssue) => {
-          if (this.issue) {
-            this.issue = { ...this.issue, ...newIssue };
-          }
-          this.cdRef.markForCheck();
-        });
-    }
-  }
-
-  public editIssue() {
-    this.edit = !this.edit;
-    if (this.issue && this.issue.project) {
-      this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
-          title: this.issueForm.value.title,
-          description: this.issueForm.value.description,
-        })
-        .subscribe((newIssue) => {
-          if (this.issue) {
-            this.issue = { ...this.issue, ...newIssue };
-          }
-          this.cdRef.markForCheck();
-        });
-    }
-  }
-
-  public cancelEdit() {
-    this.edit = !this.edit;
-    if (this.issue) {
-      this.issueForm.patchValue({
-        title: this.issue.title,
-        description: this.issue.description,
-      });
-    }
-  }
-
-  public changePriority(newPriority: number) {
-    if (this.issue && this.issue.project) {
-      this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
-          priority: newPriority,
-        })
-        .subscribe((newIssue) => {
-          if (this.issue) {
-            this.issue = { ...this.issue, ...newIssue };
-            this.priority = Priority[this.issue.priority];
-          }
-          this.cdRef.markForCheck();
-        });
-    }
-  }
-
-  public deleteIssue(issueId: Issue['id'], projectId: Project['id']) {
-    const snackBarRef = this.snackBar.open(
-      $localize`:@@issuedeleted:Issue has been deleted`,
-      $localize`:@@undo:undo`,
-      {
-        duration: 3000,
-      }
-    );
-
-    this.subs.sink = snackBarRef
-      .afterDismissed()
-      .pipe(
-        switchMap((event) =>
-          event.dismissedByAction
-            ? this.snackBar
-                .open(
-                  $localize`:@@deleteundone:Deletion has been undone.`,
-                  '',
-                  {
-                    duration: 3000,
-                  }
-                )
-                .afterDismissed()
-            : this.issuesService.deleteIssue(projectId, issueId)
-        ),
-
-        tap(
-          (res) =>
-            res === true &&
-            this.router.navigate([
-              '/projects/' + this.issue?.project?.id + '/kanban',
-            ])
-        ),
-        catchError((err) => {
-          console.log(err);
-          return this.snackBar
-            .open($localize`:@@deletefailed:Deletion has failed.`, '', {
-              duration: 3000,
-            })
-            .afterDismissed();
-        })
-      )
-      .subscribe();
-  }
-
-  public copy() {
-    this.clipboard.copy(`${window.location.host}${this.router.url}`);
-    this.snackBar.open(
-      $localize`:@@linkhasbeencopied:Link has been copied`,
-      '',
-      {
-        duration: 2500,
-      }
-    );
   }
 }

@@ -1,0 +1,167 @@
+<div class="content-wrapper">
+  <div class="main">
+    <div class="main-header">
+      <div class="priority" [ngClass]="issue?.priority | priority"></div>
+      <h1 *ngIf="!edit">{{ issue?.title }}</h1>
+      <form novalidate [formGroup]="issueForm" *ngIf="edit">
+        <mat-form-field appearance="standard">
+          <mat-label>Issue Title</mat-label>
+          <input matInput type="text" formControlName="title" />
+          <mat-error
+            *ngIf="
+              !issueForm.controls.title?.valid &&
+              (issueForm.controls.title.dirty ||
+                issueForm.controls.title?.touched)
+            "
+            i18n="@@titelerror"
+          >
+            Please enter a Titel
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <button
+        mat-button
+        [matMenuTriggerFor]="prioMenu"
+        class="priority-menu"
+        i18n="@@priority"
+      >
+        Priority
+      </button>
+      <mat-menu #prioMenu="matMenu">
+        <button
+          mat-menu-item
+          *ngIf="(issue?.priority | priority) !== 'low'"
+          (click)="changePriority(0)"
+          i18n="@@low"
+        >
+          Low
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="(issue?.priority | priority) !== 'medium'"
+          (click)="changePriority(1)"
+          i18n="@@medium"
+        >
+          Medium
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="(issue?.priority | priority) !== 'high'"
+          (click)="changePriority(2)"
+          i18n="@@high"
+        >
+          High
+        </button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="stateMenu" class="status-menu">
+        Status
+      </button>
+      <mat-menu #stateMenu="matMenu">
+        <ng-container *ngFor="let state of issue?.project?.states">
+          <button
+            mat-menu-item
+            *ngIf="state !== status"
+            (click)="changeStatus(state)"
+          >
+            {{ state }}
+          </button>
+        </ng-container>
+      </mat-menu>
+    </div>
+    <p class="issue-description" *ngIf="!edit">{{ issue?.description }}</p>
+    <form novalidate [formGroup]="issueForm" *ngIf="edit">
+      <mat-form-field appearance="standard">
+        <mat-label>Issue Description</mat-label>
+        <input matInput type="text" formControlName="description" />
+        <mat-error
+          *ngIf="
+            !issueForm.controls.description?.valid &&
+            (issueForm.controls.description.dirty ||
+              issueForm.controls.description?.touched)
+          "
+          i18n="@@descriptionerror"
+        >
+          Please enter a Description
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button
+      mat-button
+      class="cancel-button"
+      *ngIf="edit"
+      (click)="cancelEdit()"
+      i18n="@@cancel"
+    >
+      Cancel
+    </button>
+  </div>
+  <div class="side-wrapper">
+    <div class="side-header">
+      <p i18n="@@author">Author</p>
+      {{ "Hier Autor einfügen" }}
+      <button class="close" mat-icon-button [routerLink]="['../../kanban']">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="side-content">
+      <span
+        ><p i18n="@@assignee">Assignee</p>
+        <p>{{ issue?.assignee }}</p></span
+      >
+      <span
+        ><p i18n="@@priority">Priority</p>
+        <p i18n>
+          { (issue?.priority | priority), select, low{low} medium{medium}
+          high{high}}
+        </p></span
+      >
+      <span
+        ><p>Status</p>
+        <p>{{ status }}</p></span
+      >
+    </div>
+    <div class="side-buttons">
+      <button class="share" mat-icon-button (click)="copy()" *ngIf="!edit">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button
+        class="assign"
+        mat-flat-button
+        [matMenuTriggerFor]="assignMenu"
+        *ngIf="!edit"
+        i18n="@@assign"
+      >
+        assign
+      </button>
+      <mat-menu #assignMenu="matMenu" yPosition="below">
+        <button
+          mat-menu-item
+          *ngFor="let user of issue?.project?.users"
+          (click)="reassignAssignee(user.username)"
+        >
+          {{ user.username }}
+        </button>
+      </mat-menu>
+      <button
+        class="edit"
+        mat-flat-button
+        (click)="editIssue()"
+        [ngClass]="{ edit: edit === false, save: edit === true }"
+      >
+        <ng-container *ngIf="edit; else not_edit" i18n="@@save"
+          >save</ng-container
+        >
+        <ng-template #not_edit i18n="@@edit">edit</ng-template>
+      </button>
+      <button
+        class="delete"
+        mat-flat-button
+        *ngIf="!edit"
+        (click)="deleteIssue(issue!.id, (issue?.project)!.id)"
+        i18n="@@delete"
+      >
+        delete
+      </button>
+    </div>
+  </div>
+</div>

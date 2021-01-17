@@ -5,6 +5,7 @@ import { DescriptionPipe } from './pipes/description.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { AvatarPipe } from './pipes/avatar.pipe';
 import { DirectionPipe } from './pipes/direction.pipe';
+import { PriorityPipe } from './pipes/priority.pipe';
 
 const declarations = [
   UnsubscribeOnDestroyAdapter,
@@ -12,6 +13,7 @@ const declarations = [
   JoinPipe,
   AvatarPipe,
   DirectionPipe,
+  PriorityPipe,
 ];
 @NgModule({
   declarations,

@@ -149,9 +149,13 @@ export class IssueComponent
   }
 
   public deleteIssue(issueId: Issue['id'], projectId: Project['id']) {
-    const snackBarRef = this.snackBar.open('Issue has been deleted', 'undo', {
-      duration: 3000,
-    });
+    const snackBarRef = this.snackBar.open(
+      $localize`:@@6418844871954917379:`,
+      $localize`:@@4529258443538479124:`,
+      {
+        duration: 3000,
+      }
+    );
 
     this.subs.sink = snackBarRef
       .afterDismissed()
@@ -159,7 +163,9 @@ export class IssueComponent
         switchMap((event) =>
           event.dismissedByAction
             ? this.snackBar
-                .open('Deletion has been undone.', '', { duration: 3000 })
+                .open($localize`:@@3230667219782296046:`, '', {
+                  duration: 3000,
+                })
                 .afterDismissed()
             : this.issuesService.deleteIssue(projectId, issueId)
         ),
@@ -185,6 +191,8 @@ export class IssueComponent
 
   public copy() {
     this.clipboard.copy(`${window.location.host}${this.router.url}`);
-    this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
+    this.snackBar.open($localize`:@@1801671542332624782:`, '', {
+      duration: 2500,
+    });
   }
 }

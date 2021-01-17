@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
@@ -12,8 +12,20 @@ export class IssuesService {
 
   constructor(private readonly http: HttpClient) {}
 
-  public getIssuesByProject(projectID: Project['id']) {
-    return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`);
+  public getIssuesByProject(
+    projectID: Project['id'],
+    options?: {
+      assignee?: string;
+      status?: string;
+      search?: string;
+      priority?: string;
+    }
+  ) {
+    return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`, {
+      params: new HttpParams({
+        fromObject: options as { [param: string]: string },
+      }),
+    });
   }
 
   public getIssueByID(projectID: Project['id'], id: Issue['id']) {

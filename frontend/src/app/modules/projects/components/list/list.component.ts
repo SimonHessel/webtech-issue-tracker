@@ -40,6 +40,15 @@ export class ListComponent
     super();
   }
 
+  public updateIssue(issue: Issue) {
+    if (this.project) {
+      this.project.issues = this.project.issues?.map((i) =>
+        i.id === issue.id ? issue : i
+      );
+    }
+    this.cdRef.markForCheck();
+  }
+
   ngOnInit(): void {
     this.search = this.search.bind(this);
     this.projectID = this.route.snapshot.paramMap.get('id') || '';

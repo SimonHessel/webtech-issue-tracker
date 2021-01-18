@@ -31,6 +31,7 @@ import { ProjectsService } from './services/projects.service';
 import { MatListModule } from '@angular/material/list';
 import { IssueViewComponent } from './components/issue-view/issue-view.component';
 
+import { OrderModule } from 'ngx-order-pipe';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -79,6 +80,7 @@ import { IssueViewComponent } from './components/issue-view/issue-view.component
     DragDropModule,
     MatMenuModule,
     MatListModule,
+    OrderModule,
   ],
 })
 export class ProjectsModule {}

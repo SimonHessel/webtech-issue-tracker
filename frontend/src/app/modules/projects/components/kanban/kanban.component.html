@@ -21,7 +21,6 @@
         (cdkDropListDropped)="drop($event)"
       >
         <div
-          [routerLink]="['../issues/', issue.id]"
           class="issues"
           *ngFor="let issue of state; trackBy: trackByMethod"
           cdkDrag
@@ -36,7 +35,9 @@
           ></div>
           <div class="issue-content">
             <div class="issue-text">
-              <h1>{{ issue.title }}</h1>
+              <h1 [routerLink]="['../issues/', issue.id]" class="title-link">
+                {{ issue.title }}
+              </h1>
               <p>{{ issue.description | description: 100 }}</p>
             </div>
             <div class="avatar" mat-card-avatar>

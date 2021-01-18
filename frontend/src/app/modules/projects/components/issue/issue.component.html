@@ -9,4 +9,7 @@
     <mat-icon>share</mat-icon>
   </button>
 </app-header>
-<app-issue-view [issue]="currentIssue"></app-issue-view>
+<app-issue-view
+  [project]="currentIssue?.project"
+  [issue]="currentIssue"
+></app-issue-view>

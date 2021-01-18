@@ -57,7 +57,7 @@
         Status
       </button>
       <mat-menu #stateMenu="matMenu">
-        <ng-container *ngFor="let state of issue?.project?.states">
+        <ng-container *ngFor="let state of project?.states">
           <button
             mat-menu-item
             *ngIf="state !== status"
@@ -136,7 +136,7 @@
       <mat-menu #assignMenu="matMenu" yPosition="below">
         <button
           mat-menu-item
-          *ngFor="let user of issue?.project?.users"
+          *ngFor="let user of project?.users"
           (click)="reassignAssignee(user.username)"
         >
           {{ user.username }}
@@ -157,7 +157,7 @@
         class="delete"
         mat-flat-button
         *ngIf="!edit"
-        (click)="deleteIssue(issue!.id, (issue?.project)!.id)"
+        (click)="deleteIssue(issue!.id, project!.id)"
         i18n="@@delete"
       >
         delete

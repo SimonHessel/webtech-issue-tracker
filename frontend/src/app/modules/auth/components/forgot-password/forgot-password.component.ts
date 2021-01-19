@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +8,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPasswordComponent implements OnInit {
-
+  forgotPasswordForm = new FormGroup({
+    usernameOrEmail: new FormControl('', [Validators.required]),
+  })
   constructor() { }
 
+  onSubmit(){
+    console.log(`successful`)
+  }
   ngOnInit(): void {
   }
 

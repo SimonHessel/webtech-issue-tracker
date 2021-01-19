@@ -32,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
 import { IssueViewComponent } from './components/issue-view/issue-view.component';
 
 import { OrderModule } from 'ngx-order-pipe';
+import { CreateIssueComponent } from './components/create-issue/create-issue.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -44,6 +45,8 @@ import { OrderModule } from 'ngx-order-pipe';
     UsersComponent,
 
     IssueViewComponent,
+
+    CreateIssueComponent,
   ],
   providers: [
     ProjectGuardService,

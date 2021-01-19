@@ -33,6 +33,11 @@
       </mat-list-item>
       <mat-divider></mat-divider>
     </ng-container>
+    <mat-list-item>
+      <button mat-line mat-flat-button class="add-issue" (click)="openDialog()">
+        Add Issue
+      </button>
+    </mat-list-item>
   </mat-list>
 
   <div *ngIf="currentIssue" class="issue-view">

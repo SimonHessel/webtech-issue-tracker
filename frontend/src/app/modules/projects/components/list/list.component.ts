@@ -4,14 +4,18 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Priority } from 'core/enums/priority.enum';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
 import { IssuesService } from 'modules/projects/services/issues.service';
 import { ProjectsService } from 'modules/projects/services/projects.service';
+import { throwError } from 'rxjs';
 import { of } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
+import { CreateIssueComponent } from '../create-issue/create-issue.component';
 
 @Component({
   selector: 'app-list',
@@ -35,18 +39,10 @@ export class ListComponent
     private route: ActivatedRoute,
     private readonly projectService: ProjectsService,
     private readonly issueService: IssuesService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly dialog: MatDialog
   ) {
     super();
-  }
-
-  public updateIssue(issue: Issue) {
-    if (this.project) {
-      this.project.issues = this.project.issues?.map((i) =>
-        i.id === issue.id ? issue : i
-      );
-    }
-    this.cdRef.markForCheck();
   }
 
   ngOnInit(): void {
@@ -85,6 +81,48 @@ export class ListComponent
       });
   }
 
+  public openDialog() {
+    const dialogRef = this.dialog.open(CreateIssueComponent, {
+      disableClose: true,
+      data: {
+        project: this.project,
+        title: '',
+        description: '',
+        assignee: '',
+        priority: 0,
+        status: 0,
+      },
+      height: '80%',
+      width: '90%',
+    });
+
+    this.subs.sink = dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((output) =>
+          output
+            ? this.addIssue(
+                output.title,
+                output.description,
+                output.assignee,
+                output.priority,
+                output.status
+              )
+            : throwError(false)
+        )
+      )
+      .subscribe(() => {});
+  }
+
+  public updateIssue(issue: Issue) {
+    if (this.project) {
+      this.project.issues = this.project.issues?.map((i) =>
+        i.id === issue.id ? issue : i
+      );
+    }
+    this.cdRef.markForCheck();
+  }
+
   public search(value: string) {
     const options = this.parseSearchQuery(value);
 
@@ -118,5 +156,22 @@ export class ListComponent
   private removeUndefined<T>(obj: T) {
     for (const k in obj) if (obj[k] === undefined) delete obj[k];
     return obj as Required<T>;
+  }
+
+  private addIssue(
+    title: string,
+    description: string,
+    assignee: string,
+    priority: Priority,
+    status: number
+  ) {
+    return this.issueService.createIssue(
+      this.projectID,
+      title,
+      description,
+      assignee,
+      priority,
+      status
+    );
   }
 }

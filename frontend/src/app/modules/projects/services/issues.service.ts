@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Priority } from 'core/enums/priority.enum';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
 import { mapTo } from 'rxjs/operators';
@@ -64,5 +65,22 @@ export class IssuesService {
         responseType: 'text',
       })
       .pipe(mapTo(true));
+  }
+
+  public createIssue(
+    projectID: Project['id'],
+    title: string,
+    description: string,
+    assignee: string,
+    priority: Priority,
+    status: number
+  ) {
+    return this.http.post(`${this.apiEndpoint}/${projectID}`, {
+      title,
+      description,
+      assignee,
+      priority,
+      status,
+    });
   }
 }

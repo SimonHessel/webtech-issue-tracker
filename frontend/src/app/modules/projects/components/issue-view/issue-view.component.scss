@@ -9,7 +9,7 @@
 
   .main {
     background-color: white;
-    border: 1px solid #cccccc;
+    border: 1px solid mat-color($border, 400);
     border-radius: 9px 0px 0px 9px;
     width: 60%;
     min-width: 35rem;
@@ -27,13 +27,13 @@
         margin-right: 0.5rem;
 
         &.low {
-          background-color: #587aac;
+          background-color: mat-color($primary, 100);
         }
         &.medium {
-          background-color: #f6c131;
+          background-color: mat-color($accent, 600);
         }
         &.high {
-          background-color: #e22e4f;
+          background-color: mat-color($accent, 400);
         }
       }
 
@@ -44,7 +44,7 @@
         font-size: 2.2rem;
         line-height: 2.6rem;
         letter-spacing: 0px;
-        color: #4e4e4e;
+        color: mat-color($text-color, 50);
         float: left;
       }
       h1:after {
@@ -59,12 +59,12 @@
       }
       .priority-menu,
       .status-menu {
-        border: 1px solid #cccccc;
+        border: 1px solid mat-color($border, 400);
         border-radius: 11px;
         font-size: 1.3rem;
         line-height: 1rem;
         letter-spacing: 0px;
-        color: #4e4e4e;
+        color: mat-color($text-color, 50);
         min-width: 6.3rem;
         height: 2.3rem;
         margin-top: 0.3rem;
@@ -78,7 +78,7 @@
     .issue-description {
       font-size: 1rem;
       line-height: 1.3rem;
-      color: #4e4e4e;
+      color: mat-color($text-color, 50);
       padding-top: 1rem;
     }
 
@@ -93,8 +93,8 @@
   }
 
   .side-wrapper {
-    background-color: #f9f9f9;
-    border: 1px solid #cccccc;
+    background-color: mat-color($background, 300);
+    border: 1px solid mat-color($border, 400);
     border-radius: 0px 8px 9px 0px;
     width: 40%;
     min-width: 25rem;
@@ -102,8 +102,8 @@
     flex-direction: column;
     .side-header {
       height: 9%;
-      background-color: #ededed;
-      border-bottom: 1px solid #cccccc;
+      background-color: mat-color($background, 400);
+      border-bottom: 1px solid mat-color($border, 400);
       color: #666666;
       font-size: 1.1rem;
       line-height: 2.7rem;
@@ -142,7 +142,7 @@
 
       .assign,
       .edit {
-        background-color: #ededed;
+        background-color: mat-color($background, 400);
         color: #666666;
         font-size: 1.1rem;
         line-height: 2.3rem;
@@ -151,7 +151,7 @@
 
       .save {
         color: white;
-        background-color: #71d58b;
+        background-color: mat-color($accent, 200);
         font-size: 1.1rem;
         line-height: 2.3rem;
         margin: 0.5rem;

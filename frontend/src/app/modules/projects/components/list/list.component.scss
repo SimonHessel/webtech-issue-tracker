@@ -3,18 +3,18 @@ mat-list-item {
   margin: -0.5rem 0;
   mat-icon {
     &.low {
-      color: #587aac;
+      color: mat-color($primary, 100);
     }
     &.medium {
-      color: #f6c131;
+      color: mat-color($accent, 600);
     }
     &.high {
-      color: #e22e4f;
+      color: mat-color($accent, 400);
     }
   }
 
   .title {
-    color: #587aac;
+    color: mat-color($primary, 100);
     text-decoration: none;
     width: fit-content;
   }

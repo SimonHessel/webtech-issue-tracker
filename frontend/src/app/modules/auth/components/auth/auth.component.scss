@@ -1,4 +1,4 @@
-@import '/src/assets/theme.scss';
+@import "/src/assets/theme.scss";
 
 .outer {
   position: absolute;
@@ -15,7 +15,7 @@
     }
   }
   mat-card {
-    background-color: #ffffff;
+    background-color: mat-color($background, 50);
   }
 }
 

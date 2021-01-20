@@ -1,7 +1,9 @@
+@import "/src/assets/theme.scss";
+
 mat-list-item {
   margin: -0.5rem 0;
   a {
-    color: #587aac;
+    color: mat-color($primary, 100);
     text-decoration: none;
     width: fit-content;
   }

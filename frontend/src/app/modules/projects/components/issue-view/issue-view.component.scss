@@ -1,3 +1,5 @@
+@import "/src/assets/theme.scss";
+
 .content-wrapper {
   margin-top: 3rem;
   height: 50%;
@@ -8,8 +10,8 @@
   justify-content: space-between;
 
   .main {
-    background-color: white;
-    border: 1px solid #cccccc;
+    background-color: mat-color($primary, 300);
+    border: 1px solid mat-color($border, 400);
     border-radius: 9px 0px 0px 9px;
     width: 60%;
     min-width: 35rem;
@@ -20,20 +22,20 @@
     .main-header {
       display: flex;
       .priority {
-        background-color: lightcoral;
+        background-color: mat-color($red, 50);
         width: 1rem;
         height: 3.1rem;
         border-radius: 4px;
         margin-right: 0.5rem;
 
         &.low {
-          background-color: #587aac;
+          background-color: mat-color($primary, 100);
         }
         &.medium {
-          background-color: #f6c131;
+          background-color: mat-color($accent, 600);
         }
         &.high {
-          background-color: #e22e4f;
+          background-color: mat-color($accent, 400);
         }
       }
 
@@ -44,7 +46,7 @@
         font-size: 2.2rem;
         line-height: 2.6rem;
         letter-spacing: 0px;
-        color: #4e4e4e;
+        color: mat-color($text-color, 50);
         float: left;
       }
       h1:after {
@@ -52,19 +54,19 @@
         content: "";
         height: 1px;
         bottom: -0.5rem;
-        background-color: rgba($color: #000000, $alpha: 0.2);
+        background-color: rgba($color: mat-color($accent, 900), $alpha: 0.2);
         margin: 0 auto;
         left: 0;
         right: 0;
       }
       .priority-menu,
       .status-menu {
-        border: 1px solid #cccccc;
+        border: 1px solid mat-color($border, 400);
         border-radius: 11px;
         font-size: 1.3rem;
         line-height: 1rem;
         letter-spacing: 0px;
-        color: #4e4e4e;
+        color: mat-color($text-color, 50);
         min-width: 6.3rem;
         height: 2.3rem;
         margin-top: 0.3rem;
@@ -78,14 +80,14 @@
     .issue-description {
       font-size: 1rem;
       line-height: 1.3rem;
-      color: #4e4e4e;
+      color: mat-color($text-color, 50);
       padding-top: 1rem;
     }
 
     .cancel-button {
       margin-top: auto;
-      background: #ffe5e5;
-      color: #ff5050;
+      background: mat-color($background, 100);
+      color: mat-color($red, 100);
       font-size: 1.1rem;
       line-height: 2.3rem;
       margin-bottom: -0.5rem;
@@ -93,8 +95,8 @@
   }
 
   .side-wrapper {
-    background-color: #f9f9f9;
-    border: 1px solid #cccccc;
+    background-color: mat-color($background, 300);
+    border: 1px solid mat-color($border, 400);
     border-radius: 0px 8px 9px 0px;
     width: 40%;
     min-width: 25rem;
@@ -102,9 +104,9 @@
     flex-direction: column;
     .side-header {
       height: 9%;
-      background-color: #ededed;
-      border-bottom: 1px solid #cccccc;
-      color: #666666;
+      background-color: mat-color($background, 400);
+      border-bottom: 1px solid mat-color($border, 400);
+      color: mat-color($text-color, 300);
       font-size: 1.1rem;
       line-height: 2.7rem;
       padding-left: 0.5rem;
@@ -112,14 +114,14 @@
       justify-content: space-between;
 
       .close {
-        color: #999999;
+        color: mat-color($text-color, 400);
         font-size: 1.3rem;
       }
     }
 
     .side-content {
       flex: 1;
-      color: #666666;
+      color: mat-color($text-color, 300);
       font-size: 1.1rem;
       line-height: 1.4rem;
       padding-top: 0.5rem;
@@ -136,30 +138,30 @@
       justify-content: flex-end;
 
       .share {
-        color: #666666;
+        color: mat-color($text-color, 300);
         margin: 0.5rem auto 0.5rem 0.5rem;
       }
 
       .assign,
       .edit {
-        background-color: #ededed;
-        color: #666666;
+        background-color: mat-color($background, 400);
+        color: mat-color($text-color, 300);
         font-size: 1.1rem;
         line-height: 2.3rem;
         margin: 0.5rem;
       }
 
       .save {
-        color: white;
-        background-color: #71d58b;
+        color: mat-color($background, 50);
+        background-color: mat-color($accent, 200);
         font-size: 1.1rem;
         line-height: 2.3rem;
         margin: 0.5rem;
       }
 
       .delete {
-        background: #ffe5e5;
-        color: #ff5050;
+        background: mat-color($background, 100);
+        color: mat-color($red, 100);
         font-size: 1.1rem;
         line-height: 2.3rem;
         margin: 0.5rem;

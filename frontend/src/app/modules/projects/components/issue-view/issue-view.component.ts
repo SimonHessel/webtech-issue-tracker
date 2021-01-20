@@ -4,6 +4,8 @@ import {
   ChangeDetectionStrategy,
   Input,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -25,6 +27,9 @@ export class IssueViewComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
   @Input() issue: Issue | undefined = undefined;
+  @Input() project: Project | undefined = undefined;
+
+  @Output() updateIssue = new EventEmitter<Issue>();
   edit = false;
   status = '';
   issueForm = new FormGroup({
@@ -42,9 +47,9 @@ export class IssueViewComponent
   }
 
   ngOnInit(): void {
-    console.log(this.issue);
-    if (this.issue && this.issue.project) {
-      this.status = this.issue.project.states[this.issue.status];
+    console.log(this.issue, this.project);
+    if (this.issue && this.project) {
+      this.status = this.project.states[this.issue.status];
       this.issueForm.patchValue({
         title: this.issue.title,
         description: this.issue.description,
@@ -55,31 +60,33 @@ export class IssueViewComponent
   }
 
   public changeStatus(state: string) {
-    if (this.issue && this.issue.project) {
+    if (this.issue && this.project) {
       this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
-          status: this.issue.project.states.indexOf(state),
+        .updateIssue(this.project.id, this.issue.id, {
+          status: this.project.states.indexOf(state),
         })
         .subscribe((newIssue) => {
           if (this.issue) {
             this.issue = { ...this.issue, ...newIssue };
           }
           this.status = state;
+          this.updateIssue.emit(this.issue);
           this.cdRef.markForCheck();
         });
     }
   }
 
   public reassignAssignee(newAssignee: string) {
-    if (this.issue && this.issue.project) {
+    if (this.issue && this.project) {
       this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
+        .updateIssue(this.project.id, this.issue.id, {
           assignee: newAssignee,
         })
         .subscribe((newIssue) => {
           if (this.issue) {
             this.issue = { ...this.issue, ...newIssue };
           }
+          this.updateIssue.emit(this.issue);
           this.cdRef.markForCheck();
         });
     }
@@ -87,9 +94,9 @@ export class IssueViewComponent
 
   public editIssue() {
     this.edit = !this.edit;
-    if (this.issue && this.issue.project) {
+    if (this.issue && this.project) {
       this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
+        .updateIssue(this.project.id, this.issue.id, {
           title: this.issueForm.value.title,
           description: this.issueForm.value.description,
         })
@@ -97,6 +104,7 @@ export class IssueViewComponent
           if (this.issue) {
             this.issue = { ...this.issue, ...newIssue };
           }
+          this.updateIssue.emit(this.issue);
           this.cdRef.markForCheck();
         });
     }
@@ -113,15 +121,16 @@ export class IssueViewComponent
   }
 
   public changePriority(newPriority: number) {
-    if (this.issue && this.issue.project) {
+    if (this.issue && this.project) {
       this.subs.sink = this.issuesService
-        .updateIssue(this.issue.project.id, this.issue.id, {
+        .updateIssue(this.project.id, this.issue.id, {
           priority: newPriority,
         })
         .subscribe((newIssue) => {
           if (this.issue) {
             this.issue = { ...this.issue, ...newIssue };
           }
+          this.updateIssue.emit(this.issue);
           this.cdRef.markForCheck();
         });
     }
@@ -156,9 +165,7 @@ export class IssueViewComponent
         tap(
           (res) =>
             res === true &&
-            this.router.navigate([
-              '/projects/' + this.issue?.project?.id + '/kanban',
-            ])
+            this.router.navigate(['/projects/' + this.project?.id + '/kanban'])
         ),
         catchError((err) => {
           console.log(err);
@@ -169,7 +176,7 @@ export class IssueViewComponent
             .afterDismissed();
         })
       )
-      .subscribe();
+      .subscribe(() => this.updateIssue.emit(this.issue));
   }
 
   public copy() {

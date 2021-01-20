@@ -96,6 +96,11 @@
 
     .issue-text {
       flex: 1;
+      .title-link {
+        color: #587aac;
+        text-decoration: none;
+        width: fit-content;
+      }
     }
     .avatar {
       display: flex;
@@ -122,10 +127,4 @@
 }
 .board-content.cdk-drop-list-dragging .issues:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.issues:active,
-.issues:focus {
-  outline: 0;
-  border: none;
 }

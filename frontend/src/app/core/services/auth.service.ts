@@ -90,4 +90,19 @@ export class AuthService {
       )
       .pipe(catchError((error) => throwError(error.error)));
   }
+
+  public requestForgotPasswordMail(
+    usernameOrEmail: string,
+  ): Observable<unknown> {
+    return this.http
+      .post(
+        `${this.apiEndpoint}/forgot-password`,
+        {
+          usernameOrEmail,
+        }
+    )
+    .pipe(
+      catchError((error) => throwError(error.error)));
+  }
+  
 }

@@ -1,0 +1,16 @@
+<div>
+  <div class="project-name">
+    <h1>{{ header }}</h1>
+    <ng-content></ng-content>
+  </div>
+
+  <input
+    [ngClass]="{ none: !displaySearch }"
+    type="text"
+    i18n-placeholder="@@search"
+    [value]="default || ''"
+    #search
+    placeholder="Search"
+    class="search-bar"
+  />
+</div>

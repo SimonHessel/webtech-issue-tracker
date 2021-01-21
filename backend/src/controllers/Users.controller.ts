@@ -1,4 +1,4 @@
-import { Controller, DELETE, GET, PATCH, POST } from "core";
+import { BaseStructure, Controller, DELETE, PATCH, POST } from "core";
 import { User } from "entities/user.entity";
 import { Request, Response } from "express";
 import { UserDTO } from "interfaces/User.dto";
@@ -10,24 +10,17 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 @JWT()
 @Serializer()
 @Controller("users")
-export class UsersController {
-  constructor(private userService: UserService) {}
+export class UsersController extends BaseStructure {
+  constructor(private userService: UserService) {
+    super();
+  }
 
   @POST("/")
   public async create(
-    req: Request<{ projectid: number }, unknown, UserDTO>,
+    req: Request<{ projectid: string }, unknown, UserDTO>,
     res: Response<User>
   ) {
     res.sendStatus(200);
-  }
-
-  @GET("/")
-  public async read(
-    req: Request<Record<string, never>, unknown, any>,
-    res: Response
-  ) {
-    const users = await this.userService.list();
-    res.send(users);
   }
 
   @PATCH("/")
@@ -50,7 +43,7 @@ export class UsersController {
 
   @DELETE("/:id")
   public async delete(
-    req: Request<{ id: number }, unknown, any>,
+    req: Request<{ id: string }, unknown, unknown>,
     res: Response
   ) {
     const { username } = res.locals.tokenData;

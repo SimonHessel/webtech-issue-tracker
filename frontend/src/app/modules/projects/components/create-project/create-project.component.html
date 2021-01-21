@@ -1,0 +1,66 @@
+<div class="create-project">
+  <div class="header">
+    <h1 i18n="@@createproject">Create new Project</h1>
+    <button mat-icon-button (click)="onNoClick()" class="close-button">
+      <mat-icon [inline]="true">close</mat-icon>
+    </button>
+  </div>
+  <div class="body">
+    <form [formGroup]="projectForm" novalidate>
+      <div>
+        <mat-form-field appearance="standard" class="input-title">
+          <mat-label i18n="@@projecttitle">Project titel</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titel"
+            name="titel"
+            class="title"
+            formControlName="title"
+          />
+          <mat-error
+            i18n="@@titelerror"
+            *ngIf="
+              !projectForm.controls.title?.valid &&
+              (projectForm.controls.title.dirty ||
+                projectForm.controls.title?.touched)
+            "
+          >
+            Please enter a Titel
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" class="input-description">
+          <mat-label i18n="@@description">Description</mat-label>
+          <textarea
+            matInput
+            type="text"
+            id="description"
+            name="description"
+            formControlName="description"
+          ></textarea>
+          <mat-error
+            i18n="@@descriptionerror"
+            *ngIf="
+              !projectForm.controls.description?.valid &&
+              (projectForm.controls.description?.dirty ||
+                projectForm.controls.description?.touched)
+            "
+          >
+            Please enter a Description
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button
+        i18n="@@create"
+        mat-button
+        class="create-button"
+        type="submit"
+        [disabled]="!projectForm.valid"
+        (click)="save()"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+</div>

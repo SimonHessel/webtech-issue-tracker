@@ -1,8 +1,10 @@
-import { Service } from "../core";
+import { BaseStructure, Injectable } from "../core";
 
-@Service()
-export class HashService {
-  constructor() {}
+@Injectable()
+export class HashService extends BaseStructure {
+  constructor() {
+    super();
+  }
 
   // decide which hashing algorithm should be used
   public hash(password: string): string {

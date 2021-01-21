@@ -1,4 +1,12 @@
-import { Controller, DELETE, GET, MethodMiddleware, PATCH, POST } from "core";
+import {
+  BaseStructure,
+  Controller,
+  DELETE,
+  GET,
+  MethodMiddleware,
+  PATCH,
+  POST,
+} from "core";
 import { Project } from "entities/project.entity";
 import { Request, Response } from "express";
 import { ProjectDTO } from "interfaces/Project.dto";
@@ -18,12 +26,14 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 @ProjectSecurity({ all: false })
 @Serializer()
 @Controller("projects")
-export class ProjectsController {
+export class ProjectsController extends BaseStructure {
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
     private jwtService: JWTService
-  ) {}
+  ) {
+    super();
+  }
 
   @POST("/")
   public async create(
@@ -31,14 +41,14 @@ export class ProjectsController {
     res: Response
   ) {
     const { username, projects } = res.locals.tokenData as TokenData;
-    const { title, description } = req.body;
+    const { title, description, users } = req.body;
     if (!title || !description)
       res.status(400).send("Title or description are not defined");
     try {
       const project = await this.projectService.createProject(
         title,
         description,
-        username
+        users.some((name) => name === username) ? users : [...users, username]
       );
       this.jwtService.updateToken(
         res,
@@ -47,24 +57,80 @@ export class ProjectsController {
       );
       res.send(project);
     } catch (error) {
-      console.log("error:", error);
+      this.error(error);
       res.status(400).send(error);
     }
   }
 
   @GET("/")
-  public async read(req: Request, res: Response) {
-    const { username } = res.locals.tokenData as TokenData;
+  public async read(
+    req: Request<
+      unknown,
+      unknown,
+      unknown,
+      { skip?: string; take?: string; search?: string }
+    >,
+    res: Response
+  ) {
+    const { projects: ids } = res.locals.tokenData as TokenData;
+    const skip = parseInt(req.query.skip || "0", 10);
+    const take = parseInt(req.query.take || "10", 10);
+    const { search } = req.query;
+
+    if (isNaN(skip) || isNaN(take))
+      return res.status(400).send("ID is undefined");
+
     try {
-      const user = await this.userService.findUserByName(username);
-      res.send(!user ? [] : user.projects);
+      const projects = await this.projectService.findByIDs(
+        ids,
+        skip,
+        take,
+        search
+      );
+      res.send(projects);
     } catch (error) {
+      this.error(error);
       res.status(501).send(`${error}`);
     }
   }
 
   @MethodMiddleware(ProjectSecurityMiddleware)
-  @PATCH("/:id")
+  @GET("/:projectID")
+  public async project(
+    req: Request<{ projectID: string }, unknown, unknown>,
+    res: Response
+  ) {
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
+
+    try {
+      const project = await this.projectService.findByID(projectID);
+      res.send(project);
+    } catch (error) {
+      this.error(error);
+      res.status(501).send(`${error}`);
+    }
+  }
+
+  @MethodMiddleware(ProjectSecurityMiddleware)
+  @GET("/:projectID/users")
+  public async users(
+    req: Request<{ projectID: string }, unknown, unknown>,
+    res: Response
+  ) {
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
+    try {
+      const users = await this.projectService.listUsersByProjectID(projectID);
+      res.send(users);
+    } catch (error) {
+      this.error(error);
+      res.status(500).send("internal server error");
+    }
+  }
+
+  @MethodMiddleware(ProjectSecurityMiddleware)
+  @PATCH("/:projectID")
   public async update(
     req: Request<
       { projectID: string },
@@ -73,27 +139,30 @@ export class ProjectsController {
     >,
     res: Response<Project | string>
   ) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
     const updatedProject = req.body;
     if (!updatedProject) return res.status(400).send("Body malformed.");
     try {
       const project = await this.projectService.updateProject(
-        id,
+        projectID,
         updatedProject
       );
       res.send(project);
     } catch (error) {
+      this.error(error);
       res.status(501).send(`${error}`);
     }
   }
 
-  @DELETE("/:id")
+  @MethodMiddleware(ProjectSecurityMiddleware)
+  @DELETE("/:projectID")
   public async delete(req: Request<{ projectID: string }>, res: Response) {
-    const id = parseInt(req.params.projectID);
-    if (isNaN(id)) return res.status(400).send("id not a number");
+    const { projectID } = req.params;
+    if (!projectID) return res.status(400).send("ID is undefined");
     try {
-      if (this.projectService.deleteProject(id)) return res.status(200);
+      if (this.projectService.deleteProject(projectID))
+        return res.status(200).send();
 
       res.status(404).send();
     } catch (error) {

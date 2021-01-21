@@ -1,9 +1,9 @@
-import { Priority } from "enums/priority.enum";
+import { Issue } from "entities/issue.entity";
 import { UserDTO } from "interfaces/User.dto";
 export interface IssueDTO {
-  title: string;
-  description: string;
+  title: Issue["title"];
+  description: Issue["description"];
   assignee: UserDTO["username"];
-  priority: Priority;
-  status: string;
+  priority: Issue["priority"];
+  status: Issue["status"];
 }

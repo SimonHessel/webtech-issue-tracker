@@ -14,7 +14,7 @@ COPY e2e /app/e2e
 COPY *.json *.js .browserslistrc /app/
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN npm run build -- --configuration=production --output-path=dist
+RUN npm run build -- --configuration=production --localize --output-path=dist
 
 
 ### STAGE 2: Setup ###

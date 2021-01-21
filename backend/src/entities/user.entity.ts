@@ -1,26 +1,33 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
 import { Exclude, Expose } from "class-transformer";
+import { PrimaryID } from "entities/id.entity";
 import { Project } from "entities/project.entity";
+import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  public id!: number;
+export class User extends PrimaryID {
+  @Exclude()
+  public id!: string;
 
-  @Column()
+  @Column({ unique: true })
   public email!: string;
 
   @Exclude()
-  @Column()
+  @Column({ select: false, nullable: true })
+  public VerificationToken!: string;
+
+  @Exclude()
+  @Column({ select: false, default: false })
+  public isVerified!: boolean;
+
+  @Exclude()
+  @Column({ select: false })
   public password!: string;
 
-  @Column()
+  @Exclude()
+  @Column({ default: 1 })
+  public passwordVersion!: number;
+
+  @Column({ unique: true })
   public username!: string;
 
   @Expose({ groups: ["user"] })

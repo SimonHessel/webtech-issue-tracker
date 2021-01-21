@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
-import { Controller, GET } from "core";
+import { Controller, GET, ApiSummary, BaseStructure } from "core";
 
 @Controller("health")
-export class HealthController {
-  constructor() {}
+export class HealthController extends BaseStructure {
+  constructor() {
+    super();
+  }
 
-  @GET()
+  @GET("/")
+  @ApiSummary("Health endpoint")
   public index(req: Request, res: Response) {
     res.send("Healthy");
   }

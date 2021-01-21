@@ -1,0 +1,54 @@
+<app-auth header="Login">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <label for="usernameOrEmail" i18n="@@loginusernameoremail"
+      >Username or Email</label
+    >
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="text"
+        name="usernameOrEmail"
+        formControlName="usernameOrEmail"
+      />
+      <mat-error
+        i18n="@@loginusernameoremailerror"
+        *ngIf="
+          !loginForm.controls.usernameOrEmail?.valid &&
+          (loginForm.controls.usernameOrEmail?.dirty ||
+            loginForm.controls.usernameOrEmail?.touched)
+        "
+      >
+        Please enter a Username or E-Mail Adress
+      </mat-error>
+    </mat-form-field>
+
+    <label i18n="@@password" for="password">Password</label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+      <mat-error
+        i18n="@@loginpassworderror"
+        *ngIf="
+          !loginForm.controls.password?.valid &&
+          (loginForm.controls.password?.dirty ||
+            loginForm.controls.password?.touched)
+        "
+      >
+        Please enter a Password
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      i18n="@@loginbutton"
+      mat-button
+      type="submit"
+      [disabled]="!loginForm.valid"
+    >
+      Log In
+    </button>
+  </form>
+</app-auth>

@@ -1,5 +1,9 @@
+import { Project } from "entities/project.entity";
+import { User } from "entities/user.entity";
+
 export interface TokenData {
-  projects: number[];
-  username: string;
-  email: string;
+  projects: Project["id"][];
+  username: User["username"];
+  email: User["email"];
+  iat: number;
 }

@@ -1,48 +1,31 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from 'core/core.module';
+import { SharedModule } from 'shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { environment } from 'src/environments/environment';
-import { ApiBaseUrlInterceptors } from './services/ApiBaseUrlInterceptors';
+import { MenuComponent } from './layout/menu/menu.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, MenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
+    CoreModule,
+    SharedModule,
+    MatSidenavModule,
     MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatToolbarModule,
+    MatIconModule,
+    FlexLayoutModule,
+    SharedModule,
   ],
-  providers: [
-    {
-      provide: 'API_BASE_DOMAIN',
-      useValue: environment.apiBaseDomain,
-    },
-    { provide: 'HTTPS', useValue: environment.https },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiBaseUrlInterceptors,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

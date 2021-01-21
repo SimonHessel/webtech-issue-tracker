@@ -1,0 +1,120 @@
+<div class="create-project">
+  <div class="header">
+    <h1>Create new Issue</h1>
+    <button mat-icon-button (click)="onNoClick()" class="close-button">
+      <mat-icon [inline]="true">close</mat-icon>
+    </button>
+  </div>
+  <div class="body">
+    <form [formGroup]="issueForm" novalidate>
+      <div class="input">
+        <mat-form-field appearance="standard" class="input-title">
+          <mat-label>Issue titel</mat-label>
+          <input
+            matInput
+            type="text"
+            id="titel"
+            name="titel"
+            class="title"
+            formControlName="title"
+          />
+          <mat-error
+            *ngIf="
+              !issueForm.controls.title?.valid &&
+              (issueForm.controls.title.dirty ||
+                issueForm.controls.title?.touched)
+            "
+          >
+            Please enter a Titel
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="input-description">
+          <mat-label>Issue Description</mat-label>
+          <textarea
+            matInput
+            type="text"
+            id="description"
+            name="description"
+            class="description"
+            formControlName="description"
+          >
+          </textarea>
+          <mat-error
+            *ngIf="
+              !issueForm.controls.description?.valid &&
+              (issueForm.controls.description.dirty ||
+                issueForm.controls.description?.touched)
+            "
+          >
+            Please enter a Description
+          </mat-error>
+        </mat-form-field>
+        <div class="buttons">
+          <span
+            ><button
+              mat-flat-button
+              [matMenuTriggerFor]="assigneeMenu"
+              class="assignee"
+            >
+              Choose Assignee
+            </button>
+            <mat-menu #assigneeMenu="matMenu" yPosition="above">
+              <button
+                mat-menu-item
+                *ngFor="let user of data.project.users"
+                (click)="data.assignee = user.username"
+              >
+                {{ user.username }}
+              </button>
+            </mat-menu>
+            {{ data.assignee }}
+          </span>
+          <span>
+            <button
+              mat-flat-button
+              class="priority"
+              [matMenuTriggerFor]="priorityMenu"
+            >
+              Choose Priority
+            </button>
+            <mat-menu #priorityMenu="matMenu" yPosition="above">
+              <button mat-menu-item (click)="data.priority = 0">Low</button>
+              <button mat-menu-item (click)="data.priority = 1">Medium</button>
+              <button mat-menu-item (click)="data.priority = 2">High</button>
+            </mat-menu>
+            {{ data.priority | priority }}
+          </span>
+          <span
+            ><button
+              mat-flat-button
+              class="status"
+              [matMenuTriggerFor]="statusMenu"
+            >
+              Choose Status
+            </button>
+            <mat-menu #statusMenu="matMenu" yPosition="above">
+              <button
+                mat-menu-item
+                *ngFor="let status of data.project.states"
+                (click)="data.status = data.project.states.indexOf(status)"
+              >
+                {{ status }}
+              </button>
+            </mat-menu>
+            {{ data.project.states[data.status] }}
+          </span>
+        </div>
+      </div>
+      <button
+        i18n="@@create"
+        mat-button
+        class="create-button"
+        type="submit"
+        [disabled]="!issueForm.valid && data.assignee === ''"
+        (click)="save()"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+@import "/src/assets/theme.scss";
+
+.main-container {
+  background: mat-color($background, 600);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .sidenav-fixed {
+    width: 4rem;
+    height: max;
+    background: mat-color($primary, 100);
+    border: 1px solid mat-color($border, 900);
+
+    .item-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+      align-items: center;
+      .profile {
+        margin-top: 2rem;
+        width: 3rem;
+        height: 3rem;
+        background: mat-color($primary, 200);
+        border-radius: 12px;
+        border: none;
+        color: mat-color($primary, 300);
+        font-size: xx-large;
+      }
+    }
+  }
+
+  .inner-sidenav-container {
+    background: mat-color($background, 600);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .second-sidenav {
+      width: 15rem;
+      height: max;
+      background: mat-color($background, 500);
+      border: 1px solid mat-color($border, 200);
+
+      .second-sidenav-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        span {
+          padding: 0.5rem;
+        }
+
+        .second-sidenav__upper-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          h1 {
+            position: relative;
+            text-decoration: none;
+            text-align: left;
+            font-size: 2rem;
+            letter-spacing: 0px;
+            color: mat-color($text-color, 200);
+            background: mat-color($background, 500);
+            margin-top: 2rem;
+            margin-left: 1.3rem;
+          }
+          h1:after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            bottom: -0.5rem;
+            background-color: rgba($color: mat-color($background, 800), $alpha: 0.2);
+
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+          }
+
+          button {
+            color: mat-color($text-color, 50);
+            font-size: 1rem;
+
+            mat-icon {
+              font-size: 1.4rem;
+            }
+          }
+
+          .projects {
+            margin-top: 1.5rem;
+            margin-bottom: 1.8rem;
+          }
+        }
+
+        .second-sidenav__lower-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 1.1rem;
+
+          button {
+            color: mat-color($text-color, 50);
+            font-size: 1rem;
+
+            mat-icon {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+    }
+
+    .sidenav-content {
+      background: mat-color($background, 600);
+      display: flex;
+      overflow: hidden;
+
+      .sidenav-toggle {
+        width: 2.5rem;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+
+        .sizer {
+          cursor: pointer;
+          position: absolute;
+          left: 0;
+          height: 100%;
+          width: 3.5rem;
+          display: flex;
+          justify-content: space-evenly;
+          .line {
+            border: 0.094rem solid mat-color($primary, 100);
+            background-color: mat-color($primary, 100);
+            height: 100%;
+            width: min-content;
+            opacity: 0;
+          }
+        }
+
+        button {
+          background: mat-color($primary, 100);
+          color: mat-color($primary, 300);
+          margin-top: 2rem;
+        }
+        button:hover {
+          background: mat-color($primary, 200);
+        }
+      }
+      .sidenav-toggle:hover {
+        .sizer {
+          .line {
+            opacity: 1;
+          }
+        }
+        button {
+          background: mat-color($primary, 200);
+        }
+      }
+    }
+  }
+}

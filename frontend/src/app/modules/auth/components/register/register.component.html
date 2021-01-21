@@ -1,0 +1,62 @@
+<app-auth header="Register">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+    <label i18n="@@email" for="eMail">E-Mail</label>
+    <mat-form-field appearance="outline">
+      <input matInput type="email" name="eMail" formControlName="eMail" />
+      <mat-error
+        i18n="@@registeremailerror"
+        *ngIf="
+          !registerForm.controls.eMail?.valid &&
+          (registerForm.controls.eMail?.dirty ||
+            registerForm.controls.eMail?.touched)
+        "
+      >
+        Please enter a correct E-Mail address
+      </mat-error>
+    </mat-form-field>
+
+    <label i18n="@@username" for="username">Username</label>
+    <mat-form-field appearance="outline">
+      <input matInput type="text" name="username" formControlName="username" />
+      <mat-error
+        i18n="@@registerusernameerror"
+        *ngIf="
+          !registerForm.controls.username?.valid &&
+          (registerForm.controls.username?.dirty ||
+            registerForm.controls.username?.touched)
+        "
+      >
+        Please enter a correct username
+      </mat-error>
+    </mat-form-field>
+
+    <label i18n="@@password" for="password">Password</label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+      <mat-error
+        i18n="@@registerpassworderror"
+        *ngIf="
+          !registerForm.controls.password?.valid &&
+          (registerForm.controls.password?.dirty ||
+            registerForm.controls.password?.touched)
+        "
+      >
+        Please enter a password with at least 6 characters
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      i18n="@@registerbutton"
+      mat-button
+      type="submit"
+      [disabled]="!registerForm.valid"
+    >
+      Register
+    </button>
+  </form>
+</app-auth>

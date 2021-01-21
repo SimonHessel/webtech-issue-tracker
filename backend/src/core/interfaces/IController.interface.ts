@@ -1,4 +1,3 @@
-import { IMiddleware, RequestMethod } from "core";
 import { Router } from "express";
 
 export interface IController {

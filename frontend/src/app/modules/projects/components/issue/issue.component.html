@@ -1,0 +1,15 @@
+<app-header header="{{ currentIssue?.project?.title }}">
+  <button mat-icon-button class="button">
+    <mat-icon>info</mat-icon>
+  </button>
+  <button mat-icon-button class="button">
+    <mat-icon>people</mat-icon>
+  </button>
+  <button mat-icon-button class="button">
+    <mat-icon>share</mat-icon>
+  </button>
+</app-header>
+<app-issue-view
+  [project]="currentIssue?.project"
+  [issue]="currentIssue"
+></app-issue-view>

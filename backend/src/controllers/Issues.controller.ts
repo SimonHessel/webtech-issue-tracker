@@ -1,72 +1,151 @@
-import { Controller, DELETE, GET, InjectRepository, PATCH, POST } from "core";
+import { BaseStructure, Controller, DELETE, GET, PATCH, POST } from "core";
 import { Issue } from "entities/issue.entity";
 import { Request, Response } from "express";
 import { IssueDTO } from "interfaces/Issue.dto";
 import { JWT } from "middlewares/jwt.middleware";
 import { ProjectSecurity } from "middlewares/projectSecurity.middleware";
+import { Serializer } from "middlewares/serlizer.middleware";
 import { IssueService } from "services/issue.service";
-import { ProjectService } from "services/project.service";
-import { UserService } from "services/user.service";
 
 @JWT()
-@ProjectSecurity({ all: false })
+@ProjectSecurity()
+@Serializer()
 @Controller("issues")
-export class IssuesController {
-  constructor(
-    private issueService: IssueService,
-    private userService: UserService,
-    @InjectRepository() private projectService: ProjectService
-  ) {}
+export class IssuesController extends BaseStructure {
+  constructor(private issueService: IssueService) {
+    super();
+  }
 
   @POST("/:projectID")
   public async create(
-    req: Request<{ projectID: number }, unknown, IssueDTO>,
+    req: Request<{ projectID: string }, unknown, IssueDTO>,
     res: Response<Issue>
   ) {
     const { projectID } = req.params;
 
-    const { assignee, ...issue } = req.body;
+    const issue = req.body;
 
-    const [user, project] = await Promise.all([
-      this.userService.findUserByName(assignee),
-      this.projectService.findByID(projectID),
-    ]);
-
-    if (!user || !project) return res.sendStatus(404);
-
-    console.log(user, project);
-
-    // const createdIssue = await this.issueRepository.save({
-    //   ...issue,
-    //   assignee: user,
-    //   project,
-    // });
-    // res.send(createdIssue);
-    res.sendStatus(200);
+    try {
+      const createdIssue = await this.issueService.createProjectIssue(
+        projectID,
+        issue
+      );
+      return res.send(createdIssue);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   @GET("/:projectID")
   public async read(
-    req: Request<{ projectID: number }, unknown, Record<string, never>>,
-    res: Response<Issue[]>
+    req: Request<
+      { projectID: string },
+      unknown,
+      unknown,
+      {
+        skip?: string;
+        take?: string;
+        assignee?: string;
+        status: string;
+        search: string;
+        priority: string;
+      }
+    >,
+    res: Response
   ) {
-    console.log(req.body);
     const { projectID } = req.params;
-    const issues = await this.issueService.getProjectIssues(projectID);
+    const skip = parseInt(req.query.skip || "0", 10);
+    const take = parseInt(req.query.take || "50", 10);
+
+    const { assignee, search } = req.query;
+    const filter: Parameters<IssueService["getProjectIssues"]>[3] = {
+      assignee,
+      search,
+    };
+
+    const priority = parseInt(req.query.priority);
+    if (!isNaN(priority)) filter.priority = priority;
+
+    const status = parseInt(req.query.status);
+    if (!isNaN(status)) filter.status = status;
+
+    const issues = await this.issueService.getProjectIssues(
+      projectID,
+      skip,
+      take,
+      filter
+    );
     res.send(issues);
   }
 
-  @PATCH("/:projectID/:id")
-  public update(
-    req: Request<{ projectID: string; id: string }, unknown, IssueDTO>,
-    res: Response<Issue>
+  @GET("/:projectID/:id")
+  public async singleIssue(
+    req: Request<{ projectID: string; id: string }, unknown, unknown>,
+    res: Response
   ) {
-    const { projectID, id } = req.params;
-    res.sendStatus(200);
+    const { id } = req.params;
+    try {
+      const issue = await this.issueService.getIssueByID(id);
+      res.send(issue);
+    } catch (error) {
+      this.error(error);
+      res.status(400).send("Issue not found");
+    }
+  }
+
+  @PATCH("/:projectID/:id")
+  public async update(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      Parameters<IssueService["updateIssue"]>[1]
+    >,
+    res: Response
+  ) {
+    const { id } = req.params;
+    const issuePartial = req.body;
+
+    try {
+      const issue = await this.issueService.updateIssue(id, issuePartial);
+      res.send(issue);
+    } catch (error) {
+      this.error(error);
+      res.status(400).send("Issue not found");
+    }
+  }
+
+  @PATCH("/:projectID/:id/reorder")
+  public async move(
+    req: Request<
+      { projectID: string; id: string },
+      unknown,
+      {
+        position: number;
+        status: number;
+      }
+    >,
+    res: Response
+  ) {
+    const { id, projectID } = req.params;
+
+    const { position, status } = req.body;
+    if (!id || !projectID || !position)
+      return res.status(400).send("IDs and or Position are undefined.");
+    try {
+      await this.issueService.updateIssueStatusAndOrder(
+        projectID,
+        id,
+        position,
+        status
+      );
+      return res.sendStatus(200);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   @DELETE("/:projectID/:id")
-  public delete(
+  public async delete(
     req: Request<
       { projectID: string; id: string },
       unknown,
@@ -75,6 +154,16 @@ export class IssuesController {
     res: Response
   ) {
     const { projectID, id } = req.params;
-    res.sendStatus(200);
+
+    if (!id || !projectID) return res.status(400).send("IDs are undefined.");
+
+    try {
+      await this.issueService.deleteIssueByID(id);
+
+      return res.status(200);
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Deletion failed");
+    }
   }
 }

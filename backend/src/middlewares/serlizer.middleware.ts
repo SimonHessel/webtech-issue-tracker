@@ -1,16 +1,26 @@
 import { classToPlain } from "class-transformer";
-import { IMiddleware, Middleware, Options, Service } from "core";
+import {
+  IMiddleware,
+  Middleware,
+  Options,
+  Injectable,
+  BaseStructure,
+} from "core";
+import { Issue } from "entities/issue.entity";
 import { Project } from "entities/project.entity";
 import { User } from "entities/user.entity";
 import { NextFunction, Request, Response } from "express";
 
-@Service()
-export class SerializerMiddleware implements IMiddleware {
-  constructor() {}
+@Injectable()
+export class SerializerMiddleware extends BaseStructure implements IMiddleware {
+  constructor() {
+    super();
+  }
 
-  private isInstanceOf(item: any) {
+  private isInstanceOf(item: unknown) {
     if (item instanceof User) return ["user"];
     if (item instanceof Project) return ["project"];
+    if (item instanceof Issue) return ["issue"];
     return [];
   }
   async middleware(
@@ -21,7 +31,7 @@ export class SerializerMiddleware implements IMiddleware {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const oldjson = res.json;
-    res.json = function (body: any, ...args) {
+    res.json = function (body: unknown, ...args) {
       const groups: string[] =
         body instanceof Array
           ? body.length > 0
@@ -32,7 +42,7 @@ export class SerializerMiddleware implements IMiddleware {
       const sanitized = classToPlain(body, {
         enableCircularCheck: true,
         groups,
-      }) as any;
+      }) as unknown;
       return oldjson.apply(this, [sanitized], ...args);
     };
     next();

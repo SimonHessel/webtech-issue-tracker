@@ -1,4 +1,7 @@
 {
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "sourceMap": true,
     "experimentalDecorators": true,
@@ -12,6 +15,9 @@
     "baseUrl": "src",
     "types": ["reflect-metadata"],
     "lib": ["ES2020"],
+    "esModuleInterop": true,
+    "removeComments": true,
+    "alwaysStrict": true,
     "paths": {
       "controllers/*": ["controllers/*"],
       "core": ["core"],
@@ -20,7 +26,8 @@
       "services/*": ["services/*"],
       "middlewares/*": ["middlewares/*"],
       "interfaces/*": ["interfaces/*"],
-      "enums/*": ["enums/*"]
+      "enums/*": ["enums/*"],
+      "repositories/*": ["repositories/*"]
     },
     "emitDecoratorMetadata": true
   },

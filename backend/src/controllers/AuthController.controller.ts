@@ -97,11 +97,38 @@ export class AuthController extends BaseStructure {
   }
   @POST("/:userID")
   public async forgotPassword(req: Request, res: Response) {
-    res.sendStatus(404);
+    const {email} = req.body;
+    try {
+      await this.authService.sendPasswordRecoveryEmail(email);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
+    res.sendStatus(202);
   }
 
-  @POST("/:passwordToken")
+  @POST("/passwordreset/:passwordToken&:newPassword")
   public async resetPassword(req: Request, res: Response) {
-    res.sendStatus(404);
+    const {passwordToken, newPassword} = req.body;
+    if (!passwordToken) return res.status(401).send("You need to specify a token!")
+
+    try {
+      await this.authService.recoverPassword(passwordToken, newPassword);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
+    res.sendStatus(202);
+  }
+
+  @POST("/confirm/:confirmationToken")
+  public async confirmEmail(req: Request, res: Response) {
+    const {confirmationToken} = req.body;
+    if (!confirmationToken) return res.status(401).send("You need to specify a token!")
+
+    try {
+      await this.authService.confirmEmail(confirmationToken);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
+    res.sendStatus(202);
   }
 }

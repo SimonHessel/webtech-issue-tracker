@@ -13,6 +13,7 @@ export class AuthService extends BaseStructure {
   ) {
     super();
   }
+
   public async findbyUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
@@ -67,11 +68,53 @@ export class AuthService extends BaseStructure {
         password: hash,
       });
 
-      // await this.emailService.sendRegisterMail(user);
+      await this.emailService.sendRegisterMail(user);
       return user;
     } catch (error) {
       this.error(error);
       throw "Couldn't register user.";
     }
+
   }
+
+  public async sendPasswordRecoveryEmail(
+    email: string
+  ){
+    const user = await this.userRepository.findByUsernameOrEmail(
+      email
+    );
+
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!emailRegexp.test(email)) throw "Invalid email address.";
+
+    if (!user) throw "No user registered with that email address.";
+
+    await this.emailService.sendforgotPasswordMail(user);
+  }
+
+  public async recoverPassword(
+    token: string,
+    newPassword: string
+  ){
+    const user = await this.userRepository.findByToken(token);
+    if (!user) throw "No user with specified token has been found.";
+    if (!user.isVerified) throw "User needs to verify email first before attempting to reset password."
+      this.userRepository.update(
+        { id: user.id },
+        { password: await bcrypt.hash(newPassword, 10),
+          passwordVersion: user.passwordVersion + 1}
+      );
+  }
+
+  public async confirmEmail(
+    token: string
+  ){
+    const user = await this.userRepository.findByToken(token);
+    if (!user) throw "No user with specified token has been found.";
+      this.userRepository.update(
+        { id: user.id },
+        { isVerified: true}
+      );
+  }
+
 }

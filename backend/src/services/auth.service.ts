@@ -34,11 +34,20 @@ export class AuthService {
     // Password validation using regex
     if (
       password.length < 6 ||
-      !/^[a-zA-Z0-9_.-]*$/.test(password) ||
-      !/\d/.test(password)
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/.test(password)
     )
       throw "Invalid password";
 
+    // Check if user already exists
+    if (
+      await this.userRepository.findOne({
+        relations: ["projects"],
+        where: [{ username: username }, { email: email }],
+      })
+    )
+      throw "User already registered";
+
+    // Try to add user to database
     try {
       const hash = await bcrypt.hash(password, 10);
       return this.userRepository.save({ email, username, hash });

@@ -108,13 +108,23 @@ export class ProjectsComponent
 
   public copy(id: Project['id']) {
     this.clipboard.copy(`${window.location.host}${this.router.url}/${id}`);
-    this.snackBar.open('Link has been copied', 'close', { duration: 2500 });
+    this.snackBar.open(
+      $localize`:@@linkhasbeencopied:Link has been copied`,
+      '',
+      {
+        duration: 2500,
+      }
+    );
   }
 
   public deleteProject(projectId: Project['id']) {
-    const snackBarRef = this.snackBar.open('Project has been deleted', 'undo', {
-      duration: 3000,
-    });
+    const snackBarRef = this.snackBar.open(
+      $localize`:@@projectdelete:Project has been deleted`,
+      $localize`:@@undo:undo`,
+      {
+        duration: 3000,
+      }
+    );
 
     this.subs.sink = snackBarRef
       .afterDismissed()
@@ -122,9 +132,15 @@ export class ProjectsComponent
         switchMap((event) =>
           event.dismissedByAction
             ? this.snackBar
-                .open('Deletion has been undone.', '', { duration: 3000 })
+                .open(
+                  $localize`:@@deleteundone:Deletion has been undone.`,
+                  '',
+                  {
+                    duration: 3000,
+                  }
+                )
                 .afterDismissed()
-            : this.projectsService.deleteProject(projectId).toPromise()
+            : this.projectsService.deleteProject(projectId)
         )
       )
       .subscribe();

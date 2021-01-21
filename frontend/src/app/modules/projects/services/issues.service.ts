@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Priority } from 'core/enums/priority.enum';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
+import { mapTo } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +13,20 @@ export class IssuesService {
 
   constructor(private readonly http: HttpClient) {}
 
-  public getIssuesByProject(projectID: Project['id']) {
-    return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`);
+  public getIssuesByProject(
+    projectID: Project['id'],
+    options?: {
+      assignee?: string;
+      status?: string;
+      search?: string;
+      priority?: string;
+    }
+  ) {
+    return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`, {
+      params: new HttpParams({
+        fromObject: options as { [param: string]: string },
+      }),
+    });
   }
 
   public getIssueByID(projectID: Project['id'], id: Issue['id']) {
@@ -35,12 +49,38 @@ export class IssuesService {
     position: Issue['position'],
     status: Issue['status']
   ) {
-    return this.http.patch<Issue>(
+    return this.http.patch(
       `${this.apiEndpoint}/${projectID}/${id}/reorder`,
       {
         position,
         status,
-      }
+      },
+      { responseType: 'text' }
     );
+  }
+
+  public deleteIssue(projectID: Project['id'], id: Issue['id']) {
+    return this.http
+      .delete(`${this.apiEndpoint}/${projectID}/${id}`, {
+        responseType: 'text',
+      })
+      .pipe(mapTo(true));
+  }
+
+  public createIssue(
+    projectID: Project['id'],
+    title: string,
+    description: string,
+    assignee: string,
+    priority: Priority,
+    status: number
+  ) {
+    return this.http.post(`${this.apiEndpoint}/${projectID}`, {
+      title,
+      description,
+      assignee,
+      priority,
+      status,
+    });
   }
 }

@@ -19,7 +19,7 @@
             <h1>Issue Tracker</h1>
             <button mat-button routerLink="/projects" class="projects">
               <mat-icon [inline]="true">list</mat-icon>
-              Projects
+              <span i18n="@@projects">Projects</span>
             </button>
             <button
               [routerLink]="['/projects/' + id + '/kanban']"
@@ -27,7 +27,15 @@
               *ngIf="isShown"
             >
               <mat-icon [inline]="true">view_column</mat-icon>
-              Kanban
+              <span>Kanban</span>
+            </button>
+            <button
+              mat-button
+              *ngIf="isShown"
+              [routerLink]="['/projects/' + id + '/issues']"
+            >
+              <mat-icon [inline]="true">view_list</mat-icon>
+              <span i18n="@@issues">Issues</span>
             </button>
             <button
               mat-button
@@ -35,7 +43,7 @@
               [routerLink]="['/projects/' + id + '/users']"
             >
               <mat-icon [inline]="true">group</mat-icon>
-              Users
+              <span i18n="@@users">Users</span>
             </button>
             <!--Router Link muss ggf. geändert werden-->
             <button
@@ -44,17 +52,17 @@
               [routerLink]="['/projects/' + id + '/settings']"
             >
               <mat-icon [inline]="true">settings</mat-icon>
-              Settings
+              <span i18n="@@settings">Settings</span>
             </button>
           </div>
           <div class="second-sidenav__lower-content">
             <button routerLink="/settings" mat-button>
               <mat-icon [inline]="true">account_box</mat-icon>
-              Account settings
+              <span i18n="@@accountsettings">Account settings</span>
             </button>
             <button mat-button (click)="logOut()">
               <mat-icon [inline]="true">login</mat-icon>
-              Logout
+              <span i18n="@@logout">Logout</span>
             </button>
           </div>
         </div>

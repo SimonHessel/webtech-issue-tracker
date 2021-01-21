@@ -42,7 +42,14 @@ export class IssuesController extends BaseStructure {
       { projectID: string },
       unknown,
       unknown,
-      { skip: string; take: string }
+      {
+        skip?: string;
+        take?: string;
+        assignee?: string;
+        status: string;
+        search: string;
+        priority: string;
+      }
     >,
     res: Response
   ) {
@@ -50,13 +57,23 @@ export class IssuesController extends BaseStructure {
     const skip = parseInt(req.query.skip || "0", 10);
     const take = parseInt(req.query.take || "50", 10);
 
-    if (isNaN(skip) || isNaN(take))
-      return res.status(400).send("ID is undefined");
+    const { assignee, search } = req.query;
+    const filter: Parameters<IssueService["getProjectIssues"]>[3] = {
+      assignee,
+      search,
+    };
+
+    const priority = parseInt(req.query.priority);
+    if (!isNaN(priority)) filter.priority = priority;
+
+    const status = parseInt(req.query.status);
+    if (!isNaN(status)) filter.status = status;
 
     const issues = await this.issueService.getProjectIssues(
       projectID,
       skip,
-      take
+      take,
+      filter
     );
     res.send(issues);
   }
@@ -71,6 +88,7 @@ export class IssuesController extends BaseStructure {
       const issue = await this.issueService.getIssueByID(id);
       res.send(issue);
     } catch (error) {
+      this.error(error);
       res.status(400).send("Issue not found");
     }
   }
@@ -114,15 +132,20 @@ export class IssuesController extends BaseStructure {
     if (!id || !projectID || !position)
       return res.status(400).send("IDs and or Position are undefined.");
     try {
-      res.send(this.issueService.moveIssue(projectID, id, position, status));
+      await this.issueService.updateIssueStatusAndOrder(
+        projectID,
+        id,
+        position,
+        status
+      );
+      return res.sendStatus(200);
     } catch (error) {
-      this.error(error);
-      return res.status(400).send("Some error.");
+      return res.status(400).send(error);
     }
   }
 
   @DELETE("/:projectID/:id")
-  public delete(
+  public async delete(
     req: Request<
       { projectID: string; id: string },
       unknown,
@@ -131,6 +154,16 @@ export class IssuesController extends BaseStructure {
     res: Response
   ) {
     const { projectID, id } = req.params;
-    res.sendStatus(200);
+
+    if (!id || !projectID) return res.status(400).send("IDs are undefined.");
+
+    try {
+      await this.issueService.deleteIssueByID(id);
+
+      return res.status(200);
+    } catch (error) {
+      this.error(error);
+      return res.status(400).send("Deletion failed");
+    }
   }
 }

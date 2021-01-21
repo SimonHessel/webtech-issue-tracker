@@ -1,4 +1,4 @@
-<app-header [displaySearch]="false" header="{{ issue?.project?.title }}">
+<app-header header="{{ currentIssue?.project?.title }}">
   <button mat-icon-button class="button">
     <mat-icon>info</mat-icon>
   </button>
@@ -9,26 +9,7 @@
     <mat-icon>share</mat-icon>
   </button>
 </app-header>
-<div class="content-wrapper">
-  <div class="main">Main Content</div>
-  <div class="side-wrapper">
-    <div class="side-header">
-      Author: {{ "idk wer der autor ist" }}
-      <button class="close" mat-icon-button><mat-icon>close</mat-icon></button>
-    </div>
-    <div class="side-content">
-      <p>Assignee: {{ issue?.assignee }}</p>
-      <p>Priority: {{ issue?.priority }}</p>
-    </div>
-    <div class="side-buttons">
-      <button class="share" mat-icon-button>
-        <mat-icon>share</mat-icon>
-      </button>
-      <button class="assign" mat-flat-button>assign</button>
-      <button class="edit" mat-flat-button>edit</button>
-      <button class="delete" mat-flat-button>delete</button>
-    </div>
-  </div>
-</div>
-
-<p>{{ issue | json }}</p>
+<app-issue-view
+  [project]="currentIssue?.project"
+  [issue]="currentIssue"
+></app-issue-view>

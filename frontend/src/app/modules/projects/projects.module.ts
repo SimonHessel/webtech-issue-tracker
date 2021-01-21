@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatDialogModule,
   MatDialogRef,
@@ -27,7 +28,11 @@ import { UsersComponent } from './components/users/users.component';
 import { ProjectGuardService } from './guards/project.guard';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsService } from './services/projects.service';
+import { MatListModule } from '@angular/material/list';
+import { IssueViewComponent } from './components/issue-view/issue-view.component';
 
+import { OrderModule } from 'ngx-order-pipe';
+import { CreateIssueComponent } from './components/create-issue/create-issue.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -38,6 +43,10 @@ import { ProjectsService } from './services/projects.service';
     CreateProjectComponent,
 
     UsersComponent,
+
+    IssueViewComponent,
+
+    CreateIssueComponent,
   ],
   providers: [
     ProjectGuardService,
@@ -72,6 +81,9 @@ import { ProjectsService } from './services/projects.service';
     ClipboardModule,
     MatSnackBarModule,
     DragDropModule,
+    MatMenuModule,
+    MatListModule,
+    OrderModule,
   ],
 })
 export class ProjectsModule {}

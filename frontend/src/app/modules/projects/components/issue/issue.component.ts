@@ -21,7 +21,8 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
 export class IssueComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  issue: Issue | undefined = undefined;
+  currentIssue: Issue | undefined = undefined;
+
   constructor(
     private route: ActivatedRoute,
     private readonly projectService: ProjectsService,
@@ -48,7 +49,7 @@ export class IssueComponent
         })
       )
       .subscribe((issue) => {
-        this.issue = issue;
+        this.currentIssue = issue;
         this.cdRef.markForCheck();
       });
   }

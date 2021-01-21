@@ -6,6 +6,7 @@
 
 
 /* ======== Angular material custom themes ======== */
+$red: mat-palette($red, 50);
 $primary: mat-palette($primary, 100);
 $accent: mat-palette($accent, 200);
 $warn: mat-palette($mat-red);

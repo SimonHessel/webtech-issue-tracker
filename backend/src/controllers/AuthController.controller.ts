@@ -108,7 +108,7 @@ export class AuthController extends BaseStructure {
     res.sendStatus(202);
   }
 
-  @POST("/passwordreset/:passwordToken&:newPassword")
+  @POST("/passwordreset/:passwordToken")
   public async resetPassword(req: Request, res: Response) {
     const {passwordToken, newPassword} = req.body;
     if (!passwordToken) return res.status(401).send("You need to specify a token!")

@@ -30,6 +30,8 @@ export class AuthController extends BaseStructure {
         password
       );
 
+      if (!user.isVerified) throw "You need to confirm your email address before being able to login."
+
       if (
         !this.jwtService.updateToken(res, {
           username: user.username,

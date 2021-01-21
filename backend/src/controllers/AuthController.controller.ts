@@ -30,7 +30,7 @@ export class AuthController extends BaseStructure {
         password
       );
 
-      if (!user.isVerified) throw "You need to confirm your email address before being able to login."
+      if (!user.isVerified) return "You need to confirm your email address before being able to login."
 
       if (
         !this.jwtService.updateToken(res, {
@@ -97,40 +97,41 @@ export class AuthController extends BaseStructure {
     });
     res.status(200).send();
   }
-  @POST("/:userID")
+  @POST("/:usernameOrEmail")
   public async forgotPassword(req: Request, res: Response) {
-    const {email} = req.body;
+    const {usernameOrEmail} = req.params;
     try {
-      await this.authService.sendPasswordRecoveryEmail(email);
+      await this.authService.sendPasswordRecoveryEmail(usernameOrEmail);
+      res.sendStatus(202);
     } catch (error) {
       return res.status(401).send(error);
     }
-    res.sendStatus(202);
   }
 
   @POST("/passwordreset/:passwordToken")
   public async resetPassword(req: Request, res: Response) {
-    const {passwordToken, newPassword} = req.body;
+    const {passwordToken } = req.params;
+    const {newPassword} = req.body;
     if (!passwordToken) return res.status(401).send("You need to specify a token!")
 
     try {
       await this.authService.recoverPassword(passwordToken, newPassword);
+      res.sendStatus(202);
     } catch (error) {
       return res.status(401).send(error);
     }
-    res.sendStatus(202);
   }
 
   @POST("/confirm/:confirmationToken")
   public async confirmEmail(req: Request, res: Response) {
-    const {confirmationToken} = req.body;
+    const {confirmationToken} = req.params;
     if (!confirmationToken) return res.status(401).send("You need to specify a token!")
 
     try {
       await this.authService.confirmEmail(confirmationToken);
+      res.sendStatus(202);
     } catch (error) {
       return res.status(401).send(error);
     }
-    res.sendStatus(202);
   }
 }

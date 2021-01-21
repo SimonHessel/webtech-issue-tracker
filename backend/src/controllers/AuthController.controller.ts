@@ -57,11 +57,11 @@ export class AuthController extends BaseStructure {
 
     try {
       await this.authService.registerUser(email, username, password);
+      res.sendStatus(200);
     } catch (error) {
       this.error(error);
       return res.status(400).send(error);
     }
-    res.sendStatus(200);
   }
 
   @GET("/refresh")

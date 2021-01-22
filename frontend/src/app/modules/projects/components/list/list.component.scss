@@ -1,25 +1,38 @@
 .content-wrapper {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  background-color: lightcoral;
 
-  mat-list-item {
-    cursor: pointer;
-    margin: -0.5rem 0;
-    mat-icon {
-      &.low {
-        color: #587aac;
-      }
-      &.medium {
-        color: #f6c131;
-      }
-      &.high {
-        color: #e22e4f;
-      }
-    }
-
-    .title {
-      color: #587aac;
-      text-decoration: none;
+  .left {
+    width: fit-content;
+    background-color: lightblue;
+    .list {
+      height: fit-content;
       width: fit-content;
+      overflow: auto;
+      mat-list-item {
+        cursor: pointer;
+        margin: -0.5rem 0;
+        mat-icon {
+          &.low {
+            color: #587aac;
+          }
+          &.medium {
+            color: #f6c131;
+          }
+          &.high {
+            color: #e22e4f;
+          }
+        }
+
+        .title {
+          color: #587aac;
+          text-decoration: none;
+          width: fit-content;
+        }
+      }
     }
 
     .add-issue {
@@ -28,10 +41,12 @@
       font-size: 1.1rem;
       line-height: 2.3rem;
       margin-top: 2rem;
+      width: 100%;
     }
   }
 
   .issue-view {
+    height: 50rem;
     margin-left: 5rem;
   }
 }

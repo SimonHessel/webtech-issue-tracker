@@ -92,7 +92,7 @@ export class AuthService {
   }
 
   public requestForgotPasswordMail(
-    usernameOrEmail: string,
+    usernameOrEmail: string
   ): Observable<unknown> {
     return this.http
       .post(
@@ -104,5 +104,13 @@ export class AuthService {
     .pipe(
       catchError((error) => throwError(error.error)));
   }
-  
+
+  /*public resetPassword(
+    newPassword: string,
+    verificationToken: string
+  ): Observable<unknown> {
+    return this.http
+      .post(`${this.apiEndpoint}/reset-password`,)
+  }*/
+
 }

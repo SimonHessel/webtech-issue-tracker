@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import './palette';
+
+@include mat-core();
+
+
+
+/* ======== Angular material custom themes ======== */
+$red: mat-palette($red, 50);
+$primary: mat-palette($primary, 100);
+$accent: mat-palette($accent, 200);
+$warn: mat-palette($mat-red);
+$border: mat-palette($border, 500);
+$background: mat-palette($background, 600);
+$text-color: mat-palette($text-color, 100);
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+
+@include angular-material-theme($theme);
+

@@ -1,5 +1,7 @@
+@import "/src/assets/theme.scss";
+
 .main-container {
-  background: #f4f5f7;
+  background: mat-color($background, 600);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -9,8 +11,8 @@
   .sidenav-fixed {
     width: 4rem;
     height: max;
-    background: #587aac;
-    border: 1px solid #707070;
+    background: mat-color($primary, 100);
+    border: 1px solid mat-color($border, 900);
 
     .item-wrapper {
       display: flex;
@@ -22,17 +24,17 @@
         margin-top: 2rem;
         width: 3rem;
         height: 3rem;
-        background: #2b5a9c;
+        background: mat-color($primary, 200);
         border-radius: 12px;
         border: none;
-        color: white;
+        color: mat-color($primary, 300);
         font-size: xx-large;
       }
     }
   }
 
   .inner-sidenav-container {
-    background: #f4f5f7;
+    background: mat-color($background, 600);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -42,8 +44,8 @@
     .second-sidenav {
       width: 15rem;
       height: max;
-      background: #e4e6eb;
-      border: 1px solid #cdcdcd;
+      background: mat-color($background, 500);
+      border: 1px solid mat-color($border, 200);
 
       .second-sidenav-content {
         height: 100%;
@@ -66,8 +68,8 @@
             text-align: left;
             font-size: 2rem;
             letter-spacing: 0px;
-            color: #71839d;
-            background: #e4e6eb;
+            color: mat-color($text-color, 200);
+            background: mat-color($background, 500);
             margin-top: 2rem;
             margin-left: 1.3rem;
           }
@@ -76,7 +78,7 @@
             content: "";
             height: 1px;
             bottom: -0.5rem;
-            background-color: rgba($color: #000000, $alpha: 0.2);
+            background-color: rgba($color: mat-color($background, 800), $alpha: 0.2);
 
             margin: 0 auto;
             left: 0;
@@ -84,7 +86,7 @@
           }
 
           button {
-            color: #4e4e4e;
+            color: mat-color($text-color, 50);
             font-size: 1rem;
 
             mat-icon {
@@ -105,7 +107,7 @@
           margin-bottom: 1.1rem;
 
           button {
-            color: #4e4e4e;
+            color: mat-color($text-color, 50);
             font-size: 1rem;
 
             mat-icon {
@@ -117,7 +119,7 @@
     }
 
     .sidenav-content {
-      background: #f4f5f7;
+      background: mat-color($background, 600);
       display: flex;
       overflow: hidden;
 
@@ -135,8 +137,8 @@
           display: flex;
           justify-content: space-evenly;
           .line {
-            border: 0.094rem solid #587aac;
-            background-color: #587aac;
+            border: 0.094rem solid mat-color($primary, 100);
+            background-color: mat-color($primary, 100);
             height: 100%;
             width: min-content;
             opacity: 0;
@@ -144,12 +146,12 @@
         }
 
         button {
-          background: #587aac;
-          color: white;
+          background: mat-color($primary, 100);
+          color: mat-color($primary, 300);
           margin-top: 2rem;
         }
         button:hover {
-          background: #2b5a9c;
+          background: mat-color($primary, 200);
         }
       }
       .sidenav-toggle:hover {
@@ -159,7 +161,7 @@
           }
         }
         button {
-          background: #2b5a9c;
+          background: mat-color($primary, 200);
         }
       }
     }

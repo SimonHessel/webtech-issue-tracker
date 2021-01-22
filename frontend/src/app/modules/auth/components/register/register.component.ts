@@ -3,13 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'core/services/auth.service';
 import { Router } from '@angular/router';
+import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class RegisterComponent extends UnsubscribeOnDestroyAdapter {
   registerForm = new FormGroup({
     eMail: new FormControl('', [Validators.required, Validators.email]),
     username: new FormControl('', [
@@ -26,9 +27,11 @@ export class RegisterComponent {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
   onSubmit = () => {
-    this.authService
+    this.subs.sink = this.authService
       .register(
         this.registerForm.controls.username.value,
         this.registerForm.controls.eMail.value,

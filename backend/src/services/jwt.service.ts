@@ -34,7 +34,7 @@ export class JWTService extends BaseStructure {
       username: user.username,
       version: user.passwordVersion,
     });
-    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME, token, {
+    res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME, token, {
       httpOnly: true,
       secure: false,
       path: "/api/auth/refresh",

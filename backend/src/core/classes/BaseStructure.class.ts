@@ -6,6 +6,6 @@ export class BaseStructure {
   constructor() {
     this.info = (...args: unknown[]) => info(this.constructor.name, ...args);
     this.error = (...args: unknown[]) => error(this.constructor.name, ...args);
-    this.info("Initlized");
+    this.info("Initilized");
   }
 }

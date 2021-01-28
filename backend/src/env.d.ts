@@ -9,7 +9,7 @@ declare namespace NodeJS {
     DATABASE_SYNCHRONIZE: string;
     ACCESS_TOKEN_EXPIRATION: string;
     REFRESH_TOKEN_EXPIRATION: string;
-    RFRESH_TOKEN_COKKIE_NAME: string;
+    REFRESH_TOKEN_COOKIE_NAME: string;
     ACCESS_TOKEN_HEADER_NAME: string;
     FRONTEND_DOMAINS: string;
     SMTP_USERNAME?: string;

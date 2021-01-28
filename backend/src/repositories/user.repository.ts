@@ -35,4 +35,10 @@ export class UserRepository extends Repository<User> {
       .addSelect("user.password")
       .getOneOrFail();
   }
+
+  findByToken(
+    VerificationToken: string
+  ): Promise<User> {
+    return this.findOneOrFail({VerificationToken});
+  }
 }

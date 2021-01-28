@@ -30,6 +30,13 @@ export class AuthController extends BaseStructure {
         password
       );
 
+      if (!user.isVerified)
+        return res
+          .status(400)
+          .send(
+            "You need to confirm your email address before being able to login."
+          );
+
       if (
         !this.jwtService.updateToken(res, {
           username: user.username,
@@ -55,16 +62,16 @@ export class AuthController extends BaseStructure {
 
     try {
       await this.authService.registerUser(email, username, password);
+      res.sendStatus(200);
     } catch (error) {
       this.error(error);
       return res.status(400).send(error);
     }
-    res.sendStatus(200);
   }
 
   @GET("/refresh")
   public async refresh(req: Request, res: Response) {
-    const refreshToken = req.cookies[process.env.RFRESH_TOKEN_COKKIE_NAME];
+    const refreshToken = req.cookies[process.env.REFRESH_TOKEN_COOKIE_NAME];
 
     if (!refreshToken) return res.status(401).send("No Refreshtoken.");
     try {
@@ -87,7 +94,7 @@ export class AuthController extends BaseStructure {
 
   @GET("/logout")
   public async logout(req: Request, res: Response) {
-    res.cookie(process.env.RFRESH_TOKEN_COKKIE_NAME, "", {
+    res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME, "", {
       httpOnly: true,
       secure: false,
       path: "/api/auth/refresh",
@@ -95,13 +102,43 @@ export class AuthController extends BaseStructure {
     });
     res.status(200).send();
   }
-  @POST("/:userID")
+  @POST("/:usernameOrEmail")
   public async forgotPassword(req: Request, res: Response) {
-    res.sendStatus(404);
+    const { usernameOrEmail } = req.params;
+    try {
+      await this.authService.sendPasswordRecoveryEmail(usernameOrEmail);
+      res.sendStatus(202);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
   }
 
-  @POST("/:passwordToken")
+  @POST("/passwordreset/:passwordToken")
   public async resetPassword(req: Request, res: Response) {
-    res.sendStatus(404);
+    const { passwordToken } = req.params;
+    const { newPassword } = req.body;
+    if (!passwordToken)
+      return res.status(401).send("You need to specify a token!");
+
+    try {
+      await this.authService.recoverPassword(passwordToken, newPassword);
+      res.sendStatus(202);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
+  }
+
+  @POST("/confirm/:confirmationToken")
+  public async confirmEmail(req: Request, res: Response) {
+    const { confirmationToken } = req.params;
+    if (!confirmationToken)
+      return res.status(401).send("You need to specify a token!");
+
+    try {
+      await this.authService.confirmEmail(confirmationToken);
+      res.sendStatus(202);
+    } catch (error) {
+      return res.status(401).send(error);
+    }
   }
 }

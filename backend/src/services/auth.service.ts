@@ -13,6 +13,7 @@ export class AuthService extends BaseStructure {
   ) {
     super();
   }
+
   public async findbyUsernameOrEmailAndPassword(
     usernameOrEmail: string,
     password: string
@@ -26,7 +27,7 @@ export class AuthService extends BaseStructure {
       else throw "Wrong password or username.";
     } catch (error) {
       this.error(error);
-      throw "No user found";
+      throw typeof error === "string" ? error : "No user found";
     }
   }
 
@@ -45,11 +46,20 @@ export class AuthService extends BaseStructure {
     // Password validation using regex
     if (
       password.length < 6 ||
-      !/^[a-zA-Z0-9_.-]*$/.test(password) ||
-      !/\d/.test(password)
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/.test(password)
     )
       throw "Invalid password";
 
+    // Check if user already exists
+    if (
+      await this.userRepository.findOne({
+        relations: ["projects"],
+        where: [{ username: username }, { email: email }],
+      })
+    )
+      throw "User already registered";
+
+    // Try to add user to database
     try {
       const hash = await bcrypt.hash(password, 10);
       const user = await this.userRepository.save({
@@ -58,11 +68,57 @@ export class AuthService extends BaseStructure {
         password: hash,
       });
 
-      // await this.emailService.sendRegisterMail(user);
+      await this.emailService.sendRegisterMail(user);
       return user;
     } catch (error) {
       this.error(error);
       throw "Couldn't register user.";
+    }
+  }
+
+  public async sendPasswordRecoveryEmail(email: string) {
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!emailRegexp.test(email)) throw "Invalid email address.";
+
+    try {
+      const user = await this.userRepository.findByUsernameOrEmail(email);
+      await this.emailService.sendforgotPasswordMail(user);
+    } catch {
+      throw "Could not fetch user with that username/email.";
+    }
+  }
+
+  public async recoverPassword(token: string, newPassword: string) {
+    try {
+      const user = await this.userRepository.findByToken(token);
+
+      if (
+        newPassword.length < 6 ||
+        !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/.test(newPassword)
+      )
+        throw "Invalid password";
+
+      if (!user.isVerified)
+        throw "User needs to verify email first before attempting to reset password.";
+      this.userRepository.update(
+        { id: user.id },
+        {
+          password: await bcrypt.hash(newPassword, 10),
+          passwordVersion: user.passwordVersion + 1,
+        }
+      );
+    } catch {
+      throw "Could not update password.";
+    }
+  }
+
+  public async confirmEmail(token: string) {
+    try {
+      const user = await this.userRepository.findByToken(token);
+
+      this.userRepository.update({ id: user.id }, { isVerified: true });
+    } catch {
+      throw "No user with specified token has been found.";
     }
   }
 }

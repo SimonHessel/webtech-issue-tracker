@@ -25,7 +25,6 @@ export class ResetPasswordComponent implements OnInit {
 
   });
 
-  private token = this.route.snapshot.paramMap.get('token');
 
   constructor(
     private snackBar: MatSnackBar,
@@ -42,8 +41,29 @@ export class ResetPasswordComponent implements OnInit {
       });
     };
 
-    console.log(`success ${this.token}`);
+    const randomtoken = this.route.snapshot.paramMap.get('token');
+    if (!randomtoken) throw new Error('Project guard malfunction');
+
+    this.authService.resetPassword(
+      this.resetPasswordForm.controls.newPassword.value,
+      randomtoken
+      )
+      .subscribe(
+        (_) => {
+          this.snackBar.open('Reset was successfull, Login with your new Password', '', {
+            duration: 10000,
+            verticalPosition: 'top',
+          });
+        },
+        (error) => {
+          this.snackBar.open(error, '', {
+            duration: 10000,
+            verticalPosition: 'top'
+          });
+        }
+      );
   };
+
   ngOnInit(): void {
   }
 

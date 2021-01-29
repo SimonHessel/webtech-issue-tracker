@@ -28,12 +28,16 @@
       >
         Please enter a correct username
       </mat-error>
+      <mat-hint i18n="registerusernamehint">
+        Only use upper and lower case letters and numbers
+      </mat-hint>
     </mat-form-field>
 
     <label i18n="@@password" for="password">Password</label>
     <mat-form-field appearance="outline">
       <input
         matInput
+        #input
         type="password"
         name="password"
         formControlName="password"
@@ -48,6 +52,9 @@
       >
         Please enter a password with at least 6 characters
       </mat-error>
+      <mat-hint i18n="@@registerpasswordhint">
+        min. 6 characters, at least one digit and upper case letter {{input.value?.length || 0}}/6
+      </mat-hint>
     </mat-form-field>
 
     <button

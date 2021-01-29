@@ -96,21 +96,28 @@ export class AuthService {
   ): Observable<unknown> {
     return this.http
       .post(
-        `${this.apiEndpoint}/forgot-password`,
+        `${this.apiEndpoint}/${usernameOrEmail}`,
         {
-          usernameOrEmail,
+          usernameOrEmail
         }
     )
     .pipe(
       catchError((error) => throwError(error.error)));
   }
 
-  /*public resetPassword(
+  public resetPassword(
     newPassword: string,
     verificationToken: string
   ): Observable<unknown> {
     return this.http
-      .post(`${this.apiEndpoint}/reset-password`,)
-  }*/
+      .post(`${this.apiEndpoint}/passwordreset/${verificationToken}`,
+      {
+        newPassword
+      }
+    )
+    .pipe(
+      catchError((error) => throwError(error.error))
+    );
+  }
 
 }

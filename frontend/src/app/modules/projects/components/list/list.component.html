@@ -16,29 +16,31 @@
 </app-header>
 
 <div class="content-wrapper">
-  <mat-list *ngIf="project">
-    <ng-container *ngFor="let issue of project.issues | orderBy: 'status'">
-      <mat-list-item (click)="toggleSelectedIssue(issue)">
-        <mat-icon
-          [ngClass]="{
-            low: issue.priority === 0,
-            medium: issue.priority === 1,
-            high: issue.priority === 2
-          }"
-          mat-list-icon
-          >assignment</mat-icon
-        >
-        <a class="title" [routerLink]="issue.id" mat-line>{{ issue.title }}</a>
-        <div mat-line>{{ issue.description | description: 40 }}</div>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </ng-container>
-    <mat-list-item>
-      <button mat-line mat-flat-button class="add-issue" (click)="openDialog()">
-        Add Issue
-      </button>
-    </mat-list-item>
-  </mat-list>
+  <div class="left">
+    <mat-list *ngIf="project" class="list">
+      <ng-container *ngFor="let issue of project.issues | orderBy: 'status'">
+        <mat-list-item (click)="toggleSelectedIssue(issue)">
+          <mat-icon
+            [ngClass]="{
+              low: issue.priority === 0,
+              medium: issue.priority === 1,
+              high: issue.priority === 2
+            }"
+            mat-list-icon
+            >assignment</mat-icon
+          >
+          <a class="title" [routerLink]="issue.id" mat-line>{{
+            issue.title
+          }}</a>
+          <div mat-line>{{ issue.description | description: 40 }}</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+    <button mat-line mat-flat-button class="add-issue" (click)="openDialog()">
+      Add Issue
+    </button>
+  </div>
 
   <div *ngIf="currentIssue" class="issue-view">
     <app-issue-view

@@ -33,12 +33,11 @@ export class UserRepository extends Repository<User> {
         { usernameOrEmail }
       )
       .addSelect("user.password")
+      .addSelect("user.isVerified")
       .getOneOrFail();
   }
 
-  findByToken(
-    VerificationToken: string
-  ): Promise<User> {
-    return this.findOneOrFail({VerificationToken});
+  findByToken(VerificationToken: string): Promise<User> {
+    return this.findOneOrFail({ VerificationToken });
   }
 }

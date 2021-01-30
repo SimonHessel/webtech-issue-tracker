@@ -37,11 +37,13 @@ export class ResetPasswordComponent extends UnsubscribeOnDestroyAdapter{
   }
 
   onSubmit = () => {
+
     if(this.resetPasswordForm.controls.newPassword.value !== this.resetPasswordForm.controls.confirmPassword.value){
       this.snackBar.open('Passwords do not match', '', {
         duration: 7000,
         verticalPosition: 'top',
       });
+      return;
     };
 
     const randomtoken = this.route.snapshot.paramMap.get('token');
@@ -57,12 +59,14 @@ export class ResetPasswordComponent extends UnsubscribeOnDestroyAdapter{
             duration: 10000,
             verticalPosition: 'top',
           });
+          this.router.navigateByUrl('/');
         },
         (error) => {
           this.snackBar.open(error, '', {
             duration: 10000,
             verticalPosition: 'top'
           });
+          this.router.navigateByUrl('/');
         }
       );
   };

@@ -68,7 +68,11 @@
         </ng-container>
       </mat-menu>
     </div>
-    <p class="issue-description" *ngIf="!edit">{{ issue?.description }}</p>
+    <p
+      class="issue-description"
+      [innerHTML]="issue?.description | markdown"
+      *ngIf="!edit"
+    ></p>
     <form novalidate [formGroup]="issueForm" *ngIf="edit">
       <mat-form-field appearance="standard">
         <mat-label>Issue Description</mat-label>

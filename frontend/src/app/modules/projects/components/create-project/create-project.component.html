@@ -30,7 +30,11 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" class="input-description">
+        <app-markdown-editor
+          (description)="setDescription($event)"
+        ></app-markdown-editor>
+
+        <!-- <mat-form-field appearance="standard" class="input-description">
           <mat-label i18n="@@description">Description</mat-label>
           <textarea
             matInput
@@ -49,14 +53,14 @@
           >
             Please enter a Description
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
       <button
         i18n="@@create"
         mat-button
         class="create-button"
         type="submit"
-        [disabled]="!projectForm.valid"
+        [disabled]="!projectForm.valid && description"
         (click)="save()"
       >
         Create

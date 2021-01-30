@@ -16,9 +16,10 @@ import { Project } from 'core/models/project.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateIssueComponent implements OnInit {
-  issueForm = new FormGroup({
+  public description = '';
+  public issueForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
+    // description: new FormControl('', [Validators.required]),
     assignee: new FormControl('', [Validators.required]),
   });
 
@@ -39,8 +40,8 @@ export class CreateIssueComponent implements OnInit {
     return this.issueForm.controls.title.value;
   }
 
-  get description() {
-    return this.issueForm.controls.description.value;
+  setDescription(value: string) {
+    this.description = value;
   }
 
   get assignee() {

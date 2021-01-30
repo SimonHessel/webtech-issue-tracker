@@ -26,14 +26,16 @@ import { CreateIssueComponent } from '../create-issue/create-issue.component';
 export class ListComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  project: Project | undefined = undefined;
-  projectID = '';
-  currentIssue: Issue | undefined = undefined;
-  searchDefault = '';
+  public project: Project | undefined = undefined;
+  public projectID = '';
+  public currentIssue: Issue | undefined = undefined;
+  public searchDefault = '';
 
   private readonly searchRegex = new RegExp(
     /(assignee=(?<assignee>\w+)|priority=(?<priority>\d+)|status=(?<status>\d+)|(?<search>\w+))/
   );
+
+  private options = this.parseSearchQuery(this.searchDefault);
 
   constructor(
     private route: ActivatedRoute,
@@ -111,7 +113,7 @@ export class ListComponent
             : throwError(false)
         )
       )
-      .subscribe(() => {});
+      .subscribe(() => this.updateIssueList());
   }
 
   public updateIssue(issue: Issue) {
@@ -124,16 +126,8 @@ export class ListComponent
   }
 
   public search(value: string) {
-    const options = this.parseSearchQuery(value);
-
-    this.issueService
-      .getIssuesByProject(this.projectID, this.removeUndefined(options))
-      .subscribe((issues) => {
-        if (this.project) {
-          this.project.issues = issues;
-          this.cdRef.markForCheck();
-        }
-      });
+    this.options = this.parseSearchQuery(value);
+    this.updateIssueList();
   }
 
   public toggleSelectedIssue(issue: Issue) {
@@ -173,5 +167,16 @@ export class ListComponent
       priority,
       status
     );
+  }
+
+  private updateIssueList() {
+    this.subs.sink = this.issueService
+      .getIssuesByProject(this.projectID, this.removeUndefined(this.options))
+      .subscribe((issues) => {
+        if (this.project) {
+          this.project.issues = issues;
+          this.cdRef.markForCheck();
+        }
+      });
   }
 }

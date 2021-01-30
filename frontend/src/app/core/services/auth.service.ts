@@ -99,6 +99,9 @@ export class AuthService {
         `${this.apiEndpoint}/${usernameOrEmail}`,
         {
           usernameOrEmail
+        },
+        {
+          responseType: 'text',
         }
     )
     .pipe(
@@ -113,6 +116,9 @@ export class AuthService {
       .post(`${this.apiEndpoint}/passwordreset/${verificationToken}`,
       {
         newPassword
+      },
+      {
+        responseType: 'text',
       }
     )
     .pipe(
@@ -120,4 +126,18 @@ export class AuthService {
     );
   }
 
+  public confirmPassword(
+    verificationToken: string
+  ): Observable<unknown> {
+    return this.http.post(`${this.apiEndpoint}/confirm/${verificationToken}`,
+    {},
+    {
+      responseType: 'text'
+    }
+    )
+    .pipe(
+      mapTo(true),
+      catchError((error) => throwError(error.error))
+    );
+  }
 }

@@ -26,10 +26,10 @@
             registerForm.controls.username?.touched)
         "
       >
-        Please enter a correct username
+        Please enter a correct username, only use [a-z, A-Z, 0-9, __ , . , -]
       </mat-error>
       <mat-hint i18n="registerusernamehint">
-        Only use upper and lower case letters and numbers
+        min. 5 charactes, only use [a-z, A-Z, 0-9, __ , . , -]
       </mat-hint>
     </mat-form-field>
 
@@ -53,7 +53,7 @@
         Please enter a password with at least 6 characters
       </mat-error>
       <mat-hint i18n="@@registerpasswordhint">
-        min. 6 characters, at least one digit and upper case letter {{input.value?.length || 0}}/6
+        Min. 6 characters, at least one digit and upper case letter {{input.value?.length || 0}}/6
       </mat-hint>
     </mat-form-field>
 

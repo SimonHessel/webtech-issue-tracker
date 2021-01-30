@@ -35,6 +35,7 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter {
             verticalPosition: 'top',
             panelClass: ['snackBar-custom-style'],
           });
+          this.router.navigateByUrl('/');
         },
         (err) =>
           this.snackBar.open(err, '', {

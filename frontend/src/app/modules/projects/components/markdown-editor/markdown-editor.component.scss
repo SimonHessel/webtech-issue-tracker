@@ -1,0 +1,11 @@
+@import "/src/assets/theme.scss";
+
+.form-field {
+  margin: 1rem;
+  border: 1px solid mat-color($border, A200);
+  border-radius: 8px;
+  width: 100%;
+  .textarea {
+    height: 10rem;
+  }
+}

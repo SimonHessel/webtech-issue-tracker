@@ -28,7 +28,10 @@
             Please enter a Titel
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" class="input-description">
+        <app-markdown-editor
+          (description)="setDescription($event)"
+        ></app-markdown-editor>
+        <!-- <mat-form-field appearance="standard" class="input-description">
           <mat-label>Issue Description</mat-label>
           <textarea
             matInput
@@ -48,7 +51,7 @@
           >
             Please enter a Description
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
         <div class="buttons">
           <span
             ><button

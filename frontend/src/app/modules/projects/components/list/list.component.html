@@ -32,7 +32,10 @@
           <a class="title" [routerLink]="issue.id" mat-line>{{
             issue.title
           }}</a>
-          <div mat-line>{{ issue.description | description: 40 }}</div>
+          <div
+            [innerHTML]="issue.description | description: 40 | stripMarkdown"
+            mat-line
+          ></div>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>

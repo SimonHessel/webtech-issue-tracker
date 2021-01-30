@@ -1,4 +1,16 @@
-<mat-form-field class="form-field" appearance="standard">
-  <mat-label>Description</mat-label>
-  <textarea class="textarea" matInput placeholder="Description..."></textarea>
-</mat-form-field>
+<mat-tab-group class="mat-tab-group" mat-align-tabs="start">
+  <mat-tab label="Edit">
+    <mat-form-field class="form-field" appearance="standard">
+      <mat-label>Description</mat-label>
+      <textarea
+        #textarea
+        class="textarea"
+        matInput
+        placeholder="Description..."
+      ></textarea>
+    </mat-form-field>
+  </mat-tab>
+  <mat-tab label="Preview">
+    <div [innerHTML]="text | markdown"></div>
+  </mat-tab>
+</mat-tab-group>

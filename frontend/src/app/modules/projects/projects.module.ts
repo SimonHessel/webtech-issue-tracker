@@ -35,6 +35,9 @@ import { UsersComponent } from './components/users/users.component';
 import { ProjectGuardService } from './guards/project.guard';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsService } from './services/projects.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MarkdownPipe } from './pipes/markdown.pipe';
+import { StripMarkdownPipe } from './pipes/strip-markdown.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,10 @@ import { ProjectsService } from './services/projects.service';
     CreateIssueComponent,
 
     MarkdownEditorComponent,
+
+    MarkdownPipe,
+
+    StripMarkdownPipe,
   ],
   providers: [
     ProjectGuardService,
@@ -91,6 +98,7 @@ import { ProjectsService } from './services/projects.service';
     OrderModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatTabsModule,
   ],
 })
 export class ProjectsModule {}

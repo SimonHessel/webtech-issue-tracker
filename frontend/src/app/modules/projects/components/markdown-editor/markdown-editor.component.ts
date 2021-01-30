@@ -3,12 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
-  SecurityContext,
+  Output,
   ViewChild,
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import * as marked from 'marked';
+import { DomSanitizer } from '@angular/platform-browser';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
@@ -21,9 +21,11 @@ import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAd
 export class MarkdownEditorComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
-  @ViewChild('text', { static: true })
-  text!: ElementRef<HTMLDivElement>;
-  previewHtml: SafeHtml | undefined;
+  @ViewChild('textarea', { static: true })
+  public textArea!: ElementRef<HTMLTextAreaElement>;
+  @Output() public description = new EventEmitter<string>();
+
+  public text = '';
 
   constructor(
     private readonly domSanitizer: DomSanitizer,
@@ -34,28 +36,19 @@ export class MarkdownEditorComponent
   }
 
   ngOnInit(): void {
-    this.subs.sink = fromEvent(this.text.nativeElement, 'keyup')
+    this.subs.sink = fromEvent(this.textArea.nativeElement, 'keyup')
       .pipe(
         map(
           (event) =>
-            (event as KeyboardEvent & { target: HTMLDivElement }).target
-              .innerText
+            (event as KeyboardEvent & { target: HTMLTextAreaElement }).target
+              .value
         ),
-        debounceTime(500),
+        debounceTime(1000),
         distinctUntilChanged()
       )
       .subscribe((text) => {
-        const unsanitizedHtml = marked(text);
-        const sanitizedHtml = this.domSanitizer.sanitize(
-          SecurityContext.HTML,
-          unsanitizedHtml
-        );
-        if (sanitizedHtml) {
-          this.previewHtml = this.domSanitizer.bypassSecurityTrustHtml(
-            sanitizedHtml
-          );
-          console.log(this.previewHtml);
-        }
+        this.text = text;
+        this.description.emit(text);
       });
   }
 }

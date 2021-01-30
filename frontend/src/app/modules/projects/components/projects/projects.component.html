@@ -9,7 +9,9 @@
     <td mat-cell *matCellDef="let project">
       <a [routerLink]="['./', project.id]" class="project-link">
         {{ project.title }}
-        {{ project.description | description: 60 }}
+        <span
+          [innerHTML]="project.description | description: 60 | stripMarkdown"
+        ></span>
       </a>
     </td>
   </ng-container>

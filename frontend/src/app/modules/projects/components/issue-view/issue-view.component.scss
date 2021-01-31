@@ -82,6 +82,7 @@
       line-height: 1.3rem;
       color: mat-color($text-color, 50);
       padding-top: 1rem;
+      overflow: auto;
     }
 
     .cancel-button {

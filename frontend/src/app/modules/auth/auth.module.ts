@@ -14,9 +14,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgotPasswordComponent, ResetPasswordComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgotPasswordComponent, ResetPasswordComponent, ConfirmComponent],
   providers: [
     {
       provide: MatSnackBarRef,

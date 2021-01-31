@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'core/services/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter {
   forgotPasswordForm = new FormGroup({
     usernameOrEmail: new FormControl('', [Validators.required]),
   });
@@ -19,10 +19,12 @@ export class ForgotPasswordComponent {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private router: Router
-    ){}
+    ){
+    super();
+  }
 
   onSubmit = () => {
-    this.authService
+    this.subs.sink = this.authService
       .requestForgotPasswordMail(
         this.forgotPasswordForm.controls.usernameOrEmail.value
       )
@@ -33,8 +35,9 @@ export class ForgotPasswordComponent {
             verticalPosition: 'top',
             panelClass: ['snackBar-custom-style'],
           });
+          this.router.navigateByUrl('/');
         },
-        (err) => 
+        (err) =>
           this.snackBar.open(err, '', {
             duration: 10000,
             verticalPosition: 'top',

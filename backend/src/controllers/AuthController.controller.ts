@@ -124,6 +124,7 @@ export class AuthController extends BaseStructure {
       await this.authService.recoverPassword(passwordToken, newPassword);
       res.sendStatus(202);
     } catch (error) {
+      this.error(error);
       return res.status(401).send(error);
     }
   }

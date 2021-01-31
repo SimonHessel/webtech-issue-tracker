@@ -36,9 +36,9 @@
           <div class="issue-content">
             <div class="issue-text">
               <h1 [routerLink]="['../issues/', issue.id]" class="title-link">
-                {{ issue.title }}
+                {{ issue.title | description: 20 }}
               </h1>
-              <p>{{ issue.description | description: 100 }}</p>
+              <p>{{ issue.description | description: 100 | stripMarkdown }}</p>
             </div>
             <div class="avatar" mat-card-avatar>
               {{ issue.assignee | avatar }}

@@ -1,11 +1,12 @@
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
   Input,
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -25,7 +26,7 @@ import { switchMap, tap, catchError } from 'rxjs/operators';
 })
 export class IssueViewComponent
   extends UnsubscribeOnDestroyAdapter
-  implements OnInit {
+  implements OnChanges {
   @Input() issue: Issue | undefined = undefined;
   @Input() project: Project | undefined = undefined;
 
@@ -46,8 +47,8 @@ export class IssueViewComponent
     super();
   }
 
-  ngOnInit(): void {
-    console.log(this.issue, this.project);
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     if (this.issue && this.project) {
       this.status = this.project.states[this.issue.status];
       this.issueForm.patchValue({
@@ -93,8 +94,7 @@ export class IssueViewComponent
   }
 
   public editIssue() {
-    this.edit = !this.edit;
-    if (this.issue && this.project) {
+    if (this.issue && this.project && this.edit) {
       this.subs.sink = this.issuesService
         .updateIssue(this.project.id, this.issue.id, {
           title: this.issueForm.value.title,
@@ -108,6 +108,7 @@ export class IssueViewComponent
           this.cdRef.markForCheck();
         });
     }
+    this.edit = !this.edit;
   }
 
   public cancelEdit() {

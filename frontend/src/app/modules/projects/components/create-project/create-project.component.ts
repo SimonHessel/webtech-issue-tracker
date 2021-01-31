@@ -14,9 +14,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProjectComponent implements OnInit {
+  public description = '';
   projectForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -28,12 +28,15 @@ export class CreateProjectComponent implements OnInit {
     return this.projectForm.controls.title.value;
   }
 
-  get description() {
-    return this.projectForm.controls.description.value;
+  setDescription(value: string) {
+    this.description = value;
   }
 
   save(): void {
-    this.dialogRef.close({ title: this.title, description: this.description });
+    this.dialogRef.close({
+      title: this.title,
+      description: this.description,
+    });
   }
 
   onNoClick(): void {

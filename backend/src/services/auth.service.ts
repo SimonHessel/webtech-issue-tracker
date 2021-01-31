@@ -82,7 +82,11 @@ export class AuthService extends BaseStructure {
 
     try {
       const user = await this.userRepository.findByUsernameOrEmail(email);
-      await this.emailService.sendforgotPasswordMail(user);
+      if (!user.isVerified) {
+        throw "You need to verify email first before attempting to reset password.";
+      } else {
+        await this.emailService.sendforgotPasswordMail(user);
+      }
     } catch {
       throw "Could not fetch user with that username/email.";
     }

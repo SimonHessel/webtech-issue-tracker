@@ -2,7 +2,9 @@
   <div class="main">
     <div class="main-header">
       <div class="priority" [ngClass]="issue?.priority | priority"></div>
-      <h1 *ngIf="!edit">{{ issue?.title }}</h1>
+      <h1 *ngIf="!edit">
+        {{ issue?.title | description: 20 }}
+      </h1>
       <form novalidate [formGroup]="issueForm" *ngIf="edit">
         <mat-form-field appearance="standard">
           <mat-label>Issue Title</mat-label>

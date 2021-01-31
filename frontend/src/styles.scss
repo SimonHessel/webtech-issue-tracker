@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './assets/theme.scss';
+@import "./assets/theme.scss";
 
 html,
 body {
@@ -9,4 +9,27 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 0.1rem;
+  background-color: mat-color($background, 900);
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar {
+  height: 0.5rem;
+  width: 0.5rem;
+  background-color: mat-color($background, 900);
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  border-radius: 0.4rem;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: mat-color($background, A100);
 }

@@ -13,14 +13,14 @@
     background-color: mat-color($primary, 300);
     border: 1px solid mat-color($border, 400);
     border-radius: 9px 0px 0px 9px;
-    width: 60%;
-    min-width: 35rem;
+    width: fit-content;
     padding: 1rem;
     display: flex;
     flex-direction: column;
 
     .main-header {
       display: flex;
+      width: 35rem;
       .priority {
         background-color: mat-color($red, 50);
         width: 1rem;
@@ -78,10 +78,14 @@
     }
 
     .issue-description {
+      word-wrap: break-word;
       font-size: 1rem;
       line-height: 1.3rem;
       color: mat-color($text-color, 50);
       padding-top: 1rem;
+      overflow: auto;
+      width: fit-content;
+      max-width: 50vw;
     }
 
     .cancel-button {

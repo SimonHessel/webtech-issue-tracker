@@ -15,7 +15,7 @@ import {
 } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Priority } from 'core/enums/priority.enum';
 import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
@@ -60,9 +60,8 @@ export class ListComponent
   public projectID = '';
   public currentIssue: Issue | undefined = undefined;
 
-  private options: Parameters<IssuesService['getIssuesByProject']>[1] = {};
-
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private readonly projectService: ProjectsService,
     private readonly issueService: IssuesService,
@@ -82,8 +81,14 @@ export class ListComponent
   ngOnInit(): void {
     this.projectID = this.route.snapshot.paramMap.get('id') || '';
 
+    this.items = Object.values(this.route.snapshot.queryParams).filter(
+      (item) => !!item
+    );
+
     this.subs.sink = this.projectService
-      .setCurrentProject(this.projectID)
+      .setCurrentProject(this.projectID, {
+        fetchIssues: false,
+      })
       .subscribe();
 
     this.subs.sink = this.projectService.current
@@ -92,41 +97,41 @@ export class ListComponent
         distinctUntilChanged()
       )
       .subscribe((project) => {
+        console.log('now');
         this.project = project;
-        if (this.project) {
-          this.totalItems = [
-            ...this.priorties,
-            ...this.project.states,
-            ...(this.project.users?.map((user) => user.username) || []),
-          ];
-        }
+        this.lifecycleUpdate();
 
         this.cdRef.markForCheck();
       });
   }
 
-  onUpdate() {
+  lifecycleUpdate() {
     if (this.project && this.project.users && this.project.states) {
       const users = this.project.users.map((user) => user.username);
-      const options: string[] = [];
+      const dropdownOptions: string[] = [];
       const emptyArray: string[] = [];
-
-      this.options = {};
+      const options: Parameters<this['refreshIssueList']>[0] = {};
+      const queryParams: {
+        [key in keyof Parameters<this['refreshIssueList']>[0]]?: string;
+      } = {};
 
       let setUsers = true;
       let setStates = true;
       let setPriorities = true;
       for (const item of this.items) {
         if (setUsers && users.includes(item)) {
-          this.options.assignee = item;
+          options.assignee = item;
           setUsers = false;
+          queryParams.assignee = item;
         } else if (setStates && this.project.states.includes(item)) {
-          this.options.status = this.project.states.indexOf(item);
+          options.status = this.project.states.indexOf(item);
+          queryParams.status = item;
           setStates = false;
         } else if (setPriorities && this.priorties.includes(item)) {
-          this.options.priority = (Priority[
+          options.priority = (Priority[
             (item as unknown) as number
           ] as unknown) as number;
+          queryParams.priority = item;
           setPriorities = false;
         } else if (
           !(
@@ -135,13 +140,19 @@ export class ListComponent
             this.priorties.includes(item)
           )
         ) {
-          this.options.search = item;
+          queryParams.search = item;
+          options.search = item;
         }
       }
 
-      this.refreshIssueList();
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams,
+      });
 
-      this.totalItems = options.concat(
+      this.refreshIssueList(options);
+
+      this.totalItems = dropdownOptions.concat(
         setUsers ? users : emptyArray,
         setStates ? this.project.states : emptyArray,
         setPriorities ? this.priorties : emptyArray
@@ -163,7 +174,7 @@ export class ListComponent
       }
 
       this.formControl.setValue(null);
-      this.onUpdate();
+      this.lifecycleUpdate();
     }
   }
 
@@ -173,14 +184,14 @@ export class ListComponent
     if (index >= 0) {
       this.items.splice(index, 1);
     }
-    this.onUpdate();
+    this.lifecycleUpdate();
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.items.push(event.option.viewValue);
     this.itemInput.nativeElement.value = '';
     this.formControl.setValue(null);
-    this.onUpdate();
+    this.lifecycleUpdate();
   }
 
   public filter(value: string): string[] {
@@ -221,7 +232,7 @@ export class ListComponent
             : throwError(false)
         )
       )
-      .subscribe(() => this.refreshIssueList());
+      .subscribe(() => this.lifecycleUpdate());
   }
 
   public updateIssue(issue: Issue) {
@@ -254,9 +265,14 @@ export class ListComponent
     );
   }
 
-  private refreshIssueList() {
+  refreshIssueList(
+    options: Exclude<
+      Parameters<IssuesService['getIssuesByProject']>[1],
+      undefined
+    >
+  ) {
     this.subs.sink = this.issueService
-      .getIssuesByProject(this.projectID, this.options)
+      .getIssuesByProject(this.projectID, options)
       .subscribe((issues) => {
         if (this.project) {
           this.project.issues = issues;

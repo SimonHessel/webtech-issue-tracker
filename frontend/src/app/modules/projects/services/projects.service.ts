@@ -47,7 +47,13 @@ export class ProjectsService {
     return this.projects$;
   }
 
-  public setCurrentProject(id: Project['id']) {
+  public setCurrentProject(
+    id: Project['id'],
+    options?: {
+      fetchIssues?: boolean;
+      fetchUsers?: boolean;
+    }
+  ) {
     return this.projects$.pipe(
       take(1),
       map((projects) => projects.find((project) => project.id === id)),
@@ -57,14 +63,14 @@ export class ProjectsService {
           : this.http.get<Project>(`${this.apiEndpoint}/${id}`)
       ),
       switchMap((project) =>
-        project.issues
+        project.issues || options?.fetchIssues === false
           ? of(project)
           : this.issuesService
               .getIssuesByProject(project.id)
               .pipe(map((issues) => ({ ...project, issues })))
       ),
       switchMap((project) =>
-        project.users
+        project.users || options?.fetchUsers === false
           ? of(project)
           : this.loadProjectUsers(project.id).pipe(
               map((users) => ({ ...project, users }))

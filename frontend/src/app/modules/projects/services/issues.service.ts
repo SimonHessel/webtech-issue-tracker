@@ -5,9 +5,7 @@ import { Issue } from 'core/models/issue.model';
 import { Project } from 'core/models/project.model';
 import { mapTo } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class IssuesService {
   private readonly apiEndpoint = 'issues';
 

@@ -1,9 +1,4 @@
-<app-header
-  [search-default]="searchDefault"
-  search-display
-  [search]="search"
-  header="{{ project?.title }}"
->
+<app-header header="{{ project?.title }}">
   <button mat-icon-button class="button">
     <mat-icon>info</mat-icon>
   </button>
@@ -13,6 +8,35 @@
   <button mat-icon-button class="button">
     <mat-icon>share</mat-icon>
   </button>
+
+  <mat-form-field input class="example-chip-list">
+    <mat-chip-list #chipList aria-label="Filter">
+      <mat-chip
+        [class]="item"
+        *ngFor="let item of items"
+        (removed)="remove(item)"
+      >
+        {{ item }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        #itemInput
+        [formControl]="formControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
+    >
+      <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+        {{ item }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 </app-header>
 
 <div class="content-wrapper">

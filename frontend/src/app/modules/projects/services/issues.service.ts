@@ -17,9 +17,9 @@ export class IssuesService {
     projectID: Project['id'],
     options?: {
       assignee?: string;
-      status?: string;
+      status?: number;
       search?: string;
-      priority?: string;
+      priority?: Priority;
     }
   ) {
     return this.http.get<Issue[]>(`${this.apiEndpoint}/${projectID}`, {

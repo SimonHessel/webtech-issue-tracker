@@ -49,3 +49,22 @@
     margin-left: 5rem;
   }
 }
+
+.example-chip-list {
+  width: 100%;
+}
+
+mat-chip {
+  &.low {
+    color: white !important;
+    background-color: mat-color($primary, 100) !important;
+  }
+  &.medium {
+    color: white !important;
+    background-color: mat-color($accent, 600) !important;
+  }
+  &.high {
+    color: white !important;
+    background-color: mat-color($accent, 400) !important;
+  }
+}

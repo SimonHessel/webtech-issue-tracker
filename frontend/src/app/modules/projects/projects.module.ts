@@ -38,6 +38,8 @@ import { ProjectsService } from './services/projects.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MarkdownPipe } from './pipes/markdown.pipe';
 import { StripMarkdownPipe } from './pipes/strip-markdown.pipe';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { StripMarkdownPipe } from './pipes/strip-markdown.pipe';
     MatToolbarModule,
     MatTooltipModule,
     MatTabsModule,
+    MatAutocompleteModule,
+    MatChipsModule,
   ],
 })
 export class ProjectsModule {}

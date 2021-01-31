@@ -72,7 +72,9 @@ export class ProjectService extends BaseStructure {
     usernames: string[]
   ): Promise<ProjectAndCount> {
     try {
-      const users = await this.userRepository.findByUsernames(usernames);
+      const users = await this.userRepository.findByUsernamesOrEmails(
+        usernames
+      );
       const project = await this.projectRepository.save({
         title,
         description,

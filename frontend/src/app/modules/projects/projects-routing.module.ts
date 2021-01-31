@@ -6,6 +6,7 @@ import { KanbanComponent } from './components/kanban/kanban.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectGuardService } from './guards/project.guard';
 import { UsersComponent } from './components/users/users.component';
+import { MarkdownEditorComponent } from './components/markdown-editor/markdown-editor.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
     component: ProjectsComponent,
     pathMatch: 'full',
   },
+  { path: 'markdown', component: MarkdownEditorComponent },
   {
     path: ':id',
     canActivate: [ProjectGuardService],

@@ -17,6 +17,8 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
     remember: new FormControl(),
   });
 
+  private count = 0;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -32,17 +34,24 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
         this.loginForm.controls.password.value
       )
       .subscribe(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         () => {
           this.snackBar.dismiss();
           this.router.navigateByUrl('/');
         },
-        (err) =>
+        (err) => {
           this.snackBar.open(err, '', {
             duration: 7000,
             verticalPosition: 'top',
             panelClass: ['snackBar-custom-style'],
-          })
+          });
+          this.count += 1;
+          if(this.count === 5){
+            this.snackBar.open('Forgot your Password ? Click on the link under the login button.', '', {
+              verticalPosition: 'top',
+            });
+            this.count = 0;
+          };
+        }
       );
   }
 }

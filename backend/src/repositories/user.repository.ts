@@ -41,6 +41,17 @@ export class UserRepository extends Repository<User> {
   }
 
   findByToken(VerificationToken: string): Promise<User> {
-    return this.findOneOrFail({ VerificationToken });
+    return this.findOneOrFail(
+      { VerificationToken },
+      {
+        select: [
+          "isVerified",
+          "VerificationToken",
+          "id",
+          "password",
+          "passwordVersion",
+        ],
+      }
+    );
   }
 }

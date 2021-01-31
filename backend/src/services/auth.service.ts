@@ -72,7 +72,7 @@ export class AuthService extends BaseStructure {
       return user;
     } catch (error) {
       this.error(error);
-      throw "Couldn't register user.";
+      throw typeof error === "string" ? error : "Couldn't register user.";
     }
   }
 
@@ -82,9 +82,15 @@ export class AuthService extends BaseStructure {
 
     try {
       const user = await this.userRepository.findByUsernameOrEmail(email);
-      await this.emailService.sendforgotPasswordMail(user);
-    } catch {
-      throw "Could not fetch user with that username/email.";
+      if (!user.isVerified) {
+        throw "You need to verify email first before attempting to reset password.";
+      } else {
+        await this.emailService.sendforgotPasswordMail(user);
+      }
+    } catch (error) {
+      throw typeof error === "string"
+        ? error
+        : "Could not fetch user with that username/email.";
     }
   }
 
@@ -107,8 +113,9 @@ export class AuthService extends BaseStructure {
           passwordVersion: user.passwordVersion + 1,
         }
       );
-    } catch {
-      throw "Could not update password.";
+    } catch (error) {
+      this.error(error);
+      throw typeof error === "string" ? error : "Could not update password.";
     }
   }
 
@@ -117,8 +124,10 @@ export class AuthService extends BaseStructure {
       const user = await this.userRepository.findByToken(token);
 
       this.userRepository.update({ id: user.id }, { isVerified: true });
-    } catch {
-      throw "No user with specified token has been found.";
+    } catch (error) {
+      throw typeof error === "string"
+        ? error
+        : "No user with specified token has been found.";
     }
   }
 }

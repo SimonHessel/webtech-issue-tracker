@@ -87,7 +87,7 @@ export class EmailService extends BaseStructure {
         ". </p></br> <p> To reset your email please Click on this link:" +
         "</br><a href=" +
         link +
-        "></a>Click here to reset Password </p>",
+        ">Click here</a> to reset Password </p>",
     };
 
     return this.sendMail(mailOptions);

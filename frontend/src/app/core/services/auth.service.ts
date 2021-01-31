@@ -90,4 +90,54 @@ export class AuthService {
       )
       .pipe(catchError((error) => throwError(error.error)));
   }
+
+  public requestForgotPasswordMail(
+    usernameOrEmail: string
+  ): Observable<unknown> {
+    return this.http
+      .post(
+        `${this.apiEndpoint}/${usernameOrEmail}`,
+        {
+          usernameOrEmail
+        },
+        {
+          responseType: 'text',
+        }
+    )
+    .pipe(
+      catchError((error) => throwError(error.error)));
+  }
+
+  public resetPassword(
+    newPassword: string,
+    verificationToken: string
+  ): Observable<unknown> {
+    return this.http
+      .post(`${this.apiEndpoint}/passwordreset/${verificationToken}`,
+      {
+        newPassword
+      },
+      {
+        responseType: 'text',
+      }
+    )
+    .pipe(
+      catchError((error) => throwError(error.error))
+    );
+  }
+
+  public confirmPassword(
+    verificationToken: string
+  ): Observable<unknown> {
+    return this.http.post(`${this.apiEndpoint}/confirm/${verificationToken}`,
+    {},
+    {
+      responseType: 'text'
+    }
+    )
+    .pipe(
+      mapTo(true),
+      catchError((error) => throwError(error.error))
+    );
+  }
 }

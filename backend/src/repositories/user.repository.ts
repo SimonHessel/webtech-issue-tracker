@@ -12,9 +12,12 @@ export class UserRepository extends Repository<User> {
     );
   }
 
-  findByUsernames(usernames: string[]): Promise<User[]> {
+  findByUsernamesOrEmails(usernamesOrEmails: string[]): Promise<User[]> {
     return this.find({
-      username: In(usernames),
+      where: [
+        { username: In(usernamesOrEmails) },
+        { email: In(usernamesOrEmails) },
+      ],
     });
   }
 

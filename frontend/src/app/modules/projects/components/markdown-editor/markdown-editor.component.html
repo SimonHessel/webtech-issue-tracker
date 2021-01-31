@@ -11,6 +11,6 @@
     </mat-form-field>
   </mat-tab>
   <mat-tab label="Preview">
-    <div [innerHTML]="text | markdown"></div>
+    <div [innerHTML]="text | markdown | async"></div>
   </mat-tab>
 </mat-tab-group>

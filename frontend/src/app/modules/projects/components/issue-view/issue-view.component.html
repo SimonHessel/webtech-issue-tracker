@@ -70,7 +70,7 @@
     </div>
     <p
       class="issue-description"
-      [innerHTML]="issue?.description | markdown"
+      [innerHTML]="issue?.description | markdown | async"
       *ngIf="!edit"
     ></p>
     <form novalidate [formGroup]="issueForm" *ngIf="edit">

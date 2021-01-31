@@ -47,7 +47,6 @@ export class IssueViewComponent
   }
 
   ngOnInit(): void {
-    console.log(this.issue, this.project);
     if (this.issue && this.project) {
       this.status = this.project.states[this.issue.status];
       this.issueForm.patchValue({

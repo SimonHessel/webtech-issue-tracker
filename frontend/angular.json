@@ -54,11 +54,8 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "src/styles.scss",
-              "src/assets/theme.scss"
-            ],
-            "scripts": []
+            "styles": ["src/styles.scss", "src/assets/theme.scss"],
+            "scripts": ["src/scripts/markdown.js"]
           },
           "configurations": {
             "production": {
@@ -76,18 +73,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ]
+              "budgets": []
             },
             "de": {
               "localize": ["de"]

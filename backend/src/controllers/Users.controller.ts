@@ -1,7 +1,6 @@
-import { BaseStructure, Controller, DELETE, PATCH, POST } from "core";
+import { BaseStructure, Controller, DELETE, GET, PATCH } from "core";
 import { User } from "entities/user.entity";
 import { Request, Response } from "express";
-import { UserDTO } from "interfaces/User.dto";
 import { JWT } from "middlewares/jwt.middleware";
 import { Serializer } from "middlewares/serlizer.middleware";
 import { UserService } from "services/user.service";
@@ -15,12 +14,22 @@ export class UsersController extends BaseStructure {
     super();
   }
 
-  @POST("/")
-  public async create(
-    req: Request<{ projectid: string }, unknown, UserDTO>,
-    res: Response<User>
+  @GET("/")
+  public async search(
+    req: Request<unknown, unknown, unknown, { search: string }>,
+    res: Response
   ) {
-    res.sendStatus(200);
+    const { search } = req.query;
+
+    if (!search) return res.status(400).send();
+
+    try {
+      const users = await this.userService.findUsers(search);
+      return res.send(users);
+    } catch (error) {
+      this.error(error);
+      res.status(400).send();
+    }
   }
 
   @PATCH("/")

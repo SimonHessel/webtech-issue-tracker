@@ -3,8 +3,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import {
   MatDialogModule,
   MatDialogRef,
@@ -18,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OrderModule } from 'ngx-order-pipe';
@@ -33,13 +36,13 @@ import { MarkdownEditorComponent } from './components/markdown-editor/markdown-e
 import { ProjectsComponent } from './components/projects/projects.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProjectGuardService } from './guards/project.guard';
-import { ProjectsRoutingModule } from './projects-routing.module';
-import { ProjectsService } from './services/projects.service';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MarkdownPipe } from './pipes/markdown.pipe';
 import { StripMarkdownPipe } from './pipes/strip-markdown.pipe';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
+import { ProjectsRoutingModule } from './projects-routing.module';
+import { IssuesService } from './services/issues.service';
+import { MarkdownService } from './services/markdown.service';
+import { ProjectsService } from './services/projects.service';
+import { UsersService } from './services/users.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,9 @@ import { MatChipsModule } from '@angular/material/chips';
   providers: [
     ProjectGuardService,
     ProjectsService,
+    IssuesService,
+    MarkdownService,
+    UsersService,
     {
       provide: MatDialogRef,
       useValue: {},

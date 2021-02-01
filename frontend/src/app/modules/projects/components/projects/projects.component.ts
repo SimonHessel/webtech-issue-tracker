@@ -86,7 +86,7 @@ export class ProjectsComponent
   public openDialog() {
     const dialogRef = this.dialog.open(CreateProjectComponent, {
       disableClose: true,
-      data: { description: '', title: '' },
+      data: { description: '', title: '', usernames: [] },
       height: '80%',
       width: '90%',
     });
@@ -96,7 +96,11 @@ export class ProjectsComponent
       .pipe(
         switchMap((result) =>
           result
-            ? this.addProject(result.description, result.title)
+            ? this.addProject(
+                result.description,
+                result.title,
+                result.usernames
+              )
             : throwError(false)
         )
       )
@@ -149,8 +153,8 @@ export class ProjectsComponent
   public trackById(_: number, project: Project): Project['id'] {
     return project.id;
   }
-  private addProject(description: string, title: string) {
-    return this.projectsService.addProject(description, title);
+  private addProject(description: string, title: string, usernames: string[]) {
+    return this.projectsService.addProject(description, title, usernames);
   }
 
   private loadProjects(options: Parameters<ProjectsService['getProjects']>[0]) {

@@ -7,12 +7,17 @@ mat-tab-group {
 mat-tab {
   width: 100%;
 }
-.form-field {
+.textarea-form-field {
   margin: 1rem;
   border: 1px solid mat-color($border, A200);
   border-radius: 8px;
   width: 89%;
+
   .textarea {
     height: 10rem;
   }
+}
+
+::ng-deep .textarea-form-field .mat-form-field-underline {
+  display: none;
 }

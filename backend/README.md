@@ -1,14 +1,29 @@
 # Backend
 
+## Start in Production
+
+```bash
+# Duplicate the example.env file and fill in your mailtrap.io credentials
+$ cp example.env .env
+
+# Starting the backend Server on Port 5000 and Postgres on Port 5432
+$ docker-compose up
+```
+
 ## Installation
 
 ```bash
+# Duplicate the example.env file and fill in your mailtrap.io credentials
+$ cp example.env .env
+
 $ docker-compose -f docker-compose.dev.yaml up
-$ docker exec -it backend bash -- -c "cd /home/node/app && bash"
+$ docker exec -it backend bash -c "cd /home/node/app && bash"
 
 # inside the container
 $ npm i
-$ npm run dev
+
+# To load the .env file run
+$ ./start
 ```
 
 ## Project structure
@@ -25,10 +40,13 @@ src
  ┃ ┗ name.interface.ts
  ┣ middleware
  ┃ ┗ name.middleware.ts
+ ┣ repositories
+ ┃ ┗ name.repository.ts
  ┣ services
  ┃ ┗ name.service.ts
  ┣ utils
  ┃ ┗ name.util.ts
+ ┣ env.d.ts
  ┗ server.ts
 ```
 

@@ -1,9 +1,16 @@
 # Frontend
 
+## Start in Production
+
+```bash
+# Starting the frontend Server on Port 8080
+$ docker-compose up
+```
+
 ## Installation
 
 ```bash
-$ docker run -it --workdir /home/node/app -p 4200:4200 -v $(pwd):/home/node/app node:12 bash
+$ docker run -it --workdir /home/node/app -p 4200:4200 -v $(pwd):/home/node/app node:14 bash
 
 # inside the container
 $ npm i

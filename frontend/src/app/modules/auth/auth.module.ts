@@ -18,7 +18,14 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgotPasswordComponent, ResetPasswordComponent, ConfirmComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    AuthComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ConfirmComponent,
+  ],
   providers: [
     {
       provide: MatSnackBarRef,
@@ -37,7 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatCheckboxModule,
     MatToolbarModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
   ],
 })
 export class AuthModule {}

@@ -78,7 +78,10 @@
             content: "";
             height: 1px;
             bottom: -0.5rem;
-            background-color: rgba($color: mat-color($background, 800), $alpha: 0.2);
+            background-color: rgba(
+              $color: mat-color($background, 800),
+              $alpha: 0.2
+            );
 
             margin: 0 auto;
             left: 0;

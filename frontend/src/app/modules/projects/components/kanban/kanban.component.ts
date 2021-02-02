@@ -114,7 +114,7 @@ export class KanbanComponent
     }
 
     if (this.project)
-      this.issueService
+      this.subs.sink = this.issueService
         .updateStatusOrder(this.project.id, id, position, status)
         .subscribe();
   }

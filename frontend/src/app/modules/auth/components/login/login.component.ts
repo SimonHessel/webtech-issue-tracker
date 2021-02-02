@@ -5,7 +5,6 @@ import { AuthService } from 'core/services/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
-
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -18,7 +17,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
     remember: new FormControl(),
   });
 
-  hide=true;
+  hide = true;
   private count = 0;
 
   constructor(
@@ -47,12 +46,16 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
             panelClass: ['snackBar-custom-style'],
           });
           this.count += 1;
-          if(this.count === 5){
-            this.snackBar.open('Forgot your Password ? Click on the link under the login button.', '', {
-              verticalPosition: 'top',
-            });
+          if (this.count === 5) {
+            this.snackBar.open(
+              'Forgot your Password ? Click on the link under the login button.',
+              '',
+              {
+                verticalPosition: 'top',
+              }
+            );
             this.count = 0;
-          };
+          }
         }
       );
   }

@@ -17,6 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ENTER, SPACE } from '@angular/cdk/keycodes';
 import { UsersService } from 'modules/projects/services/users.service';
+import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 
 @Component({
   selector: 'app-create-project',
@@ -24,7 +25,9 @@ import { UsersService } from 'modules/projects/services/users.service';
   styleUrls: ['./create-project.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateProjectComponent implements OnInit {
+export class CreateProjectComponent
+  extends UnsubscribeOnDestroyAdapter
+  implements OnInit {
   @ViewChild('userInput', { static: false })
   userInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
@@ -46,6 +49,7 @@ export class CreateProjectComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { title: string; description: string; usernames: string[] }
   ) {
+    super();
     this.filteredUsers = this.formControl.valueChanges.pipe(
       startWith(null),
       map((user: string | null) =>
@@ -55,7 +59,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usersService.searchUsers('@').subscribe((result) => {
+    this.subs.sink = this.usersService.searchUsers('@').subscribe((result) => {
       for (const user of result) {
         this.allUsers.push(user.username);
       }

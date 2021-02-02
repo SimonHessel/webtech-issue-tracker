@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: 'confirm/:token',
         component: ConfirmComponent,
-      }
+      },
     ],
   },
 ];

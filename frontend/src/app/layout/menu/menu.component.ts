@@ -48,7 +48,7 @@ export class MenuComponent
   }
 
   public logOut() {
-    this.auth
+    this.subs.sink = this.auth
       .logout()
       .subscribe((urltree) => this.router.navigateByUrl(urltree));
   }

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter {
   forgotPasswordForm = new FormGroup({
@@ -19,7 +19,7 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private router: Router
-    ){
+  ) {
     super();
   }
 

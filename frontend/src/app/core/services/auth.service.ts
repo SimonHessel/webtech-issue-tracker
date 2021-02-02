@@ -98,14 +98,13 @@ export class AuthService {
       .post(
         `${this.apiEndpoint}/${usernameOrEmail}`,
         {
-          usernameOrEmail
+          usernameOrEmail,
         },
         {
           responseType: 'text',
         }
-    )
-    .pipe(
-      catchError((error) => throwError(error.error)));
+      )
+      .pipe(catchError((error) => throwError(error.error)));
   }
 
   public resetPassword(
@@ -113,31 +112,30 @@ export class AuthService {
     verificationToken: string
   ): Observable<unknown> {
     return this.http
-      .post(`${this.apiEndpoint}/passwordreset/${verificationToken}`,
-      {
-        newPassword
-      },
-      {
-        responseType: 'text',
-      }
-    )
-    .pipe(
-      catchError((error) => throwError(error.error))
-    );
+      .post(
+        `${this.apiEndpoint}/passwordreset/${verificationToken}`,
+        {
+          newPassword,
+        },
+        {
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((error) => throwError(error.error)));
   }
 
-  public confirmPassword(
-    verificationToken: string
-  ): Observable<unknown> {
-    return this.http.post(`${this.apiEndpoint}/confirm/${verificationToken}`,
-    {},
-    {
-      responseType: 'text'
-    }
-    )
-    .pipe(
-      mapTo(true),
-      catchError((error) => throwError(error.error))
-    );
+  public confirmPassword(verificationToken: string): Observable<unknown> {
+    return this.http
+      .post(
+        `${this.apiEndpoint}/confirm/${verificationToken}`,
+        {},
+        {
+          responseType: 'text',
+        }
+      )
+      .pipe(
+        mapTo(true),
+        catchError((error) => throwError(error.error))
+      );
   }
 }

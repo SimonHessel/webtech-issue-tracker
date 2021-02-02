@@ -48,7 +48,7 @@ export class ProjectsComponent
 
   ngOnInit() {
     this.search = this.search.bind(this);
-    this.projectsService.projects.subscribe((projects) => {
+    this.subs.sink = this.projectsService.projects.subscribe((projects) => {
       this.dataSource.data = projects;
       this.length = projects.length + 1;
       this.cdRef.markForCheck();

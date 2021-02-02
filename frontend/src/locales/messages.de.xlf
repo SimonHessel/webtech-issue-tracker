@@ -23,7 +23,7 @@
         <target>Bitte Passwort eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="password" datatype="html">
@@ -43,7 +43,7 @@
         <target>Einloggen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">51,52</context>
+          <context context-type="linenumber">52,53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="email" datatype="html">
@@ -67,7 +67,7 @@
         <target>Registrieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">66,67</context>
+          <context context-type="linenumber">67,68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registeremailerror" datatype="html">
@@ -91,7 +91,7 @@
         <target>Bitte geben Sie ein Passwort mit mindestens 6 Buchstaben ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search" datatype="html">
@@ -107,7 +107,7 @@
         <target>Neues Projekt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="name" datatype="html">
@@ -127,7 +127,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
-          <context context-type="linenumber">19,20</context>
+          <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="other" datatype="html">
@@ -135,7 +135,7 @@
         <target>Sonstiges</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">30,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="priority" datatype="html">
@@ -144,11 +144,11 @@
 Priorität</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">30,31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="author" datatype="html">
@@ -156,7 +156,7 @@ Priorität</target>
         <target>Autor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assignee" datatype="html">
@@ -164,7 +164,7 @@ Priorität</target>
         <target>Beauftragter</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="titelerror" datatype="html">
@@ -176,7 +176,7 @@ Priorität</target>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">18,19</context>
+          <context context-type="linenumber">20,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="low" datatype="html">
@@ -184,7 +184,7 @@ Priorität</target>
         <target>Niedrig</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">37,38</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="medium" datatype="html">
@@ -192,7 +192,7 @@ Priorität</target>
         <target>Mittel</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="high" datatype="html">
@@ -200,19 +200,15 @@ Priorität</target>
         <target>Hoch</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="descriptionerror" datatype="html">
         <source> Please enter a Description </source>
         <target>Bitte geben sie eine Beschreibung ein</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
-          <context context-type="linenumber">50,51</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">84,85</context>
+          <context context-type="linenumber">90,91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cancel" datatype="html">
@@ -220,7 +216,7 @@ Priorität</target>
         <target>Abbrechen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">101,102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="assign" datatype="html">
@@ -228,7 +224,7 @@ Priorität</target>
         <target>Zuweisen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">134,135</context>
+          <context context-type="linenumber">140,141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
@@ -236,7 +232,7 @@ Priorität</target>
         <target>Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">163,164</context>
+          <context context-type="linenumber">169,170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="save" datatype="html">
@@ -244,7 +240,7 @@ Priorität</target>
         <target>Speichern</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
@@ -252,7 +248,7 @@ Priorität</target>
         <target>Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projects" datatype="html">
@@ -299,12 +295,12 @@ Priorität</target>
         <source> Create </source>
         <target>Erstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
-          <context context-type="linenumber">62,63</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/create-issue/create-issue.component.html</context>
+          <context context-type="linenumber">119,120</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/create-issue/create-issue.component.html</context>
-          <context context-type="linenumber">116,117</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
+          <context context-type="linenumber">95,96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="createproject" datatype="html">
@@ -336,31 +332,31 @@ Priorität</target>
         <target>Aufgabe wurde gelöscht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="undo" datatype="html">
         <source>undo</source>
         <target>undo</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">143</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deleteundone" datatype="html">
         <source>Deletion has been undone.</source>
         <target>Die Löschung wurde rückgängig gemacht.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">156</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deletefailed" datatype="html">
@@ -368,19 +364,19 @@ Priorität</target>
         <target>Die Löschung ist gescheitert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="linkhasbeencopied" datatype="html">
         <source>Link has been copied</source>
         <target>Link wurde kopiert</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
+          <context context-type="linenumber">186</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectdelete" datatype="html">
@@ -388,7 +384,7 @@ Priorität</target>
         <target>Projekt wurde gelöscht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/projects/projects.component.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7b48110530699dd51d25d59f6da05df753ef350f" datatype="html">
@@ -396,7 +392,7 @@ Priorität</target>
         <target>{VAR_SELECT, select, low {Niedrig} medium {Mittel} high {Hoch}}</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">114,115</context>
+          <context context-type="linenumber">120,121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2375aa62ade64c1ec0fa0f20fd6edf1fe5f8397c" datatype="html">
@@ -404,7 +400,7 @@ Priorität</target>
         <target><x id="ICU" equiv-text="{ (issue?.priority | priority), select, low {Niedrig} medium {Mittel} high {Hoch}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/projects/components/issue-view/issue-view.component.html</context>
-          <context context-type="linenumber">114,116</context>
+          <context context-type="linenumber">120,122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="155d408239c6441ab4695d0d7087d5e9e7f281e0" datatype="html">
@@ -421,7 +417,11 @@ Priorität</target>
         <target>Min. 6 Zeichen, eine Zahl und ein Großbuchstabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">55,57</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
+          <context context-type="linenumber">22,23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="forgotpassword" datatype="html">
@@ -477,7 +477,7 @@ Priorität</target>
         <target>Neues Passwort bestätigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">23,24</context>
+          <context context-type="linenumber">26,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resetpasswordbutton" datatype="html">
@@ -485,7 +485,7 @@ Priorität</target>
         <target>Passwort Zurücksetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">47,48</context>
+          <context context-type="linenumber">51,52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newpassworderror" datatype="html">
@@ -501,7 +501,7 @@ Priorität</target>
         <target>Passwort braucht mind. 6 Zeichen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="logintoregisterlink" datatype="html">
@@ -509,7 +509,7 @@ Priorität</target>
         <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Hier Drücken<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/>, um dich zu registieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resetpasswordlink" datatype="html">
@@ -517,7 +517,7 @@ Priorität</target>
         <target>Passwort zurücksetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemail" datatype="html">
@@ -540,6 +540,22 @@ Priorität</target>
         <source> Confirmation Failed <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> No user with specified token found </source>
         <target>Bestätigung der Email fehlgeschlagen <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> Kein Nutzer mit spezifiziertem Token gefunden</target>
         <note priority="1" from="description">confirmemailfail</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registerusernamehint" datatype="html">
+        <source> min. 5 charactes, only use [a-z, A-Z, 0-9, __ , . , -] </source>
+        <target>mind. 5 Zeichen, nur [a-z, A-Z, 0-9, __ , . , -]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirmemailfail" datatype="html">
+        <source> Confirmation Failed <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> No user with specified token found </source>
+        <target>Bestätigung Fehlgeschlagen <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> Es wurde kein Nutzer gefunden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
           <context context-type="linenumber">6,8</context>

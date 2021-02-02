@@ -53,8 +53,10 @@
       >
         Please enter a password with at least 6 characters
       </mat-error>
-      <mat-hint i18n="@@registerpasswordhint">
-        Min. 6 characters, at least one digit and upper case letter
+      <mat-hint>
+        <span i18n="@@registerpasswordhint"
+          >Min. 6 characters, at least one digit and upper case letter</span
+        >
         {{ input.value?.length || 0 }}/6
       </mat-hint>
     </mat-form-field>

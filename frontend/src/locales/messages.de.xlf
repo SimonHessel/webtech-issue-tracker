@@ -67,7 +67,7 @@
         <target>Registrieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">67,68</context>
+          <context context-type="linenumber">70,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registeremailerror" datatype="html">
@@ -79,7 +79,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="registerusernameerror" datatype="html">
-        <source> Please enter a correct username </source>
+        <source> Please enter a correct username, only use [a-z, A-Z, 0-9, __ , . , -] </source>
         <target>Bitte geben Sie einen korrekten Nutzernamen ein.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
@@ -319,14 +319,6 @@ Priorität</target>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="description" datatype="html">
-        <source>Description</source>
-        <target>Beschreibung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/projects/components/create-project/create-project.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="issuedeleted" datatype="html">
         <source>Issue has been deleted</source>
         <target>Aufgabe wurde gelöscht</target>
@@ -403,21 +395,12 @@ Priorität</target>
           <context context-type="linenumber">120,122</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="155d408239c6441ab4695d0d7087d5e9e7f281e0" datatype="html">
-        <source> Only use upper and lower case letters and numbers </source>
-        <target>Nur Groß- und Kleinbuchstaben und Zahlen</target>
-        <note priority="1" from="description">registerusernamehint</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">32,33</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="registerpasswordhint" datatype="html">
-        <source> min. 6 characters, at least one digit and upper case letter <x id="INTERPOLATION" equiv-text=" letter {{input.value?.lengt"/>/6 </source>
+        <source>Min. 6 characters, at least one digit and upper case letter</source>
         <target>Min. 6 Zeichen, eine Zahl und ein Großbuchstabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/register/register.component.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
@@ -433,7 +416,7 @@ Priorität</target>
         </context-group>
       </trans-unit>
       <trans-unit id="forgotpasswordusernameoremail" datatype="html">
-        <source> Enter your Username or Email </source>
+        <source> Enter your Email-Address </source>
         <target>Bitte Email eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/forgot-password/forgot-password.component.html</context>
@@ -469,7 +452,7 @@ Priorität</target>
         <target>Neues Passwort eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">4,5</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmpassword" datatype="html">
@@ -485,7 +468,7 @@ Priorität</target>
         <target>Passwort Zurücksetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">51,52</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newpassworderror" datatype="html">
@@ -501,23 +484,23 @@ Priorität</target>
         <target>Passwort braucht mind. 6 Zeichen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/reset-password/reset-password.component.html</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="logintoregisterlink" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register</source>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register </source>
         <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Hier Drücken<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/>, um dich zu registieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resetpasswordlink" datatype="html">
-        <source>Reset Password</source>
+        <source>Forgot Password ?</source>
         <target>Passwort zurücksetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemail" datatype="html">
@@ -529,20 +512,11 @@ Priorität</target>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemailsuccess" datatype="html">
-        <source>Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <source> Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
         <target>Email wurde bestätigt. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> Drücke hier um zurück zum Login zu kommen <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
-          <context context-type="linenumber">2,4</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5c59dc89dcf2292d05813688f61e099b920ae2c2" datatype="html">
-        <source> Confirmation Failed <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> No user with specified token found </source>
-        <target>Bestätigung der Email fehlgeschlagen <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> Kein Nutzer mit spezifiziertem Token gefunden</target>
-        <note priority="1" from="description">confirmemailfail</note>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
-          <context context-type="linenumber">6,8</context>
+          <context context-type="linenumber">3,5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registerusernamehint" datatype="html">
@@ -554,11 +528,11 @@ Priorität</target>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemailfail" datatype="html">
-        <source> Confirmation Failed <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> No user with specified token found </source>
+        <source> Confirmation Failed <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> No user with specified token found </source>
         <target>Bestätigung Fehlgeschlagen <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;     "/> Es wurde kein Nutzer gefunden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
-          <context context-type="linenumber">6,8</context>
+          <context context-type="linenumber">8,10</context>
         </context-group>
       </trans-unit>
     </body>

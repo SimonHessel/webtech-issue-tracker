@@ -26,6 +26,7 @@ export class ResetPasswordComponent extends UnsubscribeOnDestroyAdapter{
 
   });
 
+  hide = true;
 
   constructor(
     private snackBar: MatSnackBar,

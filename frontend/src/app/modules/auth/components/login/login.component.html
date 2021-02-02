@@ -26,10 +26,11 @@
     <mat-form-field appearance="outline">
       <input
         matInput
-        type="password"
+        [type]="hide ? 'password' : 'text'"
         name="password"
         formControlName="password"
       />
+      <mat-icon matSuffix (click)="hide = !hide">remove_red_eye</mat-icon>
       <mat-error
         i18n="@@loginpassworderror"
         *ngIf="

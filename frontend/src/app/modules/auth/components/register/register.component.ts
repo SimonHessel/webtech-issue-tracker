@@ -23,6 +23,8 @@ export class RegisterComponent extends UnsubscribeOnDestroyAdapter {
     ]),
   });
 
+  hide = true;
+
   constructor(
     private snackBar: MatSnackBar,
     private authService: AuthService,

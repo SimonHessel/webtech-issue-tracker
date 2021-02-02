@@ -5,6 +5,7 @@ import { AuthService } from 'core/services/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
+
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -17,6 +18,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter {
     remember: new FormControl(),
   });
 
+  hide=true;
   private count = 0;
 
   constructor(

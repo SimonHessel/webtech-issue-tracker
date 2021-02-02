@@ -15,6 +15,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgotPasswordComponent, ResetPasswordComponent, ConfirmComponent],
@@ -36,6 +37,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     MatCheckboxModule,
     MatToolbarModule,
     MatSnackBarModule,
+    MatIconModule
   ],
 })
 export class AuthModule {}

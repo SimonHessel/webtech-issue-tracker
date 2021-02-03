@@ -12,6 +12,7 @@ declare namespace NodeJS {
     REFRESH_TOKEN_COOKIE_NAME: string;
     ACCESS_TOKEN_HEADER_NAME: string;
     FRONTEND_DOMAINS: string;
+    JWT_SECRET: string;
     SMTP_USERNAME?: string;
     SMTP_PASSWORD?: string;
   }

@@ -487,8 +487,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="logintoregisterlink" datatype="html">
-        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register </source>
-        <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register </target>
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register </source>
+        <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/auth/register&quot;&gt;"/>Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt; "/> to Register </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
           <context context-type="linenumber">56,57</context>
@@ -499,7 +499,7 @@
         <target>Forgot Password ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/login/login.component.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemail" datatype="html">
@@ -511,8 +511,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="confirmemailsuccess" datatype="html">
-        <source> Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
-        <target> Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;http://localhost:4200/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+        <source> Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <target> Confirmation worked. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/> You can click on this link to get back to the login page <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;     "/><x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/auth/login&quot;&gt; "/> Login <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/auth/components/confirm/confirm.component.html</context>
           <context context-type="linenumber">3,5</context>

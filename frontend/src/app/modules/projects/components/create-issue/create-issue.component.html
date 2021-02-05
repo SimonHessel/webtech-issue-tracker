@@ -31,27 +31,6 @@
         <app-markdown-editor
           (description)="setDescription($event)"
         ></app-markdown-editor>
-        <!-- <mat-form-field appearance="standard" class="input-description">
-          <mat-label>Issue Description</mat-label>
-          <textarea
-            matInput
-            type="text"
-            id="description"
-            name="description"
-            class="description"
-            formControlName="description"
-          >
-          </textarea>
-          <mat-error
-            *ngIf="
-              !issueForm.controls.description?.valid &&
-              (issueForm.controls.description.dirty ||
-                issueForm.controls.description?.touched)
-            "
-          >
-            Please enter a Description
-          </mat-error>
-        </mat-form-field> -->
         <div class="buttons">
           <span
             ><button

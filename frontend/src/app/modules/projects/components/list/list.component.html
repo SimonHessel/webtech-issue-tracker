@@ -54,7 +54,7 @@
             >assignment</mat-icon
           >
           <a class="title" [routerLink]="issue.id" mat-line>{{
-            issue.title | description: 20
+            issue.title
           }}</a>
           <div
             [innerHTML]="issue.description | description: 40 | stripMarkdown"

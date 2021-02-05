@@ -33,9 +33,9 @@ export class IssueViewComponent
   @Output() updateIssue = new EventEmitter<Issue>();
   edit = false;
   status = '';
+  editDescription = '';
   issueForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
   });
   constructor(
     private readonly cdRef: ChangeDetectorRef,
@@ -77,6 +77,10 @@ export class IssueViewComponent
     }
   }
 
+  public setDescription(value: string) {
+    this.editDescription = value;
+  }
+
   public reassignAssignee(newAssignee: string) {
     if (this.issue && this.project) {
       this.subs.sink = this.issuesService
@@ -98,7 +102,7 @@ export class IssueViewComponent
       this.subs.sink = this.issuesService
         .updateIssue(this.project.id, this.issue.id, {
           title: this.issueForm.value.title,
-          description: this.issueForm.value.description,
+          description: this.editDescription,
         })
         .subscribe((newIssue) => {
           if (this.issue) {

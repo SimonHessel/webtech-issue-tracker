@@ -38,6 +38,7 @@ export class JWTService extends BaseStructure {
       httpOnly: true,
       secure: false,
       path: "/api/auth/refresh",
+      expires: new Date(Date.now() * 2),
     });
   }
 

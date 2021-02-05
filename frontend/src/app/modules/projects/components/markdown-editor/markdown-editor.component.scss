@@ -1,7 +1,7 @@
 @import "/src/assets/theme.scss";
 
 mat-tab-group {
-  width: 100%;
+  height: 21rem;
 }
 
 mat-tab {
@@ -16,6 +16,18 @@ mat-tab {
   .textarea {
     height: 10rem;
   }
+}
+
+.preview {
+  height: auto;
+  word-wrap: break-word;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  color: mat-color($text-color, 50);
+  padding-top: 1rem;
+  overflow: auto;
+  width: fit-content;
+  max-width: 50vw;
 }
 
 ::ng-deep .textarea-form-field .mat-form-field-underline {

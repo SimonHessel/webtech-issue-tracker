@@ -7,10 +7,11 @@
         class="textarea"
         matInput
         placeholder="Description..."
+        [(ngModel)]="text"
       ></textarea>
     </mat-form-field>
   </mat-tab>
   <mat-tab label="Preview">
-    <div [innerHTML]="text | markdown | async"></div>
+    <p class="preview" [innerHTML]="text | markdown | async"></p>
   </mat-tab>
 </mat-tab-group>

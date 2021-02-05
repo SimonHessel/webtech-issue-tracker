@@ -1,14 +1,13 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UnsubscribeOnDestroyAdapter } from 'shared/utils/UnsubscribeOnDestroyAdapter';
@@ -25,13 +24,9 @@ export class MarkdownEditorComponent
   public textArea!: ElementRef<HTMLTextAreaElement>;
   @Output() public description = new EventEmitter<string>();
 
-  public text = '';
+  @Input() public text = '';
 
-  constructor(
-    private readonly domSanitizer: DomSanitizer,
-
-    private readonly cdRef: ChangeDetectorRef
-  ) {
+  constructor() {
     super();
   }
 

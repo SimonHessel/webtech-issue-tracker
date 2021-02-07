@@ -15,5 +15,6 @@ declare namespace NodeJS {
     JWT_SECRET: string;
     SMTP_USERNAME?: string;
     SMTP_PASSWORD?: string;
+    BASE_URL: string;
   }
 }

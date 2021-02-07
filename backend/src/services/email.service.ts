@@ -52,7 +52,7 @@ export class EmailService extends BaseStructure {
       { id: user.id },
       { VerificationToken: randomToken }
     );
-    const link = "http://localhost:4200/auth/confirm/" + randomToken;
+    const link = `${process.env.BASE_URL}/auth/confirm/${randomToken}`;
     const mailOptions = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
       to: user.email,
@@ -76,7 +76,8 @@ export class EmailService extends BaseStructure {
       { id: user.id },
       { VerificationToken: randomToken }
     );
-    const link = "http://localhost:4200/auth/passwordreset/" + randomToken;
+    const link = `${process.env.BASE_URL}/auth/passwordreset/${randomToken}`;
+
     const mailOptions: Mail.Options = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
       to: user.email,
@@ -94,7 +95,7 @@ export class EmailService extends BaseStructure {
   }
 
   public async sendinvitedToAProjectMail(user: User, projectID: Project["id"]) {
-    const link = "http://localhost:4200/projects/" + projectID;
+    const link = `${process.env.BASE_URL}/projects/${projectID}`;
     const mailOptions: Mail.Options = {
       from: '"Issue Tracker " <smtp.mailtrap.io>',
       to: user.email,

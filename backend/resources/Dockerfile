@@ -22,4 +22,4 @@ COPY --from=build /app/dist .
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=prod-deps /app/package.json ./package.json
 EXPOSE 5000
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "-r", "./tsconfig-paths-bootstrap.js", "src/server.js"]

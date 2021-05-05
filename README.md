@@ -28,14 +28,14 @@ Quick and compact installation. Follow the steps below.
 
 - `Angular`
 - `Angular-Material`
-- `MongoDB`
+- `postgres`
 - `Express`
 - `TypeORM`
 
 ##### Requirements
 
 - `Node 12+`
-- `MongoDB`
+- `postgres`
   or
 - `Docker`
 
